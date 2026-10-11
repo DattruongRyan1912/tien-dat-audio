@@ -1348,3 +1348,58 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
   + 84 keyword non-local vẫn trỏ 404 (ngoài phạm vi).
   + Thứ hạng còn phụ thuộc GBP, đánh giá, backlink và việc Google crawl lại.
 - Rollback reference: `mongorestore --archive=<backup> --gzip --drop` theo collection; code revert commit tương ứng.
+
+## 2026-10-11 13:40 +0700 — Nghiên cứu keyword/đối thủ, dọn thực thể và deploy local SEO (`2398383`)
+
+- Scope/authorization: Người dùng yêu cầu nghiên cứu thêm keyword và đối thủ rồi deploy một lần. Người dùng đã xác nhận:
+  + Mạng xã hội thật: chỉ có Facebook `amthanhtiendat`.
+  + Bỏ email khỏi website.
+  + Cửa hàng không sửa loa, không bán loa kéo, không cho thuê.
+  + Menu: trỏ đúng danh mục, ẩn Micro.
+- Research:
+  + Google Autocomplete cho 47 seed.
+  + Lấy mẫu SERP 8 truy vấn (giãn cách 20s).
+  + Teardown đối thủ: Anh Đức Digital, Tân Phát Audio, ADAVI. Kết quả chi tiết trong `docs/LOCAL_SEO_QUANG_NGAI.html` mục 1b.
+- Findings mới:
+  + `contact@tiendataudio.com` thuộc domain của Tiến Đạt Audio Hà Nội (Cầu Giẽ, Phú Xuyên).
+  + Instagram `@tiendataudio` là tài khoản không liên quan; YouTube mà Google hiển thị là `@tienataudio2889`.
+  + Link danh mục trên menu (`loa`, `loa-sub`, `cuc-day`, `micro`) không khớp `category_id`, trang đích rỗng.
+  + 4 trang thương hiệu (JBL, Sony, Bose, Pioneer) có 0 sản phẩm nhưng vẫn index.
+  + Thẻ "Loa kéo" ở trang About sai sự thật.
+  + Combo trong DB trông như dữ liệu mẫu nên không dùng làm bảng giá.
+- Changes:
+  + Sửa link danh mục, ẩn Micro, đổi thẻ About sang "Loa Sub & Main".
+  + Email thành không bắt buộc và ẩn khi trống; `sameAs` chỉ còn Facebook; bỏ `twitter:creator`.
+  + Trang thương hiệu không có sản phẩm → noindex và bỏ khỏi sitemap; title thương hiệu thêm "tại Quảng Ngãi".
+  + `/loa-quang-ngai`: title mới, bảng chọn loa theo diện tích, link "Loa ARF Quảng Ngãi", ngày cập nhật + `dateModified`, FAQ 6 câu.
+  + Trang vùng tách theo thành phố (`kon-tum`, `tam-ky-quang-nam`, `quy-nhon-binh-dinh`, `pleiku-gia-lai`), vẫn chưa publish.
+  + Title sản phẩm đổi thành "<Tên> | Tiến Đạt Audio Quảng Ngãi".
+  + Thêm 4 keyword: "dàn karaoke Quảng Ngãi", "âm thanh Quảng Ngãi", "loa ARF Quảng Ngãi", "Tiến Đạt Audio Quảng Ngãi".
+- Deploy incident:
+  + Lần chạy Deploy production #38118075195 attempt 1 fail ở bước `Activate and verify release`: `/etc/tiendataudio/tiendataudio.env: line 4: $5: unbound variable`.
+  + Nguyên nhân: ngày 2026-10-06 17:22 UTC, lần đặt lại mật khẩu admin đã ghi `ADMIN_PASSWORD_HASH` dạng thô có `$`, trái quy ước `printf %q` của `provision-ubuntu.sh`. Deploy chỉ báo lỗi ở bước activate; production vẫn ở `0d7b1ac`.
+  + Lưu ý: `gh run watch --exit-status` trả exit 0 dù job fail, nên phải đọc kết luận từng step.
+  + Fix:
+    * Backup `/root/tiendataudio.env.bak-20261011T062907Z` (0600).
+    * Escape lại dòng `ADMIN_PASSWORD_HASH` bằng `printf %q`.
+    * Xác minh SHA-256 bằng nhau giữa giá trị gốc, bash source và systemd EnvironmentFile; mật khẩu không đổi.
+  + Attempt 2 thành công. Receipt `2398383` succeeded/healthy. Hash trong process đang chạy khớp bản gốc; `/admin/login` 200.
+- Production data:
+  + Backup `/var/backups/tiendataudio/manual-local-seo-20261011T063355Z-{site_settings,posts,products}.archive.gz` + `.SHA256SUMS`.
+  + Apply 2026-10-11T06:34:01Z: email trống, `sameAs` 4 → 1, thêm 4 keyword, sửa title 6 sản phẩm. Chạy lại xác nhận idempotent.
+- Verification:
+  + Local: `npm test` 86/86, lint, `tsc`, build, `audit-secrets.sh` đều pass.
+  + CI #38117967367 success.
+  + Live:
+    * Title/site name mới; ARF index, Bose noindex.
+    * Danh mục loa thùng 2 SP, loa trầm 1, main 1.
+    * Sitemap chỉ có thương hiệu `arf`; `/khu-vuc/*` 404.
+    * Dữ liệu Mongo hiển thị sau khi ISR (300s) làm mới.
+- Remaining:
+  + Case study công trình thật, giá combo thật, dữ kiện trang vùng: cần người dùng cung cấp.
+  + GBP và Search Console (Request indexing).
+  + 84 keyword non-local đang được xử lý ở task riêng.
+- Rollback:
+  + Code: revert `2398383`.
+  + Data: `mongorestore` từ các backup trên.
+  + Env: copy lại `/root/tiendataudio.env.bak-20261011T062907Z`.
