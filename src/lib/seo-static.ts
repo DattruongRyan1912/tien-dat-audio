@@ -98,7 +98,7 @@ const staticSEOData: Record<string, SEOContent> = {
     "id": "seo_local_quangngai_20260827",
     "page": "/loa-quang-ngai",
     "title": "Loa Quảng Ngãi | Tư vấn, nghe thử — Tiến Đạt Audio",
-    "description": "Tư vấn chọn loa, nghe thử, phối ghép và lắp đặt thiết bị âm thanh tại 264 Phan Đình Phùng, Chánh Lộ, Quảng Ngãi. Gọi 0934995657.",
+    "description": "Tư vấn chọn loa, nghe thử, phối ghép và lắp đặt thiết bị âm thanh tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi. Gọi 0934995657.",
     "keywords": [
       "loa Quảng Ngãi",
       "bán loa Quảng Ngãi",
@@ -114,7 +114,7 @@ const staticSEOData: Record<string, SEOContent> = {
     "structuredData": {},
     "metaRobots": "index,follow",
     "canonicalUrl": "https://tiendataudioquangngai.id.vn/loa-quang-ngai",
-    "h1": "Loa Quảng Ngãi cho không gian nghe đúng chất của bạn",
+    "h1": "Loa Quảng Ngãi — Showroom nghe thử & lắp đặt tận nơi",
     "h2": [
       "Tư vấn theo nhu cầu thật",
       "Thiết bị để bắt đầu nghe",

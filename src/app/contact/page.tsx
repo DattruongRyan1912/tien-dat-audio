@@ -88,7 +88,7 @@ export default async function ContactPage({
               </p>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row">
                 <a
-                  href={`tel:${phoneHref}`}
+                  href={phoneHref}
                   className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#d32f2f] py-3 text-center text-sm font-bold text-white shadow-sm transition hover:bg-[#b71c1c]"
                 >
                   <Phone size={18} />
@@ -160,17 +160,19 @@ export default async function ContactPage({
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 border-t border-slate-100 pt-3">
-                  <div className="rounded-lg bg-blue-100 p-2 text-blue-700 shrink-0 mt-0.5">
-                    <Mail size={18} />
+                {profile.email && (
+                  <div className="flex items-start gap-3 border-t border-slate-100 pt-3">
+                    <div className="rounded-lg bg-blue-100 p-2 text-blue-700 shrink-0 mt-0.5">
+                      <Mail size={18} />
+                    </div>
+                    <div>
+                      <h5 className="text-xs font-bold uppercase text-slate-500">Email liên hệ</h5>
+                      <p className="mt-0.5 text-sm font-medium text-slate-800">
+                        {profile.email}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h5 className="text-xs font-bold uppercase text-slate-500">Email liên hệ</h5>
-                    <p className="mt-0.5 text-sm font-medium text-slate-800">
-                      {profile.email}
-                    </p>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
 
@@ -226,7 +228,10 @@ export default async function ContactPage({
           <div className="mb-4 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
             <div>
               <h3 className="text-lg font-bold text-slate-900">Bản đồ chỉ đường đến Showroom</h3>
-              <p className="text-xs text-slate-500">264 Phan Đình Phùng, Phường Chánh Lộ, Thành phố Quảng Ngãi</p>
+              <p className="text-xs text-slate-500">
+                {profile.address.formatted} ·{' '}
+                <Link href="/loa-quang-ngai" className="font-semibold text-[#d32f2f] underline">Showroom loa Quảng Ngãi</Link>
+              </p>
             </div>
             <a
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Tiến Đạt Audio 264 Phan Đình Phùng Quảng Ngãi')}`}

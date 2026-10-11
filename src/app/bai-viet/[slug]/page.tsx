@@ -232,7 +232,7 @@ export default async function SocialPostDetailPage({ params }: PageProps) {
               </p>
               <div className="mt-4 space-y-2">
                 <a
-                  href={`tel:${phoneHref}`}
+                  href={phoneHref}
                   className="flex items-center justify-center gap-2 rounded-xl bg-[#d32f2f] py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#b71c1c]"
                 >
                   <Phone size={14} />

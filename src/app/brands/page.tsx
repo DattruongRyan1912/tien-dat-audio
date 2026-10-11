@@ -198,7 +198,7 @@ export default async function BrandsPage({ searchParams }: BrandsPageProps) {
 
             <div className="flex flex-col gap-3 sm:flex-row lg:col-span-4 lg:flex-col">
               <a
-                href={`tel:${phoneHref}`}
+                href={phoneHref}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#d32f2f] px-6 py-3.5 text-center text-sm font-bold text-white shadow-md transition hover:bg-[#b71c1c]"
               >
                 <Phone size={16} />

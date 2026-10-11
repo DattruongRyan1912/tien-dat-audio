@@ -95,7 +95,7 @@ export function validateBusinessProfile(value: unknown) {
   const errors: string[] = []
   if (profile.name.length < 2) errors.push('Tên doanh nghiệp là bắt buộc')
   if (!/^0[0-9]{9,10}$/.test(profile.phone.replace(/\s/g, ''))) errors.push('Số điện thoại không hợp lệ')
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(profile.email)) errors.push('Email không hợp lệ')
+  if (profile.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(profile.email)) errors.push('Email không hợp lệ')
   if (!profile.address.formatted) errors.push('Địa chỉ hiển thị là bắt buộc')
   if (!profile.siteUrl.startsWith('https://')) errors.push('Website canonical phải dùng HTTPS')
   if (profile.latitude !== undefined && (profile.latitude < -90 || profile.latitude > 90)) errors.push('Vĩ độ không hợp lệ')

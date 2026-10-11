@@ -26,13 +26,16 @@ export async function generateMetadata({ params }: BrandDetailPageProps): Promis
   const { slug } = await params
   const brand = await getBrandBySlug(slug)
   if (!brand) return { title: 'Thương hiệu không tồn tại — Tiến Đạt Audio' }
+  const products = await getProducts({ brand: brand.id })
   return generateSEOMetadata({
-    title: `${brand.name} — Thương hiệu âm thanh chính hãng | Tiến Đạt Audio`,
+    title: `${brand.name} chính hãng tại Quảng Ngãi | Tiến Đạt Audio`,
     description:
       brand.description ||
       `Khám phá các thiết bị âm thanh ${brand.name} chính hãng được phân phối và bảo hành tại Tiến Đạt Audio Quảng Ngãi.`,
     image: brand.logo,
     url: `/thuong-hieu/${brand.slug}`,
+    // Trang thương hiệu chưa có sản phẩm là trang mỏng; chỉ index khi có hàng.
+    noIndex: products.length === 0,
   })
 }
 
@@ -173,7 +176,7 @@ export default async function BrandDetailPage({ params }: BrandDetailPageProps) 
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <a
-                href={`tel:${phoneHref}`}
+                href={phoneHref}
                 className="inline-flex items-center gap-2 rounded-xl bg-[#d32f2f] px-6 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#b71c1c]"
               >
                 <Phone size={14} />

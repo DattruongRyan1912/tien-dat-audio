@@ -1318,3 +1318,33 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
   + Commit `ba7d927`: CI `#37488850871` passed, Deploy Production `#37489036222` passed.
   + Production live health check: `https://tiendataudioquangngai.id.vn/api/health` trả về HTTP 200 OK, release `ba7d927`.
 - Rollback reference: Git revert commit `ba7d927`.
+
+## 2026-10-11 01:25 +0700 — Local SEO Quảng Ngãi & tỉnh lân cận, site name "Tiến Đạt Audio Quảng Ngãi"
+
+- Scope/authorization: Người dùng yêu cầu tối ưu SEO cho "loa quảng ngãi" (đang không lên, trong khi "audio quảng ngãi" có lên), ưu tiên Quảng Ngãi rồi tới tỉnh lân cận. Đã duyệt phương án B (làm Quảng Ngãi trước, dựng sẵn khung trang vùng nhưng chưa publish), đổi địa chỉ sang Phường Cẩm Thành, tự vào VPS cập nhật MongoDB, và đặt site name "Tiến Đạt Audio Quảng Ngãi" để tách khỏi Tiến Đạt Audio ở Hà Nội.
+- Audit/baseline:
+  + Domain thật là `tiendataudioquangngai.id.vn`; `tiendataudio.id.vn` không resolve.
+  + Site không có trong top 40 cho "loa quảng ngãi" và "âm thanh quảng ngãi". Google vẫn giữ title cũ của trang chủ từ lần crawl 10/8/2026.
+  + Trang chủ chứa 0 lần "loa Quảng Ngãi"; `/loa-quang-ngai` chỉ có 1 link nội bộ (footer).
+  + SEO strategy trên production: 95/105 keyword trỏ vào bài `/kien-thuc` chưa publish (404), trong đó 11 keyword local; thiếu các keyword lõi "loa Quảng Ngãi", "bán loa Quảng Ngãi"…
+  + Lỗi `tel:tel:` trên 8 trang; FAQ ghi giờ mở cửa 21:00, profile ghi 22:00; schema WebSite và og:site_name chỉ ghi "Tiến Đạt Audio".
+- Changes (code, chưa commit):
+  + `/loa-quang-ngai`: H1 mới; thêm mục "Các dòng loa", "Khu vực phục vụ" + bản đồ; sửa nội dung FAQ; sửa `tel:`.
+  + Trang chủ: title "Tiến Đạt Audio Quảng Ngãi — …"; H1 có "QUẢNG NGÃI"; thêm link nội bộ anchor "loa Quảng Ngãi". Thêm link nội bộ từ footer, `/contact`, `/about`, `/products`.
+  + Site name: `WebSite.name` lấy từ `profile.alternateName`; `alternateName` = ["Tiến Đạt Audio", domain]; cập nhật `og:site_name`, `application-name`, manifest. `LocalBusiness.name` giữ "Tiến Đạt Audio" để khớp GBP.
+  + `src/lib/service-areas.ts` + `src/app/khu-vuc/[slug]/page.tsx`: 3 vùng (`kon-tum`, `quang-nam-da-nang`, `binh-dinh-gia-lai`) đều `published: false`. `isServiceAreaPublishable` chặn publish khi thiếu dữ kiện thật. Sitemap chỉ đưa vào các vùng đã publish.
+  + Fallback data/seed: địa chỉ Phường Cẩm Thành, `areaServed` 6 tỉnh, keyword target hết 404.
+  + `scripts/update-local-seo-quang-ngai.mjs` (dry-run mặc định, guard `LOCAL_SEO_TARGET`/`CONFIRM_LOCAL_SEO`, idempotent).
+  + `docs/LOCAL_SEO_QUANG_NGAI.html`: audit, checklist GBP/Search Console/NAP, mẫu dữ kiện trang vùng, rollback.
+- Production data (đã apply 2026-10-10T18:20:10Z):
+  + Backup: `/var/backups/tiendataudio/manual-local-seo-20261010T182005Z-{site_settings,posts}.archive.gz` + `.SHA256SUMS`.
+  + Kết quả: retarget 11 keyword, thêm 6 keyword lõi, đổi địa chỉ trong business_profile, AI facts và 1 bài viết (`loa-bass-bi-re-nguyen-nhan-va-cach-khac-phuc`). Chạy lại xác nhận idempotent. File tạm trên VPS đã xoá.
+- Verification:
+  + `npm test` 84/84 pass; `npm run lint` sạch; `npx tsc --noEmit` sạch; `npm run build` pass.
+  + Smoke `next start` local: title/H1/site name/JSON-LD đúng; 0 `tel:tel:`; `/khu-vuc/*` trả 404, không có trong sitemap.
+  + Production: JSON-LD LocalBusiness đã có địa chỉ và `areaServed` mới; `llms.txt` không còn địa chỉ cũ; `/api/health` 200.
+- Remaining risk:
+  + Code chưa deploy: push lên main sẽ tự deploy qua CI.
+  + 84 keyword non-local vẫn trỏ 404 (ngoài phạm vi).
+  + Thứ hạng còn phụ thuộc GBP, đánh giá, backlink và việc Google crawl lại.
+- Rollback reference: `mongorestore --archive=<backup> --gzip --drop` theo collection; code revert commit tương ứng.

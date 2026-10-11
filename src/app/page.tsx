@@ -9,7 +9,7 @@ import HomeKaraokeCalculator from '@/components/home/HomeKaraokeCalculator'
 
 export const metadata: Metadata = generateSEOMetadata({
   pagePath: '/',
-  title: 'Tiến Đạt Audio — Dàn Karaoke Gia Đình & Âm Thanh Quảng Ngãi',
+  title: 'Tiến Đạt Audio Quảng Ngãi — Dàn Karaoke & Thiết Bị Âm Thanh',
   description: 'Chuyên cung cấp dàn karaoke gia đình, loa, vang số chống hú, cục đẩy công suất chính hãng tại Quảng Ngãi. Lắp đặt tận nơi, cắt hú 100%, bảo hành 2 năm 24/7. Showroom 264 Phan Đình Phùng. Hotline: 0934 995 657.',
   keywords: [
     'dàn karaoke gia đình Quảng Ngãi',
@@ -42,14 +42,16 @@ export default async function HomePage() {
               </span>
               
               <h1 className="mt-3 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl md:text-4xl lg:text-[40px] lg:leading-[1.15]">
-                DÀN KARAOKE GIA ĐÌNH<br />
+                DÀN KARAOKE GIA ĐÌNH QUẢNG NGÃI<br />
                 <span className="text-[#d32f2f]">HÁT NHẸ HƠI — CẮT HÚ 100% — GIÁ TẬN KHO</span>
               </h1>
               
               <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
                 Phối ghép chuẩn âm học cho phòng khách nhà ống miền Trung. 
                 <strong className="text-slate-800"> Trải nghiệm nghe thử thực tế tại 264 Phan Đình Phùng, TP Quảng Ngãi</strong> trước khi quyết định. 
-                Đội ngũ kỹ sư đo đạc âm học RTA và bàn giao tận nhà toàn tỉnh.
+                Đội ngũ kỹ sư đo đạc âm học RTA và bàn giao tận nhà toàn tỉnh. Xem thêm{' '}
+                <Link href="/loa-quang-ngai" className="font-semibold text-[#d32f2f] underline">loa Quảng Ngãi</Link>{' '}
+                và khu vực lắp đặt.
               </p>
 
               {/* CTAs */}
@@ -184,7 +186,7 @@ export default async function HomePage() {
           <Link href="/products?category=vang-so" className="rounded-full border border-slate-300 bg-white px-4 py-2 text-slate-700 hover:border-[#d32f2f] hover:text-[#d32f2f]">
             Vang Số Cắt Hú Rời
           </Link>
-          <Link href="/products?category=loa-sub" className="rounded-full border border-slate-300 bg-white px-4 py-2 text-slate-700 hover:border-[#d32f2f] hover:text-[#d32f2f]">
+          <Link href="/products?category=loa-tram" className="rounded-full border border-slate-300 bg-white px-4 py-2 text-slate-700 hover:border-[#d32f2f] hover:text-[#d32f2f]">
             Loa Sub Siêu Trầm
           </Link>
         </div>

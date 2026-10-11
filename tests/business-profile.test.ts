@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
+import fallbackProfile from '../data/business-profile.json'
 import { normalizeBusinessProfile, validateBusinessProfile } from '../src/lib/business-profile'
 
 test('business profile keeps one normalized NAP shape', () => {
@@ -19,4 +20,9 @@ test('business profile keeps one normalized NAP shape', () => {
 test('business profile validation rejects insecure canonical and invalid phone', () => {
   const result = validateBusinessProfile({ siteUrl: 'http://example.com', phone: '123', email: 'bad', address: { formatted: '' } })
   assert.ok(result.errors.length >= 3)
+})
+
+test('business profile allows an empty email but still rejects a malformed one', () => {
+  assert.ok(!validateBusinessProfile({ ...fallbackProfile, email: '' }).errors.includes('Email không hợp lệ'))
+  assert.ok(validateBusinessProfile({ ...fallbackProfile, email: 'bad' }).errors.includes('Email không hợp lệ'))
 })

@@ -6,17 +6,16 @@ import SonicDeferredMap from './SonicDeferredMap'
 
 const productLinks = [
   ['Dàn karaoke gia đình', '/combos'],
-  ['Loa karaoke & Nghe nhạc', '/products?category=loa'],
+  ['Loa karaoke & Nghe nhạc', '/products?category=loa-thung'],
   ['Vang số & Mixer chống hú', '/products?category=vang-so'],
-  ['Cục đẩy công suất', '/products?category=cuc-day'],
-  ['Loa Sub siêu trầm', '/products?category=loa-sub'],
-  ['Micro không dây', '/products?category=micro'],
+  ['Cục đẩy công suất', '/products?category=main-cong-suat'],
+  ['Loa Sub siêu trầm', '/products?category=loa-tram'],
   ['Thương hiệu phân phối', '/brands'],
 ]
 
 const serviceLinks = [
   ['Về Tiến Đạt Audio', '/about'],
-  ['Tư vấn âm thanh Quảng Ngãi', '/loa-quang-ngai'],
+  ['Loa Quảng Ngãi', '/loa-quang-ngai'],
   ['Kiến thức & Cân chỉnh', '/kien-thuc'],
   ['Câu hỏi thường gặp (FAQ)', '/faq'],
   ['Liên hệ & Đặt lịch', '/contact'],
@@ -135,10 +134,12 @@ export default function SonicFooter({ profile }: { profile: BusinessProfile }) {
                 <Clock3 size={15} className="text-amber-400 shrink-0" />
                 <span>{profile.businessHours.join(' / ')}</span>
               </p>
-              <p className="flex items-center gap-2">
-                <Mail size={15} className="text-blue-400 shrink-0" />
-                <span>{profile.email}</span>
-              </p>
+              {profile.email && (
+                <p className="flex items-center gap-2">
+                  <Mail size={15} className="text-blue-400 shrink-0" />
+                  <span>{profile.email}</span>
+                </p>
+              )}
             </div>
 
             <div className="pt-2">

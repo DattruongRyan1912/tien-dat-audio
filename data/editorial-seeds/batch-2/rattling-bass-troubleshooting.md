@@ -115,7 +115,7 @@ Tùy vào mức độ hư hỏng cơ học, bạn có thể lựa chọn giải 
 
 Nếu bạn đang gặp sự cố loa bass bị rè hoặc cần đo đạc kiểm tra cân chỉnh hệ thống âm thanh bằng thiết bị phân tích âm học RTA chuyên nghiệp tại Quảng Ngãi, hãy mang thiết bị đến showroom hoặc liên hệ kỹ thuật viên:
 
-* **Showroom:** 264 Phan Đình Phùng, Phường Chánh Lộ, TP Quảng Ngãi
+* **Showroom:** 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi
 * **Hotline / Zalo hỗ trợ kỹ thuật:** 0935 086 539
 * **Dịch vụ:** Kiểm tra cuộn coil, thay gân loa chính hãng, cân chỉnh phần mềm chống clipping bảo vệ loa tận nơi.
 

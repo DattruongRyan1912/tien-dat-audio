@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getBusinessProfile } from '@/lib/business-profile'
 import { getBrands, getProducts } from '@/lib/catalog'
 import { getPublicPosts } from '@/lib/content-repository'
+import { getPublishedServiceAreas } from '@/lib/service-areas'
 import { getAllPublicSocialPosts } from '@/modules/social/application/social-post-service'
 import { isSocialHubEnabled } from '@/modules/social/domain/feature-flag'
 
@@ -26,6 +27,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/contact`, lastModified: validDate(profile.updatedAt), changeFrequency: 'monthly', priority: 0.65 },
     { url: `${baseUrl}/faq`, lastModified: validDate(profile.updatedAt), changeFrequency: 'monthly', priority: 0.6 },
   ]
+  const serviceAreaPages: MetadataRoute.Sitemap = getPublishedServiceAreas().map((area) => ({
+    url: `${baseUrl}/khu-vuc/${area.slug}`,
+    lastModified: validDate(profile.updatedAt),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
   const productPages: MetadataRoute.Sitemap = products.map((product) => ({
     url: `${baseUrl}/san-pham/${product.slug}`,
     lastModified: validDate(product.updatedAt),
@@ -33,7 +40,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
     images: product.images.filter(Boolean).map((image) => image.startsWith('http') ? image : `${baseUrl}${image}`),
   }))
-  const brandPages: MetadataRoute.Sitemap = brands.map((brand) => ({
+  const brandIdsWithProducts = new Set(products.map((product) => product.brand_id))
+  const brandPages: MetadataRoute.Sitemap = brands.filter((brand) => brandIdsWithProducts.has(brand.id)).map((brand) => ({
     url: `${baseUrl}/thuong-hieu/${brand.slug}`,
     lastModified: validDate(brand.updatedAt || ''),
     changeFrequency: 'monthly',
@@ -53,5 +61,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
     images: [post.seo.ogImage, ...post.media.filter((item) => item.type === 'image').map((item) => item.url)].filter(Boolean),
   }))
-  return [...staticPages, ...brandPages, ...productPages, ...articlePages, ...socialPages]
+  return [...staticPages, ...serviceAreaPages, ...brandPages, ...productPages, ...articlePages, ...socialPages]
 }

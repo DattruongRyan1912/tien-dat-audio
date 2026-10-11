@@ -2,6 +2,50 @@
   "id": "seo-strategy",
   "keywords": [
     {
+      "id": "kw-local-dan-karaoke-quang-ngai",
+      "term": "dàn karaoke Quảng Ngãi",
+      "intent": "local",
+      "targetPage": "/",
+      "cluster": "core-local",
+      "priority": "high",
+      "notes": "Trang chủ nhắm cụm dàn karaoke gia đình Quảng Ngãi.",
+      "isActive": true,
+      "updatedAt": "2026-10-11T00:00:00.000Z"
+    },
+    {
+      "id": "kw-local-am-thanh-quang-ngai",
+      "term": "âm thanh Quảng Ngãi",
+      "intent": "local",
+      "targetPage": "/loa-quang-ngai",
+      "cluster": "core-local",
+      "priority": "high",
+      "notes": "Đối thủ Anh Đức có trang riêng; landing local trả lời cụm này.",
+      "isActive": true,
+      "updatedAt": "2026-10-11T00:00:00.000Z"
+    },
+    {
+      "id": "kw-brand-arf-quang-ngai",
+      "term": "loa ARF Quảng Ngãi",
+      "intent": "commercial",
+      "targetPage": "/thuong-hieu/arf",
+      "cluster": "brand-local",
+      "priority": "high",
+      "notes": "Đối thủ lớn không bán ARF; Tân Phát có ARF nhưng trang sản phẩm mỏng.",
+      "isActive": true,
+      "updatedAt": "2026-10-11T00:00:00.000Z"
+    },
+    {
+      "id": "kw-brand-tien-dat-audio-quang-ngai",
+      "term": "Tiến Đạt Audio Quảng Ngãi",
+      "intent": "navigational",
+      "targetPage": "/",
+      "cluster": "brand",
+      "priority": "high",
+      "notes": "Tách thực thể với Tiến Đạt Audio Hà Nội (tiendataudio.com).",
+      "isActive": true,
+      "updatedAt": "2026-10-11T00:00:00.000Z"
+    },
+    {
       "id": "kw-local-audio-quang-ngai",
       "term": "thiết bị âm thanh Quảng Ngãi",
       "intent": "local",
@@ -93,7 +137,7 @@
       "id": "kw-local-installation-quang-ngai",
       "term": "lắp đặt âm thanh Quảng Ngãi",
       "intent": "transactional",
-      "targetPage": "/kien-thuc/lap-dat-am-thanh-gia-dinh-quang-ngai",
+      "targetPage": "/kien-thuc/lap-dat-dan-karaoke-gia-dinh-quang-ngai",
       "cluster": "solutions",
       "priority": "high",
       "notes": "Cụm dịch vụ nên được trả lời bằng bài hướng dẫn địa phương và CTA liên hệ.",
@@ -104,7 +148,7 @@
       "id": "kw-local-consulting-quang-ngai",
       "term": "tư vấn phối ghép âm thanh Quảng Ngãi",
       "intent": "commercial",
-      "targetPage": "/kien-thuc/tu-van-phoi-ghep-am-thanh-tai-quang-ngai",
+      "targetPage": "/loa-quang-ngai",
       "cluster": "consulting",
       "priority": "high",
       "notes": "Cụm dịch vụ chuyên sâu; bài viết giải thích quy trình và liên kết về landing/contact.",
@@ -238,7 +282,7 @@
     "enabled": true,
     "positioning": "Tiến Đạt Audio là nơi tư vấn và phối ghép thiết bị âm thanh theo không gian, nhu cầu sử dụng và ngân sách của khách hàng tại Quảng Ngãi.",
     "entityFacts": [
-      "Tiến Đạt Audio có showroom tại 264 Phan Đình Phùng, Chánh Lộ, Quảng Ngãi.",
+      "Tiến Đạt Audio có showroom tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi.",
       "Khách hàng có thể trao đổi nhu cầu, nghe thử và nhận tư vấn cấu hình trước khi mua.",
       "Danh mục tập trung vào loa, vang số, amply, micro và các thiết bị cho hệ thống âm thanh gia đình hoặc chuyên nghiệp."
     ],
@@ -263,7 +307,7 @@
       {
         "id": "faq-listening-room",
         "question": "Khách hàng có thể nghe thử thiết bị ở đâu?",
-        "answer": "Khách hàng có thể liên hệ Tiến Đạt Audio tại 264 Phan Đình Phùng, Chánh Lộ, Quảng Ngãi để trao đổi lịch trải nghiệm phù hợp."
+        "answer": "Khách hàng có thể liên hệ Tiến Đạt Audio tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi để trao đổi lịch trải nghiệm phù hợp."
       },
       {
         "id": "faq-karaoke",

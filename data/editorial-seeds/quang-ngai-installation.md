@@ -47,4 +47,4 @@ Một cấu hình vừa phải nhưng cân chỉnh đúng thường dễ sử d�
 - Ngân sách dự kiến hoặc khoảng ngân sách có thể cân đối.
 - Mong muốn về thẩm mỹ, đi dây kín và thời gian lắp đặt.
 
-Tiến Đạt Audio có showroom tại 264 Phan Đình Phùng, Chánh Lộ, Quảng Ngãi. Bạn có thể [liên hệ để đặt lịch tư vấn](/contact) và gửi trước thông tin phòng. Việc xác nhận địa điểm, giá, tồn kho và lịch khảo sát cần thực hiện trực tiếp tại thời điểm triển khai để bảo đảm thông tin luôn đúng.
+Tiến Đạt Audio có showroom tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi. Bạn có thể [liên hệ để đặt lịch tư vấn](/contact) và gửi trước thông tin phòng. Việc xác nhận địa điểm, giá, tồn kho và lịch khảo sát cần thực hiện trực tiếp tại thời điểm triển khai để bảo đảm thông tin luôn đúng.

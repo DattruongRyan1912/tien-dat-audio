@@ -175,7 +175,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             <div>
               <div className="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-[#d32f2f]">
                 <Sparkles size={13} />
-                <span>Showroom Tiến Đạt Audio Quảng Ngãi</span>
+                <Link href="/loa-quang-ngai" className="hover:underline">Showroom loa Quảng Ngãi</Link>
               </div>
               <h1 className="mt-2.5 text-2xl font-black text-slate-900 md:text-3xl lg:text-4xl">
                 {dynamicH1}

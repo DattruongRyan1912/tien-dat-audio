@@ -8,11 +8,10 @@ import ThemeToggle from '@/components/ui/ThemeToggle'
 
 const navItems = [
   { label: '🔥 Dàn Karaoke Bán Chạy', href: '/combos' },
-  { label: 'Loa Karaoke & Nghe Nhạc', href: '/products?category=loa' },
+  { label: 'Loa Karaoke & Nghe Nhạc', href: '/products?category=loa-thung' },
   { label: 'Vang Số Chống Hú', href: '/products?category=vang-so' },
-  { label: 'Cục Đẩy Công Suất', href: '/products?category=cuc-day' },
-  { label: 'Loa Sub Siêu Trầm', href: '/products?category=loa-sub' },
-  { label: 'Micro Không Dây', href: '/products?category=micro' },
+  { label: 'Cục Đẩy Công Suất', href: '/products?category=main-cong-suat' },
+  { label: 'Loa Sub Siêu Trầm', href: '/products?category=loa-tram' },
   { label: 'Kiến Thức & Căn Chỉnh', href: '/kien-thuc' },
   ...(process.env.NEXT_PUBLIC_SOCIAL_HUB_ENABLED !== 'false' ? [{ label: 'Công Trình Thực Tế', href: '/bai-viet' }] : []),
 ]

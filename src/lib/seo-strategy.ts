@@ -168,6 +168,9 @@ export function buildAIReadableStructuredData(config: SEOConfig, profile: Busine
   const services = Array.from(new Set([...profile.services, ...(config.ai.enabled ? config.ai.services : [])]))
   const topics = Array.from(new Set([...activeKeywords.map((keyword) => keyword.term), ...services])).slice(0, 50)
   const openingHoursSpecification = buildOpeningHoursSpecification(profile.businessHours)
+  // Google lấy site name từ WebSite schema; tên có địa danh để tách với "Tiến Đạt Audio" ở tỉnh khác.
+  const siteName = profile.alternateName || profile.name
+  const siteAlternateNames = Array.from(new Set([profile.name, new URL(baseUrl).hostname])).filter((name) => name !== siteName)
   const business: UnknownRecord = {
     '@type': ['Store', 'LocalBusiness'],
     '@id': businessId,
@@ -178,7 +181,7 @@ export function buildAIReadableStructuredData(config: SEOConfig, profile: Busine
     image: absoluteUrl(profile.logo, baseUrl),
     description: profile.description,
     telephone: profile.phone,
-    email: profile.email,
+    email: profile.email || undefined,
     address: {
       '@type': 'PostalAddress',
       streetAddress: profile.address.streetAddress,
@@ -196,7 +199,7 @@ export function buildAIReadableStructuredData(config: SEOConfig, profile: Busine
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: profile.phone,
-      email: profile.email,
+      email: profile.email || undefined,
       contactType: 'sales',
       areaServed: profile.areaServed,
       availableLanguage: ['vi'],
@@ -224,7 +227,8 @@ export function buildAIReadableStructuredData(config: SEOConfig, profile: Busine
       {
         '@type': 'WebSite',
         '@id': `${baseUrl}#website`,
-        name: profile.name,
+        name: siteName,
+        alternateName: siteAlternateNames,
         url: baseUrl,
         description: profile.description,
         publisher: { '@id': businessId },
@@ -257,7 +261,7 @@ export function buildLLMSText(config: SEOConfig, profile: BusinessProfile, posts
     `- Address: ${profile.address.formatted}`,
     `- Areas served: ${profile.areaServed.join(', ')}`,
     `- Phone: ${profile.phone}`,
-    `- Email: ${profile.email}`,
+    ...(profile.email ? [`- Email: ${profile.email}`] : []),
     `- Business hours: ${profile.businessHours.join('; ')}`,
     '',
     '## Services',

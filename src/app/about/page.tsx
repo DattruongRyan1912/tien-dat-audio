@@ -124,7 +124,7 @@ export default async function AboutPage() {
             </h2>
             <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
               <p>
-                Khởi đầu từ niềm đam mê thuần túy với các thiết bị âm thanh analog và kỹ thuật số, Tiến Đạt Audio đã trải qua hơn một thập kỷ đồng hành cùng hàng ngàn khách hàng tại Quảng Ngãi và các tỉnh miền Trung.
+                Khởi đầu từ niềm đam mê thuần túy với các thiết bị âm thanh analog và kỹ thuật số, Tiến Đạt Audio đã trải qua hơn một thập kỷ đồng hành cùng hàng ngàn khách hàng tại <Link href="/loa-quang-ngai" className="font-semibold text-[#d32f2f] underline">Quảng Ngãi</Link> và các tỉnh miền Trung.
               </p>
               <p>
                 Khác biệt lớn nhất của Tiến Đạt Audio là chúng tôi không bán sản phẩm theo kiểu thương mại đơn thuần. Mỗi sản phẩm trước khi giao đến tay khách hàng đều được đội ngũ kỹ thuật viên kiểm định chất lượng nghiêm ngặt, cân chỉnh phối ghép để đạt hiệu suất âm thanh tối đa và độ bền cao nhất.
@@ -264,15 +264,15 @@ export default async function AboutPage() {
               <div className="rounded-xl bg-emerald-100 p-3 text-emerald-600 w-fit">
                 <Headphones size={24} />
               </div>
-              <h3 className="mt-4 text-base font-bold text-slate-900">Loa Kéo & Loa Di Động</h3>
+              <h3 className="mt-4 text-base font-bold text-slate-900">Loa Sub & Main Công Suất</h3>
               <p className="mt-2 text-xs leading-relaxed text-slate-600">
-                Loa kéo cao cấp bass uy lực, loa bluetooth di động tiện lợi cho các chuyến dã ngoại, picnic.
+                Loa trầm bổ sung dải bass chắc gọn và main công suất phối đúng trở kháng, giúp dàn karaoke chạy bền, không méo tiếng.
               </p>
               <Link
-                href="/products?category=loa-keo"
+                href="/products?category=loa-tram"
                 className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:underline"
               >
-                Xem các mẫu loa kéo <ArrowRight size={12} />
+                Xem các mẫu loa sub <ArrowRight size={12} />
               </Link>
             </div>
           </div>
@@ -304,7 +304,7 @@ export default async function AboutPage() {
                 <ArrowRight size={16} />
               </Link>
               <a
-                href={`tel:${phoneHref}`}
+                href={phoneHref}
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-center text-sm font-bold text-white transition hover:bg-white/20"
               >
                 <Phone size={16} />

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Tiến Đạt Audio - Thiết bị âm thanh chuyên nghiệp',
+    name: 'Tiến Đạt Audio Quảng Ngãi',
     short_name: 'Tiến Đạt Audio',
     description: 'Chuyên cung cấp thiết bị âm thanh chất lượng cao - Loa, Ampli, Phụ kiện âm thanh chính hãng',
     start_url: '/',

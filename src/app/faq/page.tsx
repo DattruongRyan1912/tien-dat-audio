@@ -113,7 +113,7 @@ export default async function FAQPage() {
             </div>
             <div className="flex flex-wrap gap-3 shrink-0">
               <a
-                href={`tel:${phoneHref}`}
+                href={phoneHref}
                 className="inline-flex items-center gap-2 rounded-xl bg-[#d32f2f] px-5 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#b71c1c]"
               >
                 <Phone size={14} />

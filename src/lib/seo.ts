@@ -7,6 +7,7 @@ export const defaultOpenGraphImage = '/images/og-default.jpg'
 
 const siteConfig = {
   name: 'Tiến Đạt Audio',
+  siteName: 'Tiến Đạt Audio Quảng Ngãi',
   description: 'Tư vấn, phối ghép và lắp đặt thiết bị âm thanh theo không gian tại Quảng Ngãi.',
   url: process.env.NEXT_PUBLIC_SITE_URL || defaultSiteUrl,
   ogImage: defaultOpenGraphImage,
@@ -86,7 +87,7 @@ export function generateSEOMetadata({
       url: seoUrl,
       title: seoOgTitle,
       description: seoOgDescription,
-      siteName: siteConfig.name,
+      siteName: siteConfig.siteName,
       images: [
         {
           url: absoluteImage,
@@ -101,7 +102,6 @@ export function generateSEOMetadata({
       title: seoOgTitle,
       description: seoOgDescription,
       images: [absoluteImage],
-      creator: '@tiendataudio',
     },
     robots: {
       index: !isNoIndex,
@@ -229,7 +229,7 @@ export function generateProductSEODefaults(product: Product, category?: Category
   const price = Number(product.salePrice || product.price)
   const priceCopy = price > 0 ? `Giá tham khảo ${price.toLocaleString('vi-VN')}đ.` : 'Liên hệ để nhận báo giá theo thời điểm.'
   return {
-    metaTitle: `${product.name} - ${brand?.name || 'Tiến Đạt Audio'} | Chính hãng, giá tốt`,
+    metaTitle: `${product.name} | ${siteConfig.siteName}`,
     metaDescription: `${product.name} tại Tiến Đạt Audio. ${product.description.substring(0, 105)} ${priceCopy} Chính hãng, bảo hành và tư vấn phối ghép.`,
     keywords: [
       product.name.toLowerCase(),
