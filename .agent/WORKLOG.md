@@ -1403,3 +1403,109 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
   + Code: revert `2398383`.
   + Data: `mongorestore` từ các backup trên.
   + Env: copy lại `/root/tiendataudio.env.bak-20261011T062907Z`.
+
+## 2026-10-11 18:02 +0700 — Xử lý 84 keyword non-local trỏ bài /kien-thuc chưa publish (404 trong /llms.txt)
+
+- Scope/authorization: Người dùng yêu cầu liệt kê 84 keyword chết theo cluster, đề xuất quy tắc theo cluster để duyệt, viết script dry-run/apply có guard, backup `site_settings` trước khi apply, rồi verify `/llms.txt` không còn link 404. Người dùng đã duyệt phương án và xác nhận backup + apply production. Chưa được phép commit/push.
+- Audit/baseline (read-only):
+  + `seo_strategy` có 115 keyword (lúc bắt đầu audit là 111; session local SEO thêm 4 keyword lúc 06:34Z). Tập 84 keyword chết không đổi: cả 84 đều `isActive: true` và không chứa "Quảng Ngãi".
+  + 84 keyword chia thành 9 cluster: equipment-selection, karaoke-troubleshooting, room-acoustics, setup-maintenance, commercial-event, buying-decisions (mỗi cluster 10), audio-technology 9, speaker-hi-fi 8, family-karaoke 7.
+  + `/llms.txt` live có 107 link không trùng, trong đó 84 trả 404 (đều là `/kien-thuc/<slug chết>`).
+  + Cả 84 slug đích là bài AI draft đã unpublish ngày 06/10. Các bài draft vẫn gắn `keywordIds`, nên dashboard coverage hiện 84 keyword là "in progress".
+  + `isActive` điều khiển cả `/llms.txt`, `knowsAbout` lẫn dashboard coverage; coverage tính theo `post.keywordIds`, không theo `targetPage`.
+  + "crossover là gì" đã nằm trong `keywordIds` của bài published `dsp-audio-la-gi` nhưng `targetPage` vẫn trỏ slug 404.
+- Quy tắc đã duyệt:
+  + 27 keyword: trỏ sang bài published có mục H2/H3 trả lời trực tiếp. Đã đối chiếu heading và nội dung thật của 10 bài trên production.
+  + 26 keyword dịch vụ/mua hàng: trỏ về hub. `/contact` 16 keyword (gồm cả 10 keyword commercial-event), `/combos` 6, `/products` 4.
+  + 31 keyword hỏi đáp/so sánh chưa có bài: `isActive=false`, giữ `targetPage` là slug dự kiến.
+  + Keyword được retarget ghi slug cũ vào `notes` ("Bài riêng dự kiến: …"); keyword bị tắt ghi "Tạm tắt 2026-10-11: … bật lại khi publish."
+- Changes:
+  + `scripts/fix-dead-seo-keywords.mjs` (mới):
+    * Mặc định dry-run. Apply local cần `DEAD_SEO_KEYWORDS_TARGET=local` và host localhost; production cần `DEAD_SEO_KEYWORDS_TARGET=production` cùng `CONFIRM_DEAD_SEO_KEYWORDS=FIX-DEAD-SEO-KEYWORDS`.
+    * Throw nếu bài đích chưa publish hoặc plan có term trùng.
+    * Chỉ sửa keyword vẫn đang trỏ bài chết; target đã được admin đổi thì bỏ qua.
+    * Ghi có điều kiện theo `value.updatedAt` để không đè thay đổi admin lưu giữa chừng.
+    * Idempotent; chỉ sửa `site_settings.seo_strategy`, không đụng `posts`.
+- Production data:
+  + Backup: `/var/backups/tiendataudio/manual-dead-seo-keywords-20261011T110111Z-site_settings.archive.gz` + `.SHA256SUMS` (0600). Checksum OK; `mongorestore --dryRun -v` thấy namespace `tiendataudio.site_settings`.
+  + Apply lúc 2026-10-11T11:01:29Z: article=27, hub=26, deactivate=31, skipped=0, missing=0, remainingDeadActive=0.
+  + Chạy lại: `unchanged=84`, "Nothing to apply". File tạm trên VPS đã xoá.
+- Verification:
+  + Test trên DB nháp local `tda_dead_kw_test`, seed từ snapshot production (`seo_strategy` + slug/status của posts):
+    * Guard chặn production apply khi thiếu CONFIRM và chặn host không phải local.
+    * Dry-run/apply đúng 27/26/31; chạy lại idempotent; nhánh skip hoạt động khi target đã bị admin đổi.
+    * `buildLLMSText` render từ dữ liệu sau apply: 19 link, cả 19 đều 200 trên live.
+    * DB nháp đã drop.
+  + `npx eslint scripts/fix-dead-seo-keywords.mjs` sạch; `node --check` OK; `bash deploy/scripts/audit-secrets.sh` pass.
+  + Production sau apply:
+    * Mongo: 115 keyword, 84 active, 31 inactive, 0 keyword active trỏ bài chết.
+    * `/llms.txt` 200: 25 link không trùng (gồm cả sản phẩm), cả 25 đều 200, 0 link 404; 84 dòng topic.
+    * `/api/health` 200, release `c303c46`.
+  + Không chạy `npm test`/`build` vì không đổi `src/`.
+- Remaining risk:
+  + Script chưa commit/push.
+  + Keyword được retarget sang bài vẫn có thể hiện "in progress" trên dashboard coverage, vì bài AI draft vẫn gắn `keywordIds`. Muốn sửa phải đồng bộ `posts.keywordIds` ở bước riêng.
+  + 5 bài batch-2 đã publish gắn `keywordIds` không tồn tại trong `seo_strategy` (`kw-tuning-digital-mixer`, `kw-connecting-mixer-amp`, `kw-wireless-mic-guide`, `kw-analog-vs-digital-mixer`, `kw-rattling-bass-troubleshooting`).
+  + 6 keyword trỏ `/combos`: trang khớp intent nhưng 2 combo trong DB mô tả chung chung (đã ghi nhận ở entry local SEO).
+  + Khi publish bài mới cho keyword đã tắt: bật lại `isActive`. Khi viết bài riêng cho keyword đang trỏ bài/hub: đổi `targetPage` theo slug ghi trong `notes`.
+- Rollback reference: `mongorestore --uri="$MONGODB_URI" --archive=/var/backups/tiendataudio/manual-dead-seo-keywords-20261011T110111Z-site_settings.archive.gz --gzip --nsInclude="tiendataudio.site_settings" --drop`. Restore cả collection sẽ hoàn tác mọi thay đổi `site_settings` sau 11:01Z.
+
+## 2026-10-12 01:49 +0700 — Đồng bộ coverage keyword theo `posts.keywordIds` (28 keyword đã retarget + 5 ID batch-2 thiếu)
+
+- Scope/authorization: Tiếp nối entry "2026-10-11 18:02 +0700". Lưu ý: entry đó và `scripts/fix-dead-seo-keywords.mjs` chỉ nằm trong worktree `wonderful-noyce-b4189f`, chưa commit. Người dùng yêu cầu audit read-only, đề xuất phương án để duyệt, viết script dry-run/apply, backup bằng mongodump trước khi apply. Người dùng đã duyệt phương án (a) và (b) bên dưới và xác nhận backup + apply production. Chưa được phép commit/push.
+- Audit/baseline (read-only, production):
+  + `seo_strategy` có 115 keyword, 84 active. Có 108 bài editorial: 98 draft, 10 published (thêm 2 bài non-editorial).
+  + 34 keyword active trỏ bài published: 6 ở trạng thái "published", 28 ở "in_progress". Trong 28 keyword này, 26 do script 18:02 retarget, 2 là `kw-q-063` và `kw-q-064` do session local SEO retarget ngày 10/10.
+  + Với mỗi keyword trong 28: có đúng 1 bài draft gắn ID làm primary, và không bài published nào gắn ID đó.
+  + 5 ID lạ (`kw-tuning-digital-mixer`, `kw-connecting-mixer-amp`, `kw-wireless-mic-guide`, `kw-analog-vs-digital-mixer`, `kw-rattling-bass-troubleshooting`): mỗi ID chỉ nằm ở đúng 1 bài batch-2 published (dạng primary), không bài draft nào dùng. Term trong manifest chưa có trong strategy.
+  + Cannibalization (`publishedPostIds.length > 1`): 0.
+  + 50 keyword trỏ hub: 39 "in_progress" (do có draft gắn ID), 11 "uncovered". Theo logic hiện tại, keyword trỏ hub không thể đạt "published". Giữ nguyên.
+  + Bug phát hiện thêm (ngoài phạm vi, đã tạo task riêng):
+    * Dashboard và `/api/admin/seo/insights` gọi `listContentPosts({ limit: 500 })`, nhưng hàm này giới hạn tối đa 100 bài.
+    * Hệ quả: 8 draft cũ nhất bị loại khỏi coverage; dashboard thực tế hiện 25 "in_progress" và 3 "uncovered".
+- Phương án đã duyệt:
+  + (a) Thêm 28 ID vào cuối `keywordIds` của 10 bài published. Giữ nguyên `primaryKeywordId`, không gỡ ID khỏi bài draft.
+    * Lý do giữ ID ở draft: khi bài riêng được publish lại, dashboard sẽ báo cannibalization, nhắc chọn URL chính.
+    * Cách ghi: optimistic lock theo `version` và `$inc version`; ghi snapshot vào `post_revisions` (`published_update`, actor `seo-keyword-sync`).
+    * **Không đổi `updatedAt`**, vì nội dung bài không đổi.
+  + (b) Thêm 5 keyword vào `seo_strategy`, giữ đúng ID mà bài đang dùng:
+    * Term lấy từ `seoResearch.primaryKeyword` trong `data/editorial-seeds/batch-2/manifest.json`.
+    * Cluster và intent theo các keyword cùng bài; priority `medium`; active; notes "Bổ sung 2026-10-11: …".
+- Changes:
+  + `scripts/sync-seo-keyword-coverage.mjs` (mới):
+    * Mặc định dry-run. Apply local cần `SEO_KEYWORD_SYNC_TARGET=local` và host loopback. Apply production cần `SEO_KEYWORD_SYNC_TARGET=production` cùng `CONFIRM_SEO_KEYWORD_SYNC=SYNC-SEO-KEYWORD-COVERAGE`.
+    * Throw khi: bài đích chưa publish; một ID được lên kế hoạch cho 2 bài; một bài vượt 30 `keywordIds`; keyword do script đụng tới bị cannibalization.
+    * Skip kèm cảnh báo khi: keyword đã bị admin đổi `targetPage` hoặc tắt; ID hoặc term đã tồn tại; bài không còn gắn ID.
+    * Ghi `seo_strategy` có điều kiện theo `value.updatedAt`. Ghi posts theo filter `{ id, status, version }`; nếu gặp conflict thì dừng, lần chạy lại sẽ xử lý tiếp phần còn thiếu.
+    * Idempotent. In dự phóng coverage, mô phỏng đúng logic của `deriveContentSEOInsights`.
+- Production data:
+  + Backup: `/var/backups/tiendataudio/manual-seo-keyword-sync-20261011T184824Z-{site_settings,posts,post_revisions}.archive.gz` + `.SHA256SUMS` (0600). Checksum OK; `mongorestore --dryRun -v` thấy đúng 3 namespace `tiendataudio.*`.
+  + Apply lúc 2026-10-11T18:48:39Z: keywordAdded=5, idAdded=28, postsChanged=10, cannibalized=0.
+  + Chạy lại: `unchanged` 5/28, "Nothing to apply".
+  + Script chạy từ `/tmp/kwsync` (symlink `node_modules` của release hiện tại; SHA-256 khớp bản local). Đã xoá sau khi chạy.
+- Verification:
+  + Local, DB nháp `tda_kw_sync_test` seed từ snapshot production (`seo_strategy` + metadata posts):
+    * Kiểm tra bằng chính `deriveContentSEOInsights` và `normalizeContentPost` của app: 39/39 keyword trỏ bài là "published"; 0 cannibalization; 0 ID lạ trên bài published; term và target của 5 keyword khớp manifest; 10 revision chứa snapshot trước khi đổi; `updatedAt` giữ nguyên.
+    * Guard: chặn production apply khi thiếu CONFIRM, chặn host không phải loopback, chặn khi thiếu URI.
+    * Nhánh skip (`targetPage` bị đổi, trùng term) hoạt động.
+    * Chặn cannibalization: dừng trước khi ghi, 0 thay đổi.
+    * Conflict version giữa chừng: dừng ở bài thứ 3; chạy lại xử lý tiếp 8 bài, tổng đúng 10 revision.
+    * DB nháp đã drop.
+  + `npx eslint` sạch; `node --check` OK; `bash deploy/scripts/audit-secrets.sh` pass.
+  + Production sau apply (audit độc lập):
+    * 120 keyword, 89 active. Keyword trỏ bài published: 39 "published", cả khi tính trên toàn bộ bài lẫn trên tập 100 bài của dashboard. 0 mismatch, 0 ID lạ, 0 cannibalization, 0 keyword active trỏ bài chết.
+    * `post_revisions` +10 (actor `seo-keyword-sync`).
+  + Live:
+    * `/api/health` 200 (release `c303c46`).
+    * `/llms.txt` 200: 89 dòng topic, trong đó có 5 topic mới. 25 link không trùng, cả 25 đều 200.
+    * Meta keywords của `dsp-audio-la-gi`, `lap-dat-dan-karaoke-gia-dinh-quang-ngai`, `loa-bass-bi-re-…` đã có term mới.
+  + Chưa kiểm chứng: UI dashboard admin (cần đăng nhập). Không chạy `npm test`/`build` vì không đổi `src/`.
+- Remaining risk:
+  + Script chưa commit/push. Entry 18:02 và `fix-dead-seo-keywords.mjs` nằm ở worktree khác, chưa commit; khi gộp WORKLOG cần giữ đúng thứ tự append.
+  + `apply-editorial-batch.mjs` (sync production) spread `...item` từ manifest, nên sẽ đặt lại `keywordIds` của 5 bài batch-2 về 1 ID và làm mất 9 ID vừa thêm. Sau mỗi lần sync batch-2, chạy lại script này; script idempotent.
+  + Khi publish lại một bài draft cho keyword đã retarget: gỡ ID khỏi bài thay thế và đổi `targetPage` theo slug ghi trong `notes`. Dashboard sẽ báo cannibalization nếu quên.
+  + Term gần nghĩa cùng trỏ 1 bài ("so sánh vang cơ lai số và vang số" / "vang cơ hay vang số"; "loa bass bị rè" / "loa karaoke bị rè"): nhiều keyword cho 1 bài, không phải cannibalization.
+  + Bug limit 100 của coverage vẫn còn, đã tạo task riêng.
+- Rollback reference:
+  + Theo từng collection: `mongorestore --uri="$MONGODB_URI" --archive=/var/backups/tiendataudio/manual-seo-keyword-sync-20261011T184824Z-<collection>.archive.gz --gzip --nsInclude="tiendataudio.<collection>" --drop`. Restore cả collection sẽ hoàn tác mọi thay đổi sau 18:48Z.
+  + Rollback có chọn lọc: lấy `snapshot.keywordIds` từ `post_revisions` có actor `seo-keyword-sync`, và xoá 5 keyword có ID trên khỏi `seo_strategy`.
