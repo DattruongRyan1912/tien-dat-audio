@@ -19,7 +19,10 @@
       ],
       "primaryKeywordId": "kw-family-karaoke-budget",
       "keywordIds": [
-        "kw-family-karaoke-budget"
+        "kw-family-karaoke-budget",
+        "kw-q-004",
+        "kw-q-005",
+        "kw-q-095"
       ],
       "relatedPostIds": [
         "seed-2026-08-karaoke-feedback",
@@ -171,7 +174,10 @@
       ],
       "primaryKeywordId": "kw-karaoke-feedback",
       "keywordIds": [
-        "kw-karaoke-feedback"
+        "kw-karaoke-feedback",
+        "kw-q-021",
+        "kw-q-047",
+        "kw-q-086"
       ],
       "relatedPostIds": [
         "seed-2026-08-family-karaoke-budget",
@@ -320,7 +326,14 @@
       ],
       "primaryKeywordId": "kw-karaoke-quang-ngai",
       "keywordIds": [
-        "kw-karaoke-quang-ngai"
+        "kw-karaoke-quang-ngai",
+        "kw-q-027",
+        "kw-q-042",
+        "kw-q-043",
+        "kw-q-045",
+        "kw-q-048",
+        "kw-q-063",
+        "kw-q-064"
       ],
       "relatedPostIds": [
         "seed-2026-08-family-karaoke-budget",
@@ -469,7 +482,10 @@
       ],
       "primaryKeywordId": "kw-q-031",
       "keywordIds": [
-        "kw-q-031"
+        "kw-q-031",
+        "kw-q-014",
+        "kw-q-087",
+        "kw-q-089"
       ],
       "relatedPostIds": [
         "kw-q-039",
@@ -615,7 +631,10 @@
       "primaryKeywordId": "kw-q-081",
       "keywordIds": [
         "kw-q-081",
-        "kw-q-082"
+        "kw-q-082",
+        "kw-q-011",
+        "kw-q-084",
+        "kw-q-085"
       ],
       "relatedPostIds": [
         "kw-q-082",

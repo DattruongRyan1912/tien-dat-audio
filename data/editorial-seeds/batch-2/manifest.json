@@ -20,7 +20,9 @@
       ],
       "primaryKeywordId": "kw-tuning-digital-mixer",
       "keywordIds": [
-        "kw-tuning-digital-mixer"
+        "kw-tuning-digital-mixer",
+        "kw-q-022",
+        "kw-q-028"
       ],
       "relatedPostIds": [
         "seed-2026-08-karaoke-feedback",
@@ -165,7 +167,11 @@
       ],
       "primaryKeywordId": "kw-connecting-mixer-amp",
       "keywordIds": [
-        "kw-connecting-mixer-amp"
+        "kw-connecting-mixer-amp",
+        "kw-q-025",
+        "kw-q-051",
+        "kw-q-052",
+        "kw-q-090"
       ],
       "relatedPostIds": [
         "seed-2026-10-tuning-digital-mixer",
@@ -309,7 +315,8 @@
       ],
       "primaryKeywordId": "kw-wireless-mic-guide",
       "keywordIds": [
-        "kw-wireless-mic-guide"
+        "kw-wireless-mic-guide",
+        "kw-q-019"
       ],
       "relatedPostIds": [
         "seed-2026-08-family-karaoke-budget",
@@ -451,7 +458,8 @@
       ],
       "primaryKeywordId": "kw-analog-vs-digital-mixer",
       "keywordIds": [
-        "kw-analog-vs-digital-mixer"
+        "kw-analog-vs-digital-mixer",
+        "kw-q-012"
       ],
       "relatedPostIds": [
         "seed-2026-10-tuning-digital-mixer",
@@ -592,7 +600,8 @@
       ],
       "primaryKeywordId": "kw-rattling-bass-troubleshooting",
       "keywordIds": [
-        "kw-rattling-bass-troubleshooting"
+        "kw-rattling-bass-troubleshooting",
+        "kw-q-023"
       ],
       "relatedPostIds": [
         "seed-2026-10-connecting-mixer-amp",
