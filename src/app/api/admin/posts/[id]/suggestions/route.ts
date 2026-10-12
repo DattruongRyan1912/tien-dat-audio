@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { requireAdmin, unauthorizedResponse } from '@/lib/admin-guard'
-import { getContentPostById, listContentPosts } from '@/lib/content-repository'
+import { getContentPostById, listAllContentPosts } from '@/lib/content-repository'
 import { suggestInternalLinks } from '@/lib/content-seo'
 import { getSEOConfig } from '@/lib/seo-strategy'
 
@@ -12,11 +12,11 @@ export async function GET(_request: Request, { params }: Context) {
     const id = String(((await params) as { id?: string }).id || '')
     const [post, posts, config] = await Promise.all([
       getContentPostById(id),
-      listContentPosts({ limit: 500 }),
+      listAllContentPosts(),
       getSEOConfig(),
     ])
     if (!post) return NextResponse.json({ success: false, message: 'Không tìm thấy bài viết' }, { status: 404 })
-    const data = suggestInternalLinks(post, posts.items, config).map((item) => ({
+    const data = suggestInternalLinks(post, posts, config).map((item) => ({
       postId: item.post.id,
       title: item.post.title,
       slug: item.post.slug,

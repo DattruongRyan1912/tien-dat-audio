@@ -10,6 +10,8 @@ import type {
 import { hasPublicStatus, normalizeContentPost, validateContentPost } from './content-validation'
 
 const fallbackContent = (fallbackPosts as unknown[]).map(normalizeContentPost)
+const editorialFilter = { $or: [{ contentType: 'editorial' }, { contentType: { $exists: false } }] }
+const postSort = { publishedAt: -1, updatedAt: -1 } as const
 let indexesPromise: Promise<unknown> | null = null
 
 function escapeRegex(value: string) {
@@ -60,7 +62,7 @@ export async function listContentPosts(filters: PostListFilters = {}, publicOnly
   try {
     const db = await getDb()
     const query: Record<string, unknown> = {}
-    const conditions: Record<string, unknown>[] = [{ $or: [{ contentType: 'editorial' }, { contentType: { $exists: false } }] }]
+    const conditions: Record<string, unknown>[] = [editorialFilter]
     if (publicOnly) {
       const now = new Date().toISOString()
       conditions.push({ $or: [
@@ -80,7 +82,7 @@ export async function listContentPosts(filters: PostListFilters = {}, publicOnly
     if (conditions.length) query.$and = conditions
 
     const [documents, total] = await Promise.all([
-      db.collection('posts').find(query).sort({ publishedAt: -1, updatedAt: -1 }).skip((page - 1) * limit).limit(limit).toArray(),
+      db.collection('posts').find(query).sort(postSort).skip((page - 1) * limit).limit(limit).toArray(),
       db.collection('posts').countDocuments(query),
     ])
     return { items: documents.map(normalizeContentPost), total, page, limit }
@@ -88,6 +90,18 @@ export async function listContentPosts(filters: PostListFilters = {}, publicOnly
     console.error('[content] MongoDB unavailable, using JSON fallback:', error)
     const filtered = filterFallback(filters, publicOnly)
     return { items: filtered.slice((page - 1) * limit, page * limit), total: filtered.length, page, limit }
+  }
+}
+
+// Coverage/insight admin cần toàn bộ bài editorial; danh sách phân trang vẫn giới hạn 100 bài mỗi trang.
+export async function listAllContentPosts(): Promise<ContentPost[]> {
+  if (!hasMongoConfig()) return filterFallback({}, false)
+  try {
+    const db = await getDb()
+    return (await db.collection('posts').find(editorialFilter).sort(postSort).toArray()).map(normalizeContentPost)
+  } catch (error) {
+    console.error('[content] MongoDB unavailable, using JSON fallback:', error)
+    return filterFallback({}, false)
   }
 }
 

@@ -2,20 +2,20 @@ import Link from 'next/link'
 import { ArrowUpRight, BarChart3, FileText, Package, Tags, Users } from 'lucide-react'
 import { getGrowthDashboard } from '@/lib/analytics-repository'
 import { deriveContentSEOInsights } from '@/lib/content-seo'
-import { listContentPosts } from '@/lib/content-repository'
+import { listAllContentPosts } from '@/lib/content-repository'
 import { getDashboardStats, getProducts } from '@/lib/catalog'
 import { getSEOConfig } from '@/lib/seo-strategy'
 
 export default async function AdminDashboardPage() {
-  const [stats, products, growth, content, seo] = await Promise.all([
+  const [stats, products, growth, posts, seo] = await Promise.all([
     getDashboardStats(),
     getProducts({ limit: 5 }),
     getGrowthDashboard(30),
-    listContentPosts({ limit: 500 }),
+    listAllContentPosts(),
     getSEOConfig(),
   ])
-  const insights = deriveContentSEOInsights(seo, content.items)
-  const statusCounts = Object.fromEntries(['idea', 'draft', 'review', 'scheduled', 'published', 'archived'].map((status) => [status, content.items.filter((post) => post.status === status).length]))
+  const insights = deriveContentSEOInsights(seo, posts)
+  const statusCounts = Object.fromEntries(['idea', 'draft', 'review', 'scheduled', 'published', 'archived'].map((status) => [status, posts.filter((post) => post.status === status).length]))
   const cards = [
     { icon: Package, label: 'Sản phẩm', value: stats.products, href: '/admin/products' },
     { icon: Tags, label: 'Danh mục', value: stats.categories, href: '/admin/categories' },
