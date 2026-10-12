@@ -1509,3 +1509,41 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
 - Rollback reference:
   + Theo từng collection: `mongorestore --uri="$MONGODB_URI" --archive=/var/backups/tiendataudio/manual-seo-keyword-sync-20261011T184824Z-<collection>.archive.gz --gzip --nsInclude="tiendataudio.<collection>" --drop`. Restore cả collection sẽ hoàn tác mọi thay đổi sau 18:48Z.
   + Rollback có chọn lọc: lấy `snapshot.keywordIds` từ `post_revisions` có actor `seo-keyword-sync`, và xoá 5 keyword có ID trên khỏi `seo_strategy`.
+
+## 2026-10-13 02:40 +0700 — Gom code keyword SEO, đồng bộ manifest, sửa coverage admin giới hạn 100 bài và deploy (`83d3b0a`)
+
+- Scope/authorization: Người dùng yêu cầu "làm all và deploy hết, không cần hỏi thêm". Phạm vi: (1) gom code chưa commit, (2) sửa manifest để sync batch không ghi đè `keywordIds`, (3) sửa bug coverage, (4) deploy production. Không làm phần cần đăng nhập admin, biên tập nội dung, GBP hoặc Search Console.
+- Audit:
+  + `origin/main` = `c303c46`, cùng base với nhánh.
+  + Worktree `wonderful-noyce-b4189f` (session đang rảnh) giữ `scripts/fix-dead-seo-keywords.mjs` và entry 18:02 chưa commit. Đã copy nguyên văn, chèn entry 18:02 trước entry 01:49. Không sửa worktree đó.
+  + `apply-editorial-batch.mjs` mặc định dùng `data/editorial-seeds/batch-1` và spread `...item` từ manifest. Nghĩa là cả batch-1 (5 bài, 19 ID) lẫn batch-2 (5 bài, 9 ID) đều có thể bị ghi đè `keywordIds`. `complete-editorial-corpus.mjs` bỏ qua slug batch-1 nên an toàn.
+  + Các workflow sync/seed/publish nội dung chỉ chạy bằng `workflow_dispatch`; push lên `main` chỉ chạy CI → Deploy.
+  + Bug coverage: `listContentPosts` giới hạn `limit` tối đa 100, trong khi có 4 nơi phía admin gọi `{ limit: 500 }`: `src/app/admin/page.tsx`, `src/app/admin/seo/dashboard/page.tsx`, `src/app/api/admin/seo/insights/route.ts`, `src/app/api/admin/posts/[id]/suggestions/route.ts`.
+- Changes (commit `a69f230`, `b96c082`, `83d3b0a`):
+  + Thêm `scripts/fix-dead-seo-keywords.mjs` và `scripts/sync-seo-keyword-coverage.mjs`.
+  + `batch-1/manifest.json` thêm 19 ID; `batch-2/manifest.json` thêm 9 ID. Đối chiếu read-only với production: `keywordIds` khớp 10/10 bài, đúng cả thứ tự.
+  + `src/lib/content-repository.ts`:
+    * Thêm `listAllContentPosts()`: lấy toàn bộ bài editorial, cùng sort, có JSON fallback.
+    * Tách `editorialFilter` và `postSort` dùng chung.
+    * `listContentPosts` vẫn giới hạn 100 bài mỗi trang.
+  + 4 nơi gọi phía admin chuyển sang `listAllContentPosts()`. Phía public (`getPosts` homepage, `getPublicPosts`) giữ nguyên.
+- Verification:
+  + Local: `npx tsc --noEmit` sạch; `npm test` 86/86; `npm run lint` sạch; eslint 2 script sạch; `npm audit --omit=dev --audit-level=high` 0; `audit-secrets.sh` pass; `npm run build` pass.
+  + Tích hợp trên DB nháp local `tda_limit_test` (150 bài editorial + 1 bài non-editorial), đã drop sau khi test:
+    * `listAllContentPosts` trả 150/150, không lọt bài non-editorial, bài published xếp trước.
+    * `listContentPosts({ limit: 500 })` vẫn trả 100, total 150.
+    * Fallback khi không có URI: 3/3.
+  + CI #38298270057 success. Deploy production #38298486226 success; đã đọc kết luận từng step, tất cả success hoặc skipped.
+  + Receipt: release `83d3b0a…`, previous `c303c46…`, `succeeded`/`healthy`.
+  + Live:
+    * `/api/health` 200 (release `83d3b0a`); `/`, `/kien-thuc`, bài `dsp-audio-la-gi`, `/llms.txt`, `/sitemap.xml`, `/loa-quang-ngai`, `/admin/login` đều 200.
+    * Route admin khi chưa đăng nhập: `/admin/seo/dashboard` → 307 về login; `/api/admin/seo/insights` và `/api/admin/posts/:id/suggestions` → 401, không có lỗi 500.
+    * Service `active`; journal 15 phút sau deploy không có error.
+  + Chưa kiểm chứng: dashboard admin đã đăng nhập (người dùng tự kiểm tra). Không đổi dữ liệu Mongo ở bước này.
+- Ghi chú: GitHub báo repo đã đổi tên thành `DattruongRyan1912/tien-dat-audio`; push qua remote cũ vẫn được redirect.
+- Remaining risk:
+  + Worktree `wonderful-noyce-b4189f` vẫn còn bản copy chưa commit, nay đã thừa vì đã lên `main`. Có thể bỏ thay đổi trong worktree đó hoặc archive session.
+  + `listAllContentPosts` tải cả `bodyMarkdown` (cần cho `orphanPosts`); với khoảng 108 bài là ổn, khi lên hàng nghìn bài thì nên thêm projection.
+  + Các danh sách public vẫn giới hạn 100 bài, đúng ý đồ thiết kế.
+  + Nội dung (biên tập 59 bài draft cho keyword đang mượn bài khác hoặc đang tắt), GBP, Search Console, case study và giá combo thật: cần người dùng.
+- Rollback reference: revert `a69f230..83d3b0a` hoặc redeploy release `c303c46` theo `docs/DEPLOYMENT_RUNBOOK.md`. Dữ liệu không đổi trong bước này; backup dữ liệu của bước sync nằm ở entry 01:49.
