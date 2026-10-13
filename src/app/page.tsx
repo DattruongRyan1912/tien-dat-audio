@@ -326,7 +326,7 @@ export default async function HomePage() {
         {/* Showroom Contact Banner */}
         <div className="rounded-2xl border-2 border-[#d32f2f] bg-gradient-to-r from-red-50 via-white to-red-50 p-6 text-center sm:p-10">
           <h2 className="text-2xl font-black text-slate-900 sm:text-3xl">
-            Trải Nghiệm Trực Tiếp Tại Showroom Tiến Đạt Audio
+            Trải Nghiệm Trực Tiếp Tại Showroom Tiến Đạt Audio Quảng Ngãi
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
             📍 <strong>264 Phan Đình Phùng, TP Quảng Ngãi</strong> — Phòng thử âm học tiêu chuẩn, sẵn sàng các dòng loa ARF, Crown, DBX để quý khách test chất âm trước khi mua.

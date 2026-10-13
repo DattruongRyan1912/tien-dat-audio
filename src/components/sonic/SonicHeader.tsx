@@ -50,7 +50,7 @@ export default function SonicHeader() {
       <div className="mx-auto max-w-[1240px] px-4 py-3">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="Tiến Đạt Audio - Trang chủ">
+          <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="Tiến Đạt Audio Quảng Ngãi - Trang chủ">
             <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#d32f2f] text-xl font-black text-white shadow-md shadow-[#d32f2f]/30">
               TĐ
             </div>

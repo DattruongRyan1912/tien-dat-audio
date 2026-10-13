@@ -30,5 +30,6 @@ test('WebSite schema uses the localized site name so Google can tell this store 
   const data = buildAIReadableStructuredData(normalizeSEOConfig({}), fallbackProfile as BusinessProfile)
   const website = data['@graph'].find((node) => node['@type'] === 'WebSite') as Record<string, unknown>
   assert.equal(website.name, 'Tiến Đạt Audio Quảng Ngãi')
-  assert.deepEqual(website.alternateName, ['Tiến Đạt Audio', 'tiendataudioquangngai.id.vn'])
+  // Không khai domain làm tên dự phòng: Google sẽ chọn domain khi chưa tin tên chính.
+  assert.deepEqual(website.alternateName, ['Tiến Đạt Audio'])
 })

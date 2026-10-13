@@ -169,8 +169,9 @@ export function buildAIReadableStructuredData(config: SEOConfig, profile: Busine
   const topics = Array.from(new Set([...activeKeywords.map((keyword) => keyword.term), ...services])).slice(0, 50)
   const openingHoursSpecification = buildOpeningHoursSpecification(profile.businessHours)
   // Google lấy site name từ WebSite schema; tên có địa danh để tách với "Tiến Đạt Audio" ở tỉnh khác.
+  // Không đưa domain vào alternateName: Google sẽ hiện domain khi chưa tin tên chính.
   const siteName = profile.alternateName || profile.name
-  const siteAlternateNames = Array.from(new Set([profile.name, new URL(baseUrl).hostname])).filter((name) => name !== siteName)
+  const siteAlternateNames = [profile.name].filter((name) => name !== siteName)
   const business: UnknownRecord = {
     '@type': ['Store', 'LocalBusiness'],
     '@id': businessId,
