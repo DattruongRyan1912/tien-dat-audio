@@ -1559,3 +1559,20 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
 - Verification: Cả 3 checkout ở `2635df9`, 0 thay đổi chưa commit.
 - Remaining risk: Hai mục "worktree còn bản copy" và "remote cũ" ở entry 02:40 đã xử lý xong. Nội dung, GBP và Search Console vẫn cần người dùng.
 - Rollback reference: `git remote set-url origin git@github.com:DattruongRyan1912/TienDatAudio.git` (URL cũ vẫn được GitHub redirect).
+
+## 2026-10-13 16:56 +0700 — Google hiện domain thay vì site name "Tiến Đạt Audio Quảng Ngãi"
+
+- Scope/authorization: Người dùng gửi ảnh SERP: Google hiện `tiendataudioquangngai.id.vn` thay vì tên website. Yêu cầu sửa (theo hướng đã cho phép trước đó: làm và deploy).
+- Audit:
+  + Trang chủ live đã có `WebSite.name`, `og:site_name`, `application-name` là "Tiến Đạt Audio Quảng Ngãi", và title bắt đầu bằng tên này.
+  + Snippet trên SERP vẫn là title cũ (đổi ở `2398383` ngày 11/10), nên Google chưa crawl lại trang chủ.
+  + Theo tài liệu Google "Site names": khi chưa tin tên chính, Google dùng `alternateName` hoặc domain; tên dùng chung với site khác thường bị bỏ qua.
+  + Schema đang khai `alternateName: ["Tiến Đạt Audio", "tiendataudioquangngai.id.vn"]`. "Tiến Đạt Audio" trùng với shop Hà Nội, nên dự phòng hợp lệ còn lại chính là domain.
+  + Phần chữ trên trang chủ không có chỗ nào ghi "Tiến Đạt Audio Quảng Ngãi" (header, footer, showroom đều ghi "Tiến Đạt Audio").
+- Changes:
+  + `src/lib/seo-strategy.ts`: bỏ hostname khỏi `alternateName` của WebSite.
+  + Trang chủ: heading showroom ghi "… Tiến Đạt Audio Quảng Ngãi"; copyright footer dùng `alternateName || name`; aria-label logo ghi "Tiến Đạt Audio Quảng Ngãi - Trang chủ".
+  + `tests/seo-strategy.test.ts` cập nhật kỳ vọng (fail trước khi sửa, pass sau khi sửa).
+- Verification: `npm test` 86/86, lint, `tsc`, build, `audit-secrets.sh` pass. Smoke `next start` local: WebSite `alternateName: ["Tiến Đạt Audio"]`, trên trang có tên ưu tiên.
+- Remaining risk: SERP chỉ đổi sau khi Google crawl lại (vài ngày đến vài tuần). Người dùng cần vào Search Console → URL Inspection trang chủ → Request Indexing. Header vẫn hiển thị "Tiến Đạt Audio" (chưa đổi giao diện để tránh vỡ layout mobile).
+- Rollback reference: revert commit fix này.
