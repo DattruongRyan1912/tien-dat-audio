@@ -1547,3 +1547,15 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
   + Các danh sách public vẫn giới hạn 100 bài, đúng ý đồ thiết kế.
   + Nội dung (biên tập 59 bài draft cho keyword đang mượn bài khác hoặc đang tắt), GBP, Search Console, case study và giá combo thật: cần người dùng.
 - Rollback reference: revert `a69f230..83d3b0a` hoặc redeploy release `c303c46` theo `docs/DEPLOYMENT_RUNBOOK.md`. Dữ liệu không đổi trong bước này; backup dữ liệu của bước sync nằm ở entry 01:49.
+
+## 2026-10-13 16:19 +0700 — Dọn trạng thái git sau deploy keyword coverage
+
+- Scope/authorization: Người dùng yêu cầu "cập nhật và push hết lên". Không đổi `src/`, script hay dữ liệu Mongo.
+- Audit: Mọi commit đã có trên `origin/main` (`2635df9`). Repo GitHub đã đổi tên thành `tien-dat-audio`. Checkout `main` chậm 4 commit nhưng không có thay đổi dở. Worktree `wonderful-noyce-b4189f` còn `scripts/fix-dead-seo-keywords.mjs` (giống hệt bản trên `main`) và WORKLOG (đúng 1451 dòng đầu của `main`).
+- Changes:
+  + `origin` đổi sang `git@github.com:DattruongRyan1912/tien-dat-audio.git`; `git ls-remote` xác nhận `main` = `2635df9`.
+  + Fast-forward checkout `main` lên `2635df9`.
+  + Bỏ bản copy thừa trong worktree `wonderful-noyce-b4189f` sau khi xác minh nội dung trùng `main`, rồi fast-forward nhánh đó lên `2635df9`.
+- Verification: Cả 3 checkout ở `2635df9`, 0 thay đổi chưa commit.
+- Remaining risk: Hai mục "worktree còn bản copy" và "remote cũ" ở entry 02:40 đã xử lý xong. Nội dung, GBP và Search Console vẫn cần người dùng.
+- Rollback reference: `git remote set-url origin git@github.com:DattruongRyan1912/TienDatAudio.git` (URL cũ vẫn được GitHub redirect).
