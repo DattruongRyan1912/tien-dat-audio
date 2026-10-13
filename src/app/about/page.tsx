@@ -79,7 +79,7 @@ export default async function AboutPage() {
                 Showroom Trực Tiếp
               </span>
               <p className="mt-2 text-xl font-bold md:text-2xl">
-                Không gian phòng nghe chuẩn âm tại 264 Phan Đình Phùng, TP. Quảng Ngãi
+                Không gian phòng nghe chuẩn âm tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi
               </p>
             </div>
           </div>

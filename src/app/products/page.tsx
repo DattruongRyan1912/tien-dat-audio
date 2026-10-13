@@ -110,7 +110,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const dynamicSubtitle = categoryPreset?.subtitle
     || (activeCategory ? `Bộ sưu tập ${activeCategory.name.toLowerCase()} tuyển chọn tại Tiến Đạt Audio Quảng Ngãi. Trải nghiệm nghe thử âm thanh trực tiếp tại 264 Phan Đình Phùng.` : null)
     || (activeBrand ? `Các thiết bị âm thanh ${activeBrand.name} chính hãng phân phối tại Quảng Ngãi với chính sách bảo hành uy tín và lắp đặt tận nơi.` : null)
-    || 'Khám phá bộ sưu tập loa, vang số, main công suất và dàn karaoke chính hãng. Phối ghép chuẩn âm học, trải nghiệm nghe thử thực tế tại 264 Phan Đình Phùng, TP Quảng Ngãi.'
+    || 'Khám phá bộ sưu tập loa, vang số, main công suất và dàn karaoke chính hãng. Phối ghép chuẩn âm học, trải nghiệm nghe thử thực tế tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi.'
 
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://tiendataudioquangngai.id.vn').replace(/\/$/, '')
   const catalogStructuredData = {

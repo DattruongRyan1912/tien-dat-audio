@@ -56,4 +56,4 @@ Vang số là thiết bị xử lý âm thanh kỹ thuật số đỉnh cao, v�
   - Phòng khách nhà bạn có nhiều mặt kính, sàn gạch, trần thạch cao gây dội âm và hú rít liên tục.
   - Bạn mua thiết bị tại các đơn vị có cam kết hỗ trợ căn chỉnh phần mềm máy tính tận nhà như [Tiến Đạt Audio](/contact).
 
-Tại showroom **Tiến Đạt Audio — 264 Phan Đình Phùng, TP Quảng Ngãi**, chúng tôi luôn có sẵn cả hai dòng sản phẩm để quý khách trực tiếp nghe thử, hát thử và so sánh chất âm thực tế trước khi quyết định chọn mua.
+Tại showroom **Tiến Đạt Audio — 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi**, chúng tôi luôn có sẵn cả hai dòng sản phẩm để quý khách trực tiếp nghe thử, hát thử và so sánh chất âm thực tế trước khi quyết định chọn mua.

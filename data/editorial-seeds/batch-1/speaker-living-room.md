@@ -53,4 +53,4 @@ Việc phối ghép thiết bị âm thanh đòi hỏi sự am hiểu sâu sắc
 Để có được bộ dàn ưng ý nhất:
 * Tham khảo ngay [danh mục loa và cục đẩy công suất chính hãng](/products).
 * Xem bảng phân bổ chi phí chi tiết tại [bài viết dàn karaoke gia đình giá bao nhiêu](/kien-thuc/dan-karaoke-gia-dinh-gia-bao-nhieu).
-* Ghé trực tiếp showroom **Tiến Đạt Audio tại 264 Phan Đình Phùng, TP Quảng Ngãi** hoặc liên hệ qua [trang liên hệ](/contact) (Hotline: 0934 995 657) để được các kỹ thuật viên đo đạc và tư vấn phối ghép an toàn tuyệt đối.
+* Ghé trực tiếp showroom **Tiến Đạt Audio tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi** hoặc liên hệ qua [trang liên hệ](/contact) (Hotline: 0934 995 657) để được các kỹ thuật viên đo đạc và tư vấn phối ghép an toàn tuyệt đối.

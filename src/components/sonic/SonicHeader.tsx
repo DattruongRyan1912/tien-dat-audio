@@ -36,7 +36,7 @@ export default function SonicHeader() {
       <div className="bg-[#0f172a] py-1.5 text-xs text-[#cbd5e1]">
         <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-2 px-4">
           <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs">
-            <span>📍 Showroom: <strong className="text-white">264 Phan Đình Phùng, TP Quảng Ngãi</strong></span>
+            <span>📍 Showroom: <strong className="text-white">264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi</strong></span>
             <span className="hidden text-white/30 sm:inline">|</span>
             <span className="hidden sm:inline">🚚 <strong className="text-white">Miễn phí lắp đặt tận nhà</strong> bán kính 30km (Bình Sơn, Tư Nghĩa, Mộ Đức...)</span>
           </div>

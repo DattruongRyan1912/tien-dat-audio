@@ -48,7 +48,7 @@ export default async function HomePage() {
               
               <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
                 Phối ghép chuẩn âm học cho phòng khách nhà ống miền Trung. 
-                <strong className="text-slate-800"> Trải nghiệm nghe thử thực tế tại 264 Phan Đình Phùng, TP Quảng Ngãi</strong> trước khi quyết định. 
+                <strong className="text-slate-800"> Trải nghiệm nghe thử thực tế tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi</strong> trước khi quyết định. 
                 Đội ngũ kỹ sư đo đạc âm học RTA và bàn giao tận nhà toàn tỉnh. Xem thêm{' '}
                 <Link href="/loa-quang-ngai" className="font-semibold text-[#d32f2f] underline">loa Quảng Ngãi</Link>{' '}
                 và khu vực lắp đặt.
@@ -329,7 +329,7 @@ export default async function HomePage() {
             Trải Nghiệm Trực Tiếp Tại Showroom Tiến Đạt Audio Quảng Ngãi
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-            📍 <strong>264 Phan Đình Phùng, TP Quảng Ngãi</strong> — Phòng thử âm học tiêu chuẩn, sẵn sàng các dòng loa ARF, Crown, DBX để quý khách test chất âm trước khi mua.
+            📍 <strong>264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi</strong> — Phòng thử âm học tiêu chuẩn, sẵn sàng các dòng loa ARF, Crown, DBX để quý khách test chất âm trước khi mua.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a

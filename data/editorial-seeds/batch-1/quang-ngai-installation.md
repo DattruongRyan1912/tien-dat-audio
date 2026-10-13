@@ -46,4 +46,4 @@ Tại **Tiến Đạt Audio Quảng Ngãi**, chúng tôi cam kết thi công và
    * *Preset 2 - Hát chuyên nghiệp:* Reverb sâu, rõ tiếng mộc của giọng hát như trên sân khấu.
    * *Preset 3 - Nghe nhạc & Remix:* Tăng cường dải trầm uy lực, âm trường rộng mở.
 
-Khám phá ngay [các cấu hình dàn karaoke chính hãng](/products), xem [bảng giá dàn karaoke gia đình 2026](/kien-thuc/dan-karaoke-gia-dinh-gia-bao-nhieu), hoặc liên hệ với showroom **Tiến Đạt Audio tại 264 Phan Đình Phùng, TP Quảng Ngãi** qua [trang liên hệ](/contact) để đặt lịch khảo sát và nghe thử âm thanh tận nhà miễn phí.
+Khám phá ngay [các cấu hình dàn karaoke chính hãng](/products), xem [bảng giá dàn karaoke gia đình 2026](/kien-thuc/dan-karaoke-gia-dinh-gia-bao-nhieu), hoặc liên hệ với showroom **Tiến Đạt Audio tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi** qua [trang liên hệ](/contact) để đặt lịch khảo sát và nghe thử âm thanh tận nhà miễn phí.

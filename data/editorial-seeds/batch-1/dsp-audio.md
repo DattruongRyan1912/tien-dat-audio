@@ -55,4 +55,4 @@ Nếu dàn âm thanh gia đình của bạn đang gặp phải một trong các 
 * Đã từng bị cháy củ loa treble nhiều lần mà không rõ nguyên nhân.
 * Phòng khách nhà bạn rộng trên $25\text{m}^2$ hoặc có kết cấu nhà ống dội âm phức tạp cần xử lý độc lập dải trầm và dải cao.
 
-Bạn có thể tham khảo [bộ sưu tập vang số và cục đẩy công suất chính hãng](/products), xem cách [chia ngân sách lắp dàn karaoke gia đình](/kien-thuc/dan-karaoke-gia-dinh-gia-bao-nhieu), hoặc liên hệ với đội ngũ kỹ thuật của **Tiến Đạt Audio tại 264 Phan Đình Phùng, TP Quảng Ngãi** qua [trang liên hệ](/contact) để được hỗ trợ cân chỉnh vang số bằng phần mềm và máy đo RTA tận nhà.
+Bạn có thể tham khảo [bộ sưu tập vang số và cục đẩy công suất chính hãng](/products), xem cách [chia ngân sách lắp dàn karaoke gia đình](/kien-thuc/dan-karaoke-gia-dinh-gia-bao-nhieu), hoặc liên hệ với đội ngũ kỹ thuật của **Tiến Đạt Audio tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi** qua [trang liên hệ](/contact) để được hỗ trợ cân chỉnh vang số bằng phần mềm và máy đo RTA tận nhà.

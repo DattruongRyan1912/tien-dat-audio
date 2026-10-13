@@ -4,7 +4,7 @@ import { generateSEOMetadata } from '@/lib/seo'
 export const metadata: Metadata = generateSEOMetadata({
   pagePath: '/contact',
   title: 'Đặt lịch trải nghiệm — Tiến Đạt Audio',
-  description: 'Đặt lịch nghe thử và nhận tư vấn phối ghép tại Tiến Đạt Audio, 264 Phan Đình Phùng, Quảng Ngãi. Hotline 0934995657.',
+  description: 'Đặt lịch nghe thử và nhận tư vấn phối ghép tại Tiến Đạt Audio, 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi. Hotline 0934995657.',
   keywords: [
     'tư vấn âm thanh Quảng Ngãi',
     'showroom âm thanh Quảng Ngãi',

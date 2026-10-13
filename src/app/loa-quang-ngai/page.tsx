@@ -531,7 +531,7 @@ export default async function LocalQuangNgaiPage() {
                 Cần tư vấn một cấu hình âm thanh hoàn hảo cho căn phòng của bạn?
               </h2>
               <p className="mt-2 text-sm text-slate-300 leading-relaxed">
-                Đừng ngại ghé showroom 264 Phan Đình Phùng, TP. Quảng Ngãi để nghe thử miễn phí, hoặc gọi ngay Hotline để kỹ thuật viên tư vấn tận tình.
+                Đừng ngại ghé showroom 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi để nghe thử miễn phí, hoặc gọi ngay Hotline để kỹ thuật viên tư vấn tận tình.
               </p>
             </div>
 

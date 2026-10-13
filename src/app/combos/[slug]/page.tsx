@@ -195,7 +195,7 @@ export default async function ComboDetailPage({ params }: { params: Promise<{ sl
             <div className="mt-6 rounded-xl border border-slate-100 bg-slate-50 p-4">
               <span className="block text-xs font-bold text-slate-900">Showroom Tiến Đạt Audio</span>
               <p className="mt-1 text-xs text-slate-600">
-                264 Phan Đình Phùng, TP Quảng Ngãi<br />
+                264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi<br />
                 Mở cửa: 08:00 — 21:00 hàng ngày (kể cả Thứ 7 & CN)
               </p>
             </div>

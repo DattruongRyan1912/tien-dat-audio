@@ -22,7 +22,7 @@ export const metadata: Metadata = generateSEOMetadata({
   pagePath: '/contact',
   title: 'Liên hệ & Đặt lịch nghe thử — Tiến Đạt Audio',
   description:
-    'Đặt lịch nghe thử thực tế và nhận tư vấn cấu hình âm thanh tại Showroom Tiến Đạt Audio, 264 Phan Đình Phùng, TP. Quảng Ngãi. Hotline tư vấn 24/7: 0934.995.657.',
+    'Đặt lịch nghe thử thực tế và nhận tư vấn cấu hình âm thanh tại Showroom Tiến Đạt Audio, 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi. Hotline tư vấn 24/7: 0934.995.657.',
   keywords: [
     'tư vấn âm thanh Quảng Ngãi',
     'showroom âm thanh Quảng Ngãi',
