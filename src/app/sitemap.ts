@@ -20,6 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: baseUrl, lastModified: validDate(profile.updatedAt), changeFrequency: 'weekly', priority: 1 },
     { url: `${baseUrl}/products`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
     { url: `${baseUrl}/loa-quang-ngai`, lastModified: validDate(profile.updatedAt), changeFrequency: 'weekly', priority: 0.95 },
+    { url: `${baseUrl}/combos`, lastModified: validDate(profile.updatedAt), changeFrequency: 'weekly', priority: 0.85 },
     { url: `${baseUrl}/chon-cua-hang-am-thanh-uy-tin-quang-ngai`, lastModified: validDate(profile.updatedAt), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/brands`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.75 },
     { url: `${baseUrl}/kien-thuc`, lastModified: posts.length ? validDate(posts[0].updatedAt) : new Date(), changeFrequency: 'weekly', priority: 0.8 },

@@ -1716,3 +1716,23 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
   + Google chỉ đổi sau khi crawl lại (vài ngày đến vài tuần); cần Request Indexing trong Search Console.
   + Google có thể không dùng tên ngắn "Tiến Đạt Audio" vì trùng với cửa hàng ở Hà Nội; khi đó dự phòng là "Tiến Đạt Audio Quảng Ngãi".
 - Rollback reference: revert commit này.
+
+## 2026-10-14 00:10 +0700 — Search Console: yêu cầu lập chỉ mục, rà độ phủ index, thêm /combos vào sitemap
+
+- Scope/authorization: Người dùng nhờ bấm Request Indexing trang chủ để Google cập nhật site name; sau đó duyệt gửi thêm 9 trang ưu tiên và gửi yêu cầu xoá nội dung cũ của bản Vercel. Thao tác qua browser pane đang đăng nhập Search Console của người dùng.
+- Audit (Search Console, property `sc-domain:tiendataudioquangngai.id.vn`):
+  + Trang chủ: lần crawl gần nhất 10:45 ngày 11/10, trước mọi thay đổi site name; đã có yêu cầu cũ ("Đã yêu cầu lập chỉ mục").
+  + Lập chỉ mục: 3 URL được lập chỉ mục (`/`, `/products`, và `/kien-thuc/tu-van-am-thanh-hoi-truong-quang-ngai` nay đã 404), 121 chưa lập chỉ mục. Trong đó 117 ở "Đã phát hiện – chưa lập chỉ mục", 2 "Trang có lệnh chuyển hướng", 1 "Đã thu thập – chưa lập chỉ mục", 1 "Lỗi chuyển hướng" (`/bai-viet/`; live hiện 308 → 200, đang xác thực từ 18/8).
+  + `/loa-quang-ngai`: "Đã phát hiện – chưa lập chỉ mục", không bị chặn. `/combos`: Google chưa từng biết URL và URL không có trong sitemap.
+  + Sitemap `/sitemap.xml`: đọc lần cuối 9/10, thành công, 30 URL được phát hiện.
+  + Remove outdated content: đã có yêu cầu ngày 13/10 cho `https://tien-dat-audio.vercel.app/`, bị từ chối với lý do "Trang chưa được lập chỉ mục", tức Google không còn giữ bản này; không gửi lại.
+- Actions:
+  + Request Indexing 10 URL, mỗi URL đều có xác nhận "URL đã được thêm vào hàng đợi ưu tiên thu thập dữ liệu", không gặp giới hạn hạn mức: `/`, `/loa-quang-ngai`, `/chon-cua-hang-am-thanh-uy-tin-quang-ngai`, `/about`, `/contact`, `/thuong-hieu/arf`, `/combos`, `/faq`, `/kien-thuc/lap-dat-dan-karaoke-gia-dinh-quang-ngai`, `/kien-thuc/dan-karaoke-gia-dinh-gia-bao-nhieu`.
+  + Code: `src/app/sitemap.ts` thêm `/combos` (weekly, priority 0.85); `tests/local-seo.test.ts` khoá điều này (fail trước khi sửa, pass sau khi sửa). Chưa thêm 2 trang combo chi tiết vì nội dung combo đã được ghi nhận là chung chung.
+- Verification: `npm test` 89/89, lint, `tsc`, `audit-secrets.sh` pass.
+- Remaining:
+  + Index phụ thuộc Google; nên theo dõi báo cáo Trang sau 1–2 tuần.
+  + Gửi tiếp các bài/sản phẩm còn lại vào ngày sau (hạn mức theo ngày).
+  + Backlink/nhắc tên từ bên ngoài để Google ưu tiên crawl.
+  + Bing Webmaster Tools (nguồn của ChatGPT/Copilot) có thể vẫn giữ bản Vercel cũ.
+- Rollback reference: revert commit sitemap; các yêu cầu Search Console không cần rollback.

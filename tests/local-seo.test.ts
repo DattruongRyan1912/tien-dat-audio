@@ -27,6 +27,8 @@ test('local keyword map routes commercial queries to the landing or a matching g
 
 test('local landing is discoverable from sitemap and contains matching public facts', () => {
   assert.match(sitemapSource, /baseUrl}\/loa-quang-ngai/)
+  // Trang combo là đích của nhóm keyword dàn karaoke trọn bộ; Search Console 14/10 báo Google chưa từng biết URL này.
+  assert.match(sitemapSource, /baseUrl}\/combos`/)
   assert.match(landingSource, /Loa Quảng Ngãi — Showroom/)
   assert.doesNotMatch(landingSource, /tel:\$\{phoneHref\}/)
   assert.match(landingSource, /264 Phan Đình Phùng/)
