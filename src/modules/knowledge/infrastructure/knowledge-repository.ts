@@ -390,15 +390,17 @@ export async function rebuildArticleChunks(post: ContentPost) {
   return chunks
 }
 
-export async function searchArticleChunks(query: string, limit = 20) {
+export async function searchArticleChunks(query: string, limit = 20, articles?: Array<{ id: string; version: number }>) {
   if (!hasMongoConfig()) return [] as ArticleChunk[]
   const normalized = normalizeKnowledgeText(query)
   const terms = normalized.split(' ').filter((term) => term.length > 1).slice(0, 12)
-  if (!terms.length) return [] as ArticleChunk[]
+  if (!terms.length || articles?.length === 0) return [] as ArticleChunk[]
   const pattern = { $regex: terms.map(escapeRegex).join('|'), $options: 'i' }
-  const documents = await (await getDb()).collection('article_chunks').find({
-    $or: [{ normalizedText: pattern }, { articleTitle: pattern }, { headingPath: pattern }],
-  }).sort({ sourceUpdatedAt: -1 }).limit(Math.min(300, Math.max(limit * 12, 60))).toArray()
+  const textFilter = { $or: [{ normalizedText: pattern }, { articleTitle: pattern }, { headingPath: pattern }] }
+  const articleFilter = articles && { $or: articles.map(({ id, version }) => ({ articleId: id, articleVersion: version })) }
+  const documents = await (await getDb()).collection('article_chunks').find(
+    articleFilter ? { $and: [textFilter, articleFilter] } : textFilter,
+  ).sort({ sourceUpdatedAt: -1 }).limit(Math.min(300, Math.max(limit * 12, 60))).toArray()
   const queryTerms = new Set(terms)
   return documents
     .map((document) => {

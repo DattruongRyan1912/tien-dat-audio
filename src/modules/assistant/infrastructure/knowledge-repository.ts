@@ -12,7 +12,8 @@ import { normalizeSearchText } from '../domain/retrieval'
 import type { AssistantKnowledgeDocument } from '../domain/types'
 
 const CACHE_TTL_MS = 5 * 60 * 1000
-let cache: { expiresAt: number; documents: AssistantKnowledgeDocument[] } | null = null
+type PublicArticleVersion = { id: string; version: number }
+let cache: { expiresAt: number; documents: AssistantKnowledgeDocument[]; articles: PublicArticleVersion[] } | null = null
 
 function oneLine(value: unknown, max = 500) {
   return String(value || '').replace(/\s+/g, ' ').trim().slice(0, max)
@@ -139,8 +140,10 @@ export function invalidateAssistantKnowledgeCache() {
 
 export async function listAssistantKnowledge(query = '') {
   let documents: AssistantKnowledgeDocument[]
+  let articles: PublicArticleVersion[]
   if (cache && cache.expiresAt > Date.now()) {
     documents = cache.documents
+    articles = cache.articles
   } else {
     const [products, posts, entries, claims] = await Promise.all([
       getProducts({ limit: 500 }),
@@ -154,10 +157,12 @@ export async function listAssistantKnowledge(query = '') {
       ...entries.map(curatedDocument),
       ...claims.map(claimDocument),
     ]
-    cache = { documents, expiresAt: Date.now() + CACHE_TTL_MS }
+    articles = posts.map((post) => ({ id: post.id, version: post.version }))
+    cache = { documents, articles, expiresAt: Date.now() + CACHE_TTL_MS }
   }
   if (!query.trim()) return documents
-  const chunks = await searchArticleChunks(query, 30).catch(() => [])
+  // Chỉ dùng chunk của bài đang public ở đúng version; chunk của bài đã gỡ hoặc version cũ bị bỏ qua.
+  const chunks = await searchArticleChunks(query, 30, articles).catch(() => [])
   if (!chunks.length) return documents
   const chunkArticleIds = new Set(chunks.map((chunk) => chunk.articleId))
   return [...documents.filter((document) => document.type !== 'article' || !chunkArticleIds.has(document.id)), ...chunks.map(chunkDocument)]
