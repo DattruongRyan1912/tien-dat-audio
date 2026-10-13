@@ -1604,3 +1604,21 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
   + 1.242 chunk draft chiếm chỗ trong DB; có thể dọn sau (là dữ liệu dẫn xuất).
   + Các script sync editorial ghi đè `version`; sau mỗi lần sync nên chạy lại `assistant:migrate`.
 - Rollback reference: `mongorestore --archive=<backup-collection> --gzip --nsInclude="tiendataudio.<collection>" --drop` theo từng collection; code revert 2 commit.
+
+## 2026-10-13 17:16 +0700 — Phân tích GEO (AI trả lời không ổn định, keyword còn hẹp)
+
+- Scope/authorization: Người dùng gửi ảnh Gemini ("tìm cơ sở audio uy tín ở quảng ngãi") và AI Overview ("audio quảng ngãi"), yêu cầu phân tích kỹ GEO. Đây là bước phân tích; không đổi dữ liệu hay code.
+- Audit:
+  + AI Overview liệt kê Tiến Đạt Audio đầu tiên, nhưng gán thêm "sửa chữa thiết bị âm thanh" và trộn tên phường cũ/mới.
+  + Gemini nêu Tân Phát, Anh Đức, Tân Nguyễn, trích nguồn bên thứ ba (HSV Media, Anh Đức Digital) và website đối thủ.
+  + Không tìm thấy trang độc lập nào nhắc Tiến Đạt Audio Quảng Ngãi.
+  + Nhầm thực thể với tiendataudio.com (Hà Nội), tiendataudio.vn và Facebook "Âm Thanh Tiến Đạt audio".
+  + Bản `tien-dat-audio.vercel.app` (nay 404) từng ghi "sửa chữa", "#1 Quảng Ngãi" và footer giả; công cụ tìm kiếm vẫn mô tả nội dung cũ. Repo GitHub public cũng được index.
+  + Keyword "cho thuê âm thanh sự kiện Quảng Ngãi" đang active, trái với xác nhận "không cho thuê". `mapUrl` là link tìm kiếm chung.
+  + `robots.txt` cho phép mọi crawler AI; trên site không có chữ nào về "sửa chữa".
+  + Google Autocomplete 40 seed: "audio quảng ngãi" → gợi ý đầu là "anh đức audio quảng ngãi"; nhóm "loa arf" có nhiều biến thể theo model + "giá bao nhiêu" + "của nước nào sản xuất"; có nhu cầu "mua loa karaoke ở đâu uy tín", "nên mua dàn karaoke ở đâu", "dàn karaoke gia đình 10 triệu".
+  + `/loa-quang-ngai` đã có FAQPage (6 câu).
+- Changes: `docs/GEO_QUANG_NGAI.html` (báo cáo HTML: nguyên nhân, keyword thêm/tắt, việc on-site/off-site, bộ prompt đo lường, dữ kiện cần người dùng cung cấp).
+- Verification: HTML parse OK; `audit-secrets.sh` pass.
+- Remaining / chờ duyệt: tắt keyword cho thuê; thêm 25 keyword; mở rộng entityFacts/FAQ (gồm "điều không làm"); trang hướng dẫn chọn cửa hàng uy tín; hub ARF (cần xuất xứ, giá); link GBP; người dùng làm GBP, Remove outdated content, quyết định repo private.
+- Rollback reference: không có thay đổi runtime.
