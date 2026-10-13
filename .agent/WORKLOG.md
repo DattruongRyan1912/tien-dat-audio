@@ -1622,3 +1622,31 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
 - Verification: HTML parse OK; `audit-secrets.sh` pass.
 - Remaining / chờ duyệt: tắt keyword cho thuê; thêm 25 keyword; mở rộng entityFacts/FAQ (gồm "điều không làm"); trang hướng dẫn chọn cửa hàng uy tín; hub ARF (cần xuất xứ, giá); link GBP; người dùng làm GBP, Remove outdated content, quyết định repo private.
 - Rollback reference: không có thay đổi runtime.
+
+## 2026-10-13 17:36 +0700 — Triển khai GEO: keyword hỏi đáp/ARF, dữ kiện thực thể, trang chọn cửa hàng uy tín
+
+- Scope/authorization: Người dùng duyệt 4 việc (tắt keyword cho thuê; thêm keyword; dữ kiện + FAQ "điều không làm"; trang chọn cửa hàng uy tín) và cung cấp dữ kiện: hoạt động từ 2005, là đại lý ARF, không muốn hiện giá trên web, có làm âm thanh hội trường/nhà thờ/quán cafe; chưa có link GBP.
+- Audit:
+  + Mọi sản phẩm có `price=0` ("Báo giá qua Zalo"); bài ngân sách bắt đầu từ 12 triệu.
+  + ARF VX330PRO nằm trong danh mục "Vang Số" nhưng thông số giống loa sub. Site không có sản phẩm micro.
+  + About/footer/`data/seo.json` ghi "hơn 10 năm"; `/brands` và About khẳng định phân phối JBL/Bose/BMB/Paramax/Yamaha/Denon, trong khi catalog chỉ có ARF.
+  + `knowsAbout` lấy 50 topic đầu theo thứ tự lưu, nên keyword mới (kể cả priority high) bị cắt.
+  + `/faq` render `seo_strategy.ai.faqs` kèm FAQPage.
+- Changes:
+  + Code:
+    * Trang `/chon-cua-hang-am-thanh-uy-tin-quang-ngai` (NAP lấy từ business profile; chỉ dùng dữ kiện đã công bố/xác nhận), có trong sitemap, link từ `/loa-quang-ngai`.
+    * `foundingDate` (profile, admin, schema).
+    * `knowsAbout` xếp theo priority rồi intent.
+    * Sửa claim "10 năm" và đại lý đa thương hiệu.
+  + Script `scripts/update-geo-keywords.mjs`:
+    * Mặc định dry-run; production cần `GEO_KEYWORDS_TARGET=production` cùng `CONFIRM_GEO_KEYWORDS=UPDATE-GEO-KEYWORDS`. Ghi có điều kiện theo `updatedAt`; idempotent.
+    * Nội dung: tắt 1 keyword, thêm 17 keyword, 5 entityFacts, 3 FAQ, 1 preferredSource, `business_profile.foundingDate=2005`, mô tả brand ARF.
+  + Giữ lại 9 keyword chưa có trang trả lời (giá, xuất xứ ARF, VX330PRO, 10 triệu, gồm những gì, hãng nào, micro, Kon Tum).
+- Verification (local):
+  + `npm test` 89/89 (thêm 3 test: foundingDate trong schema/profile, xếp hạng knowsAbout); lint, `tsc`, build, `audit-secrets.sh` pass.
+  + Script trên DB nháp seed từ production: dry/apply/rerun idempotent, guard OK.
+  + `buildLLMSText`: không còn "cho thuê"; có dữ kiện "không nhận sửa loa" và "Phú Xuyên, Hà Nội".
+  + `knowsAbout` có "đại lý ARF Quảng Ngãi", "cửa hàng âm thanh uy tín Quảng Ngãi", "audio Quảng Ngãi".
+  + Smoke `next start`: trang mới 200, canonical đúng, schema WebPage + Breadcrumb (3) + FAQPage (4); `/about` và `/brands` không còn "10 năm" hay claim JBL/Bose. DB nháp đã drop.
+- Production: xem phần apply ngay dưới (sau deploy).
+- Rollback reference: revert 2 commit feat; data restore từ backup của bước apply.
