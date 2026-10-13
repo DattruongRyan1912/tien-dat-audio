@@ -1576,3 +1576,31 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
 - Verification: `npm test` 86/86, lint, `tsc`, build, `audit-secrets.sh` pass. Smoke `next start` local: WebSite `alternateName: ["Tiến Đạt Audio"]`, trên trang có tên ưu tiên.
 - Remaining risk: SERP chỉ đổi sau khi Google crawl lại (vài ngày đến vài tuần). Người dùng cần vào Search Console → URL Inspection trang chủ → Request Indexing. Header vẫn hiển thị "Tiến Đạt Audio" (chưa đổi giao diện để tránh vỡ layout mobile).
 - Rollback reference: revert commit fix này.
+
+## 2026-10-13 17:08 +0700 — Đồng bộ địa chỉ showroom sau sáp nhập + sửa trợ lý dùng chunk của bài draft
+
+- Scope/authorization: Người dùng yêu cầu "sửa luôn địa chỉ cho khớp rồi deploy".
+- Audit:
+  + `business_profile` (production và fallback) dùng địa chỉ "264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi".
+  + Code còn 10 chỗ ghi "264 Phan Đình Phùng, TP(.) Quảng Ngãi" hoặc ", Quảng Ngãi." không có phường: header, trang chủ (2), about, contact (2), products, combo detail, loa-quang-ngai, `data/seo.json`.
+  + Dữ liệu: 6 bài published có địa chỉ cũ trong `bodyMarkdown`/`seoResearch`. Sản phẩm, combo, categories, brands và site_settings đều sạch.
+  + Phát hiện bug trợ lý AI trên site: `searchArticleChunks` không lọc theo bài public và version hiện tại. Trong 1.300 chunk: 1.242 thuộc 95 bài AI draft đã gỡ, 58 thuộc version cũ (có chunk ghi "Chánh Lộ"), 0 thuộc version hiện tại. Nghĩa là trợ lý có thể trích nội dung đã gỡ, kèm link 404.
+  + Giữ nguyên các chỗ "TP Quảng Ngãi" chỉ địa bàn phục vụ hoặc vị trí khách hàng (không phải NAP).
+- Changes (commit fix(assistant) + fix(seo)):
+  + Thay địa chỉ trong code và seed (`batch-1`/`batch-2` manifest + md, `data/seo.json`) để sync batch không ghi lại địa chỉ cũ.
+  + `scripts/fix-showroom-address.mjs`:
+    * Mặc định dry-run; production cần `SHOWROOM_ADDRESS_TARGET=production` cùng `CONFIRM_SHOWROOM_ADDRESS=FIX-SHOWROOM-ADDRESS`.
+    * Thay sâu trong mọi field string; optimistic lock theo `version`; revision `published_update`; cập nhật `updatedAt` vì nội dung bài thật sự đổi. Idempotent.
+  + `searchArticleChunks(query, limit, articles?)` lọc ngay trong query theo cặp (articleId, articleVersion). Trợ lý truyền vào tập bài public (lưu trong cache 5 phút).
+- Production data:
+  + Backup `/var/backups/tiendataudio/manual-showroom-address-20261013T100729Z-{posts,post_revisions,article_chunks}.archive.gz` + `.SHA256SUMS` (0600); checksum OK; `--dryRun` thấy đúng namespace.
+  + Apply lúc 2026-10-13T10:07:38Z: 6 bài; chạy lại "Nothing to apply".
+  + `assistant:migrate --apply` (lệnh có sẵn trong runbook): 10 bài, 86 chunk. Sau đó: 86 chunk thuộc version hiện tại, 0 chunk/bài mang địa chỉ cũ, 6 revision. 1.242 chunk draft vẫn còn trong DB (không xoá) và được code mới bỏ qua.
+- Verification:
+  + Local, DB nháp seed từ snapshot production: script đổi đúng 6 bài, idempotent, guard OK. Trước rebuild, trợ lý dùng 0 chunk; sau rebuild dùng 30 chunk, chỉ link tới 9 bài published, 0 địa chỉ cũ. DB nháp đã drop.
+  + `npm test` 86/86, lint, `tsc`, build, `audit-secrets.sh` pass.
+- Remaining risk:
+  + Khi publish lại bài draft, chunk cũ của bài đó sẽ được thay qua `refreshPublishedContent`.
+  + 1.242 chunk draft chiếm chỗ trong DB; có thể dọn sau (là dữ liệu dẫn xuất).
+  + Các script sync editorial ghi đè `version`; sau mỗi lần sync nên chạy lại `assistant:migrate`.
+- Rollback reference: `mongorestore --archive=<backup-collection> --gzip --nsInclude="tiendataudio.<collection>" --drop` theo từng collection; code revert 2 commit.
