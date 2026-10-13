@@ -32,6 +32,7 @@ test('local landing is discoverable from sitemap and contains matching public fa
   assert.match(landingSource, /264 Phan Đình Phùng/)
   assert.match(landingSource, /0934995657/)
   assert.match(landingSource, /FAQPage/)
+  assert.doesNotMatch(landingSource, /22:00/)
   assert.match(landingSource, /application\/ld\+json/)
 })
 
@@ -42,6 +43,8 @@ test('business profile fallback uses the post-merger address and lists neighbour
   assert.deepEqual(businessProfile.socialLinks, ['https://www.facebook.com/amthanhtiendat', 'https://maps.google.com/?cid=1617460810128453419'])
   assert.equal(businessProfile.mapUrl, 'https://maps.google.com/?cid=1617460810128453419')
   assert.equal(businessProfile.address.postalCode, '53000')
+  // Giờ khớp Google Business Profile (đóng cửa 21:00, xác nhận 2026-10-13).
+  assert.deepEqual(businessProfile.businessHours, ['Thứ 2 - Chủ nhật: 08:00 - 21:00'])
   for (const area of ['Quảng Ngãi', 'Kon Tum', 'Quảng Nam', 'Đà Nẵng', 'Bình Định', 'Gia Lai']) {
     assert.ok(businessProfile.areaServed.includes(area), area)
   }

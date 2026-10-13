@@ -1679,3 +1679,21 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
 - Verification: DB nháp seed từ production: schema ra `sameAs` [Facebook, GBP], `hasMap` = GBP, `postalCode` 53000, `foundingDate` 2005; DB nháp đã drop. `npm test` 89/89, lint, `audit-secrets.sh` pass.
 - Remaining risk: lệch giờ đóng cửa 21:00 / 22:00; GBP mới có 1 đánh giá.
 - Rollback reference: `mongorestore --archive=/var/backups/tiendataudio/manual-business-gbp-20261013T125526Z-site_settings.archive.gz --gzip --nsInclude="tiendataudio.site_settings" --drop` (hoàn tác mọi thay đổi site_settings sau 12:55Z).
+
+## 2026-10-13 20:18 +0700 — Đồng bộ giờ đóng cửa 21:00 theo Google Business Profile
+
+- Scope/authorization: Người dùng xác nhận giờ đóng cửa đúng là 21:00 và yêu cầu sửa web. Giữ giờ mở 08:00, Thứ 2 – Chủ nhật.
+- Audit:
+  + Production: `business_profile.businessHours` = "Thứ 2 - Chủ nhật: 08:00 - 22:00" (nguồn cho schema `openingHoursSpecification`, `llms.txt`, footer, trang chọn cửa hàng); 2 câu trong `seo_strategy` sinh từ giờ cũ (entityFact showroom, FAQ "Mua loa karaoke ở đâu uy tín").
+  + Code: FAQ `/loa-quang-ngai` "từ 08:00 đến 22:00"; fallback `data/business-profile.json`; `data/theme.json` + mặc định trong `api/admin/theme`.
+  + Posts, products, combos, brands, categories, article_chunks: không có.
+- Changes:
+  + Sửa các chỗ trên thành 21:00.
+  + `tests/local-seo.test.ts` khoá giờ fallback và cấm "22:00" trong `/loa-quang-ngai` (fail trước khi sửa, pass sau khi sửa).
+  + `scripts/update-business-hours.mjs`: mặc định dry-run; production cần `BUSINESS_HOURS_TARGET=production` cùng `CONFIRM_BUSINESS_HOURS=UPDATE-BUSINESS-HOURS`; ghi có điều kiện theo `updatedAt`; idempotent.
+  + `docs/GEO_QUANG_NGAI.html` cập nhật.
+- Production data:
+  + Backup `/var/backups/tiendataudio/manual-business-hours-20261013T131811Z-site_settings.archive.gz` + `.SHA256SUMS` (0600); checksum OK; `--dryRun` thấy đúng namespace.
+  + Apply lúc 2026-10-13T13:18:12Z (SHA-256 script khớp bản local): businessHours + 2 câu seo_strategy; chạy lại "Nothing to apply".
+- Verification: DB nháp seed từ production: schema `openingHoursSpecification` 7 ngày 08:00–21:00, `llms.txt` không còn 22:00; DB nháp đã drop. `npm test` 89/89, lint, `tsc`, `audit-secrets.sh` pass.
+- Rollback reference: `mongorestore --archive=/var/backups/tiendataudio/manual-business-hours-20261013T131811Z-site_settings.archive.gz --gzip --nsInclude="tiendataudio.site_settings" --drop`; code revert commit.

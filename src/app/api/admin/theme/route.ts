@@ -95,7 +95,7 @@ function ensureThemeFile() {
         phone: '0934995657',
         email: '',
         address: '264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi, Việt Nam',
-        workingHours: 'Thứ 2 - Chủ nhật: 08:00 - 22:00',
+        workingHours: 'Thứ 2 - Chủ nhật: 08:00 - 21:00',
         socialLinks: {
           facebook: 'https://www.facebook.com/amthanhtiendat',
           instagram: '',

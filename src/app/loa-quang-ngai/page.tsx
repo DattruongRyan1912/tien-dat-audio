@@ -29,7 +29,7 @@ const localFaqs = [
   {
     question: 'Showroom Tiến Đạt Audio ở đâu tại Quảng Ngãi?',
     answer:
-      'Tiến Đạt Audio có showroom trực tiếp tại số 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi (trước sáp nhập là Phường Chánh Lộ, TP. Quảng Ngãi). Quý khách có thể ghé bất kỳ ngày nào trong tuần từ 08:00 đến 22:00.',
+      'Tiến Đạt Audio có showroom trực tiếp tại số 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi (trước sáp nhập là Phường Chánh Lộ, TP. Quảng Ngãi). Quý khách có thể ghé bất kỳ ngày nào trong tuần từ 08:00 đến 21:00.',
   },
   {
     question: 'Có được nghe thử và hát thử trước khi quyết định mua không?',
