@@ -1650,3 +1650,12 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
   + Smoke `next start`: trang mới 200, canonical đúng, schema WebPage + Breadcrumb (3) + FAQPage (4); `/about` và `/brands` không còn "10 năm" hay claim JBL/Bose. DB nháp đã drop.
 - Production: xem phần apply ngay dưới (sau deploy).
 - Rollback reference: revert 2 commit feat; data restore từ backup của bước apply.
+- Production apply (bổ sung cho entry trên):
+  + Release `7f30b61` deploy thành công (CI #38384505079, Deploy #38384703113; mọi step success hoặc skipped); receipt `succeeded/healthy`.
+  + Backup `/var/backups/tiendataudio/manual-geo-keywords-20261013T104049Z-{site_settings,brands}.archive.gz` + `.SHA256SUMS` (0600); checksum OK; `--dryRun` thấy đúng namespace.
+  + Apply lúc 2026-10-13T10:40:51Z (SHA-256 script khớp bản local): deactivated=1, added=17, facts+=5, faqs+=3, sources+=1, foundingDate=2005, mô tả ARF; chạy lại "Nothing to apply". File tạm trên VPS đã xoá.
+  + Live:
+    * `/llms.txt`: 105 topic, 0 "cho thuê", có "không nhận sửa loa", "Phú Xuyên, Hà Nội", "từ năm 2005", "đại lý ARF"; 29 link đều 200.
+    * Sau chu kỳ ISR: schema trang chủ có `foundingDate=2005`, `knowsAbout` gồm "đại lý ARF Quảng Ngãi" và không có "cho thuê"; `/faq` có 3/3 FAQ mới (FAQPage 6 câu); `/thuong-hieu/arf` có câu đại lý ARF.
+    * Trang mới 200, canonical đúng, FAQPage 4 câu, có trong sitemap.
+  + Rollback: `mongorestore --archive=<backup> --gzip --nsInclude="tiendataudio.<site_settings|brands>" --drop`.
