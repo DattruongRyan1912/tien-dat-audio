@@ -1697,3 +1697,22 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
   + Apply lúc 2026-10-13T13:18:12Z (SHA-256 script khớp bản local): businessHours + 2 câu seo_strategy; chạy lại "Nothing to apply".
 - Verification: DB nháp seed từ production: schema `openingHoursSpecification` 7 ngày 08:00–21:00, `llms.txt` không còn 22:00; DB nháp đã drop. `npm test` 89/89, lint, `tsc`, `audit-secrets.sh` pass.
 - Rollback reference: `mongorestore --archive=/var/backups/tiendataudio/manual-business-hours-20261013T131811Z-site_settings.archive.gz --gzip --nsInclude="tiendataudio.site_settings" --drop`; code revert commit.
+
+## 2026-10-13 22:08 +0700 — Đổi tên website ưu tiên thành "Tiến Đạt Audio"
+
+- Scope/authorization: Người dùng yêu cầu tên website trên Google hiện "Tiến Đạt Audio" thay vì domain.
+- Audit:
+  + Live đang khai `WebSite.name`/`og:site_name`/`application-name` = "Tiến Đạt Audio Quảng Ngãi", alternateName ["Tiến Đạt Audio"]; title trang chủ bắt đầu bằng "Tiến Đạt Audio Quảng Ngãi".
+  + Tên trên Google Business Profile và tên trên header là "Tiến Đạt Audio".
+  + SERP người dùng gửi vẫn là bản crawl trước 11/10, nên Google chưa crawl lại trang chủ.
+- Changes:
+  + `WebSite.name` = `profile.name` ("Tiến Đạt Audio"); alternateName = ["Tiến Đạt Audio Quảng Ngãi"] (vẫn không có domain).
+  + `og:site_name`, `applicationName`, copyright footer, aria-label logo = "Tiến Đạt Audio".
+  + Title trang chủ: "Tiến Đạt Audio — Dàn Karaoke & Thiết Bị Âm Thanh Quảng Ngãi".
+  + Title mặc định sản phẩm giữ "… | Tiến Đạt Audio Quảng Ngãi" qua `siteConfig.localName`.
+  + Test cập nhật (fail trước khi sửa, pass sau khi sửa).
+- Verification: `npm test` 89/89, lint, `tsc`, build, `audit-secrets.sh` pass. Smoke `next start`: title, og:site_name, application-name, WebSite name/alternateName đúng; title sản phẩm không đổi.
+- Remaining risk:
+  + Google chỉ đổi sau khi crawl lại (vài ngày đến vài tuần); cần Request Indexing trong Search Console.
+  + Google có thể không dùng tên ngắn "Tiến Đạt Audio" vì trùng với cửa hàng ở Hà Nội; khi đó dự phòng là "Tiến Đạt Audio Quảng Ngãi".
+- Rollback reference: revert commit này.

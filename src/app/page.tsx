@@ -9,7 +9,7 @@ import HomeKaraokeCalculator from '@/components/home/HomeKaraokeCalculator'
 
 export const metadata: Metadata = generateSEOMetadata({
   pagePath: '/',
-  title: 'Tiến Đạt Audio Quảng Ngãi — Dàn Karaoke & Thiết Bị Âm Thanh',
+  title: 'Tiến Đạt Audio — Dàn Karaoke & Thiết Bị Âm Thanh Quảng Ngãi',
   description: 'Chuyên cung cấp dàn karaoke gia đình, loa, vang số chống hú, cục đẩy công suất chính hãng tại Quảng Ngãi. Lắp đặt tận nơi, cắt hú 100%, bảo hành 2 năm 24/7. Showroom 264 Phan Đình Phùng. Hotline: 0934 995 657.',
   keywords: [
     'dàn karaoke gia đình Quảng Ngãi',

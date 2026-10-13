@@ -19,7 +19,7 @@ const themeBootstrapScript = `try{const stored=localStorage.getItem('sonic_theme
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://tiendataudioquangngai.id.vn'),
-  applicationName: 'Tiến Đạt Audio Quảng Ngãi',
+  applicationName: 'Tiến Đạt Audio',
   manifest: '/manifest.webmanifest',
   icons: {
     icon: [

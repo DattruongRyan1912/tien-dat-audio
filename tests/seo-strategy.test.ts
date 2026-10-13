@@ -26,12 +26,13 @@ test('llms.txt exposes Markdown links for canonical and discovery pages', () => 
   assert.match(output, /- \[Homepage\]\(https:\/\/tiendataudioquangngai\.id\.vn\/?\)/)
 })
 
-test('WebSite schema uses the localized site name so Google can tell this store apart from same-name brands', () => {
+test('WebSite schema prefers the brand name and keeps the localized name as the only alternate', () => {
   const data = buildAIReadableStructuredData(normalizeSEOConfig({}), fallbackProfile as BusinessProfile)
   const website = data['@graph'].find((node) => node['@type'] === 'WebSite') as Record<string, unknown>
-  assert.equal(website.name, 'Tiến Đạt Audio Quảng Ngãi')
+  // Tên ưu tiên khớp tên Google Business Profile; tên có địa danh làm dự phòng nếu Google không dùng được tên ngắn.
+  assert.equal(website.name, 'Tiến Đạt Audio')
   // Không khai domain làm tên dự phòng: Google sẽ chọn domain khi chưa tin tên chính.
-  assert.deepEqual(website.alternateName, ['Tiến Đạt Audio'])
+  assert.deepEqual(website.alternateName, ['Tiến Đạt Audio Quảng Ngãi'])
 })
 
 test('LocalBusiness schema exposes the founding year from the business profile', () => {

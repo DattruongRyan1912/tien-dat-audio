@@ -7,7 +7,8 @@ export const defaultOpenGraphImage = '/images/og-default.jpg'
 
 const siteConfig = {
   name: 'Tiến Đạt Audio',
-  siteName: 'Tiến Đạt Audio Quảng Ngãi',
+  siteName: 'Tiến Đạt Audio',
+  localName: 'Tiến Đạt Audio Quảng Ngãi',
   description: 'Tư vấn, phối ghép và lắp đặt thiết bị âm thanh theo không gian tại Quảng Ngãi.',
   url: process.env.NEXT_PUBLIC_SITE_URL || defaultSiteUrl,
   ogImage: defaultOpenGraphImage,
@@ -229,7 +230,7 @@ export function generateProductSEODefaults(product: Product, category?: Category
   const price = Number(product.salePrice || product.price)
   const priceCopy = price > 0 ? `Giá tham khảo ${price.toLocaleString('vi-VN')}đ.` : 'Liên hệ để nhận báo giá theo thời điểm.'
   return {
-    metaTitle: `${product.name} | ${siteConfig.siteName}`,
+    metaTitle: `${product.name} | ${siteConfig.localName}`,
     metaDescription: `${product.name} tại Tiến Đạt Audio. ${product.description.substring(0, 105)} ${priceCopy} Chính hãng, bảo hành và tư vấn phối ghép.`,
     keywords: [
       product.name.toLowerCase(),

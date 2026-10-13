@@ -172,10 +172,10 @@ export function buildAIReadableStructuredData(config: SEOConfig, profile: Busine
   const rankedKeywords = [...activeKeywords].sort((a, b) => priorityRank[a.priority] - priorityRank[b.priority] || intentRank[a.intent] - intentRank[b.intent])
   const topics = Array.from(new Set([...rankedKeywords.map((keyword) => keyword.term), ...services])).slice(0, 50)
   const openingHoursSpecification = buildOpeningHoursSpecification(profile.businessHours)
-  // Google lấy site name từ WebSite schema; tên có địa danh để tách với "Tiến Đạt Audio" ở tỉnh khác.
+  // Google lấy site name từ WebSite schema: tên ưu tiên khớp tên Google Business Profile, tên có địa danh làm dự phòng.
   // Không đưa domain vào alternateName: Google sẽ hiện domain khi chưa tin tên chính.
-  const siteName = profile.alternateName || profile.name
-  const siteAlternateNames = [profile.name].filter((name) => name !== siteName)
+  const siteName = profile.name
+  const siteAlternateNames = [profile.alternateName].filter((name) => name && name !== siteName)
   const business: UnknownRecord = {
     '@type': ['Store', 'LocalBusiness'],
     '@id': businessId,

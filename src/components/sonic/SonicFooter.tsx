@@ -159,7 +159,7 @@ export default function SonicFooter({ profile }: { profile: BusinessProfile }) {
 
         {/* Bottom Bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-800/80 pt-8 text-center text-xs text-slate-500 sm:flex-row sm:text-left">
-          <p>© {new Date().getFullYear()} {profile.alternateName || profile.name}. Tất cả quyền được bảo lưu.</p>
+          <p>© {new Date().getFullYear()} {profile.name}. Tất cả quyền được bảo lưu.</p>
           <div className="flex items-center gap-4 text-[11px]">
             <span>Đại lý âm thanh chính hãng tại Quảng Ngãi</span>
             <span>•</span>
