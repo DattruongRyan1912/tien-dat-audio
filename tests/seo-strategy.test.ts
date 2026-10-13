@@ -33,3 +33,21 @@ test('WebSite schema uses the localized site name so Google can tell this store 
   // Không khai domain làm tên dự phòng: Google sẽ chọn domain khi chưa tin tên chính.
   assert.deepEqual(website.alternateName, ['Tiến Đạt Audio'])
 })
+
+test('LocalBusiness schema exposes the founding year from the business profile', () => {
+  const data = buildAIReadableStructuredData(normalizeSEOConfig({}), { ...(fallbackProfile as BusinessProfile), foundingDate: '2005' })
+  const business = data['@graph'].find((node) => Array.isArray(node['@type']) && (node['@type'] as string[]).includes('LocalBusiness')) as Record<string, unknown>
+  assert.equal(business.foundingDate, '2005')
+})
+
+test('knowsAbout keeps high-priority keywords when there are more than 50 topics', () => {
+  const keywords = [
+    ...Array.from({ length: 60 }, (_, index) => ({ id: `kw-medium-${index}`, term: `chủ đề phụ ${index}`, priority: 'medium' })),
+    { id: 'kw-high-howto', term: 'cách chỉnh vang số', priority: 'high', intent: 'informational' },
+    { id: 'kw-high', term: 'đại lý ARF Quảng Ngãi', priority: 'high', intent: 'local' },
+  ]
+  const data = buildAIReadableStructuredData(normalizeSEOConfig({ keywords }), fallbackProfile as BusinessProfile)
+  const business = data['@graph'][0] as { knowsAbout: string[] }
+  assert.equal(business.knowsAbout.length, 50)
+  assert.deepEqual(business.knowsAbout.slice(0, 2), ['đại lý ARF Quảng Ngãi', 'cách chỉnh vang số'])
+})

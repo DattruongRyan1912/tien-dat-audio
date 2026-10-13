@@ -22,6 +22,7 @@ export interface BusinessProfile {
   email: string
   address: BusinessAddress
   businessHours: string[]
+  foundingDate?: string
   latitude?: number
   longitude?: number
   areaServed: string[]
@@ -60,6 +61,7 @@ export function normalizeBusinessProfile(value: unknown): BusinessProfile {
   const addressInput = record(input.address)
   const latitude = Number(input.latitude)
   const longitude = Number(input.longitude)
+  const foundingDate = text(input.foundingDate, defaults.foundingDate || '', 10)
 
   return {
     name: text(input.name, defaults.name, 120),
@@ -78,6 +80,7 @@ export function normalizeBusinessProfile(value: unknown): BusinessProfile {
       formatted: text(addressInput.formatted, defaults.address.formatted, 300),
     },
     businessHours: list(input.businessHours, defaults.businessHours, 14, 120),
+    ...(/^\d{4}(-\d{2}(-\d{2})?)?$/.test(foundingDate) ? { foundingDate } : {}),
     ...(Number.isFinite(latitude) ? { latitude } : {}),
     ...(Number.isFinite(longitude) ? { longitude } : {}),
     areaServed: list(input.areaServed, defaults.areaServed, 30, 120),

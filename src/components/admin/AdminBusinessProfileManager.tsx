@@ -81,6 +81,7 @@ export default function AdminBusinessProfileManager() {
       <label className="text-xs text-[#858989]">Logo URL<input value={profile.logo} onChange={(event) => update('logo', event.target.value)} className="sonic-input mt-2" /></label>
       <label className="text-xs text-[#858989]">Điện thoại<input value={profile.phone} onChange={(event) => update('phone', event.target.value)} className="sonic-input mt-2" /></label>
       <label className="text-xs text-[#858989]">Email<input type="email" value={profile.email} onChange={(event) => update('email', event.target.value)} className="sonic-input mt-2" /></label>
+      <label className="text-xs text-[#858989]">Năm bắt đầu hoạt động<input value={profile.foundingDate ?? ''} placeholder="2005" maxLength={10} onChange={(event) => update('foundingDate', event.target.value || undefined)} className="sonic-input mt-2" /></label>
       <label className="text-xs text-[#858989] md:col-span-2">Địa chỉ hiển thị<textarea value={profile.address.formatted} onChange={(event) => updateAddress('formatted', event.target.value)} className="sonic-input mt-2 min-h-20" /></label>
       <label className="text-xs text-[#858989]">Số nhà / đường<input value={profile.address.streetAddress} onChange={(event) => updateAddress('streetAddress', event.target.value)} className="sonic-input mt-2" /></label>
       <label className="text-xs text-[#858989]">Thành phố / địa phương<input value={profile.address.addressLocality} onChange={(event) => updateAddress('addressLocality', event.target.value)} className="sonic-input mt-2" /></label>

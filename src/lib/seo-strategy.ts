@@ -166,7 +166,11 @@ export function buildAIReadableStructuredData(config: SEOConfig, profile: Busine
   const businessId = `${baseUrl}#business`
   const activeKeywords = config.ai.enabled ? config.keywords.filter((keyword) => keyword.isActive) : []
   const services = Array.from(new Set([...profile.services, ...(config.ai.enabled ? config.ai.services : [])]))
-  const topics = Array.from(new Set([...activeKeywords.map((keyword) => keyword.term), ...services])).slice(0, 50)
+  // knowsAbout giới hạn 50 topic: ưu tiên priority cao, rồi intent local/thương hiệu (nhận diện thực thể), giữ thứ tự gốc trong cùng mức.
+  const priorityRank: Record<SEOKeywordPriority, number> = { high: 0, medium: 1, low: 2 }
+  const intentRank: Record<SEOKeywordIntent, number> = { local: 0, navigational: 0, commercial: 1, transactional: 1, informational: 2 }
+  const rankedKeywords = [...activeKeywords].sort((a, b) => priorityRank[a.priority] - priorityRank[b.priority] || intentRank[a.intent] - intentRank[b.intent])
+  const topics = Array.from(new Set([...rankedKeywords.map((keyword) => keyword.term), ...services])).slice(0, 50)
   const openingHoursSpecification = buildOpeningHoursSpecification(profile.businessHours)
   // Google lấy site name từ WebSite schema; tên có địa danh để tách với "Tiến Đạt Audio" ở tỉnh khác.
   // Không đưa domain vào alternateName: Google sẽ hiện domain khi chưa tin tên chính.
@@ -181,6 +185,7 @@ export function buildAIReadableStructuredData(config: SEOConfig, profile: Busine
     logo: absoluteUrl(profile.logo, baseUrl),
     image: absoluteUrl(profile.logo, baseUrl),
     description: profile.description,
+    foundingDate: profile.foundingDate || undefined,
     telephone: profile.phone,
     email: profile.email || undefined,
     address: {

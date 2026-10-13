@@ -26,3 +26,8 @@ test('business profile allows an empty email but still rejects a malformed one',
   assert.ok(!validateBusinessProfile({ ...fallbackProfile, email: '' }).errors.includes('Email không hợp lệ'))
   assert.ok(validateBusinessProfile({ ...fallbackProfile, email: 'bad' }).errors.includes('Email không hợp lệ'))
 })
+
+test('business profile keeps a valid founding year and drops malformed values', () => {
+  assert.equal(normalizeBusinessProfile({ foundingDate: '2005' }).foundingDate, '2005')
+  assert.equal(normalizeBusinessProfile({ foundingDate: 'năm 2005' }).foundingDate, undefined)
+})
