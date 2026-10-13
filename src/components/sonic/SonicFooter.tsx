@@ -47,7 +47,7 @@ export default function SonicFooter({ profile }: { profile: BusinessProfile }) {
             </div>
 
             <p className="text-xs leading-relaxed text-slate-400">
-              Hơn 10 năm kinh nghiệm tư vấn, phối ghép và triển khai hệ thống âm thanh gia đình, phòng karaoke, cafe và sân khấu sự kiện. Cam kết 100% chính hãng, bảo hành minh bạch.
+              Hoạt động từ năm 2005: tư vấn, phối ghép và triển khai hệ thống âm thanh gia đình, phòng karaoke, cafe và sân khấu sự kiện. Cam kết 100% chính hãng, bảo hành minh bạch.
             </p>
 
             <div className="pt-2">

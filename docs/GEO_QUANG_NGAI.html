@@ -153,15 +153,17 @@ showroom nghe thử loa quảng ngãi
 lắp đặt dàn karaoke tại nhà quảng ngãi</pre>
 <p>Kèm theo: Search Console → Hiệu suất → lọc truy vấn chứa "uy tín", "ở đâu", "arf", "tiến đạt"; theo dõi số đánh giá GBP.</p>
 
-<h2 id="can">8. Cần người dùng cung cấp</h2>
-<ul>
-  <li>Năm bắt đầu hoạt động, tên người phụ trách/kỹ thuật chính (nếu muốn công khai).</li>
-  <li>Tiến Đạt có phải đại lý/nhà phân phối chính thức ARF không; xuất xứ ARF đã xác minh (để trả lời "loa ARF của nước nào sản xuất").</li>
-  <li>Giá bán thật các model ARF đang có; chính sách bảo hành thật (thời hạn, điều kiện).</li>
-  <li>Có thật sự làm âm thanh hội trường / nhà thờ / quán cafe không (kèm 1–2 công trình thật nếu có).</li>
-  <li>Link Google Business Profile (dạng <code>maps.app.goo.gl/…</code> hoặc có <code>cid</code>).</li>
-  <li>Trang Facebook "Âm Thanh Tiến Đạt audio" (ID 100046848505571) có phải của cửa hàng không.</li>
-</ul>
+<h2 id="can">8. Dữ kiện người dùng (cập nhật 13/10)</h2>
+<div class="tw"><table>
+<tr><th>Câu hỏi</th><th>Trả lời</th><th>Đã dùng vào</th></tr>
+<tr><td>Năm bắt đầu hoạt động</td><td>2005</td><td><code>foundingDate</code> trong LocalBusiness schema + business profile; About/footer đổi "hơn 10 năm" → "hoạt động từ năm 2005"; entityFacts</td></tr>
+<tr><td>Đại lý ARF?</td><td>Có</td><td>Keyword "đại lý ARF Quảng Ngãi"; mô tả hãng ARF; trang <code>/brands</code> và About sửa claim "đại lý JBL, Bose, BMB…" thành "đại lý ARF"</td></tr>
+<tr><td>Xuất xứ ARF</td><td>Chưa xác nhận</td><td>Giữ lại keyword "loa ARF của nước nào sản xuất"</td></tr>
+<tr><td>Giá bán</td><td>Không hiển thị giá trên web</td><td>Giữ "Báo giá qua Zalo"; không thêm keyword giá ("loa ARF giá bao nhiêu", "dàn karaoke gia đình 10 triệu")</td></tr>
+<tr><td>Âm thanh hội trường / nhà thờ / quán cafe</td><td>Có làm</td><td>Giữ các keyword này active; thêm entityFact</td></tr>
+<tr><td>Link Google Business Profile</td><td>Chưa có</td><td>Cách lấy: Google Maps → tìm cửa hàng → <b>Chia sẻ</b> → <b>Sao chép đường liên kết</b> (dạng <code>maps.app.goo.gl/…</code>). Nếu chưa có hồ sơ: tạo và xác minh tại business.google.com.</td></tr>
+</table></div>
+<p>Còn mở: xác nhận dữ liệu <b>ARF VX330PRO</b> (danh mục "Vang Số" nhưng thông số giống loa sub: 35–150Hz, 32kg).</p>
 
 <h2 id="lam">9. Đã làm hôm nay và đề xuất triển khai</h2>
 <h3>Đã làm (13/10, đã deploy)</h3>
@@ -170,15 +172,17 @@ lắp đặt dàn karaoke tại nhà quảng ngãi</pre>
   <li>Đồng bộ địa chỉ "264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi" trên toàn site và 6 bài viết (release <code>6d3afc4</code>).</li>
   <li>Trợ lý AI trên site chỉ dùng nội dung của bài đang public, đúng version; rebuild 86 chunk.</li>
 </ul>
-<h3>Có thể làm ngay khi được duyệt (không cần thêm dữ kiện)</h3>
+<h3>Đã triển khai sau khi được duyệt (13/10)</h3>
 <ul>
   <li>Tắt keyword "cho thuê âm thanh sự kiện Quảng Ngãi".</li>
-  <li>Thêm nhóm keyword P0/P1 (mục 4.1) vào <code>seo_strategy</code> với trang đích hiện có.</li>
-  <li>Thêm <code>entityFacts</code> và FAQ "điều không làm" + "phân biệt với Tiến Đạt Audio Hà Nội"; bổ sung các câu này vào FAQPage có sẵn (6 câu) trên <code>/loa-quang-ngai</code>.</li>
-  <li>Viết trang "Cách chọn cửa hàng âm thanh uy tín tại Quảng Ngãi" từ dữ kiện đã xác nhận.</li>
+  <li>Thêm 17 keyword có trang đích trả lời được: 4 câu hỏi "uy tín / ở đâu" (trang mới), 3 thương hiệu, 8 ARF (gồm "đại lý ARF Quảng Ngãi" và 5 model), 2 sản phẩm + địa danh.</li>
+  <li>Giữ lại 9 keyword chưa có trang trả lời: giá ARF, xuất xứ ARF, VX330PRO (dữ liệu lệch), 4 keyword ngân sách/hãng, micro, Kon Tum.</li>
+  <li>Thêm 5 entityFacts và 3 FAQ (hiển thị ở <code>/faq</code> và <code>llms.txt</code>): điều cửa hàng không làm, phân biệt với Tiến Đạt Audio Hà Nội, hoạt động từ 2005 + đại lý ARF, các loại công trình.</li>
+  <li>Trang mới <code>/chon-cua-hang-am-thanh-uy-tin-quang-ngai</code> (7 tiêu chí, FAQPage), có trong sitemap và được link từ <code>/loa-quang-ngai</code>.</li>
+  <li><code>knowsAbout</code> ưu tiên keyword priority cao, intent local/thương hiệu (trước đây cắt 50 topic đầu theo thứ tự lưu).</li>
 </ul>
-<h3>Làm sau khi có dữ kiện (mục 8)</h3>
-<ul><li>Hub ARF (xuất xứ, giá, model), dữ kiện năm hoạt động/đại lý/bảo hành, link GBP, schema review.</li></ul>
+<h3>Còn lại cho người dùng</h3>
+<ul><li>Google Business Profile + đánh giá thật; gửi link GBP để thay <code>mapUrl</code>.</li><li>Remove outdated content cho <code>tien-dat-audio.vercel.app</code>.</li><li>Quyết định repo GitHub private.</li><li>Xác nhận xuất xứ ARF và dữ liệu VX330PRO.</li></ul>
 </main>
 <script>
 document.querySelectorAll('button.copy').forEach((button) => button.addEventListener('click', async () => {

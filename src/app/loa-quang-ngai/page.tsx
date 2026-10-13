@@ -518,6 +518,12 @@ export default async function LocalQuangNgaiPage() {
               </details>
             ))}
           </div>
+          <p className="mx-auto mt-5 max-w-3xl text-center text-sm text-slate-600">
+            Đang so sánh nhiều nơi bán?{' '}
+            <Link href="/chon-cua-hang-am-thanh-uy-tin-quang-ngai" className="font-bold text-[#d32f2f] hover:underline">
+              Xem 7 tiêu chí chọn cửa hàng âm thanh uy tín tại Quảng Ngãi
+            </Link>
+          </p>
         </section>
 
         {/* Bottom Local CTA Banner */}

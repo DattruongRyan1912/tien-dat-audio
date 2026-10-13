@@ -16,12 +16,11 @@ export const metadata: Metadata = generateSEOMetadata({
   pagePath: '/brands',
   title: 'Thương hiệu âm thanh chính hãng — Tiến Đạt Audio',
   description:
-    'Danh sách các thương hiệu thiết bị âm thanh hàng đầu thế giới được Tiến Đạt Audio phân phối chính hãng và bảo hành uy tín tại Quảng Ngãi: JBL, Bose, BMB, Yamaha, Denon, Paramax...',
+    'Tiến Đạt Audio là đại lý ARF tại Quảng Ngãi: loa thùng, loa trầm, vang số và main công suất ARF chính hãng, nghe thử trực tiếp tại showroom.',
   keywords: [
     'thương hiệu âm thanh',
-    'đại lý loa JBL Quảng Ngãi',
-    'bose chính hãng Quảng Ngãi',
-    'loa bmb chính hãng',
+    'đại lý ARF Quảng Ngãi',
+    'loa ARF chính hãng',
     'Tiến Đạt Audio',
   ],
 })
@@ -102,7 +101,7 @@ export default async function BrandsPage({ searchParams }: BrandsPageProps) {
               Thương Hiệu Âm Thanh Tuyển Chọn
             </h1>
             <p className="mt-3 text-base text-slate-600 leading-relaxed">
-              Tiến Đạt Audio là đại lý phân phối chính hãng các thương hiệu âm thanh nổi tiếng toàn cầu. Mỗi sản phẩm được bảo hành minh bạch, hỗ trợ kỹ thuật và cân chỉnh chuyên sâu tại Quảng Ngãi.
+              Tiến Đạt Audio là đại lý ARF tại Quảng Ngãi. Mỗi sản phẩm được bảo hành minh bạch, hỗ trợ kỹ thuật và cân chỉnh chuyên sâu tại Quảng Ngãi.
             </p>
           </div>
 
@@ -192,7 +191,7 @@ export default async function BrandsPage({ searchParams }: BrandsPageProps) {
                 Bạn chưa biết thương hiệu nào phù hợp với diện tích phòng và ngân sách?
               </h2>
               <p className="mt-2 text-sm text-slate-300 leading-relaxed">
-                Đừng ngần ngại! Hãy liên hệ ngay với kỹ thuật viên của Tiến Đạt Audio để được so sánh trực tiếp các mẫu loa JBL, Bose, BMB, Paramax... trước khi quyết định mua.
+                Đừng ngần ngại! Hãy liên hệ ngay với kỹ thuật viên của Tiến Đạt Audio để được nghe thử và so sánh trực tiếp các mẫu ARF đang có tại showroom trước khi quyết định mua.
               </p>
             </div>
 

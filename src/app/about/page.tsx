@@ -23,7 +23,7 @@ export const metadata: Metadata = generateSEOMetadata({
   pagePath: '/about',
   title: 'Giới thiệu về Tiến Đạt Audio — Chuyên gia Âm thanh tại Quảng Ngãi',
   description:
-    'Tiến Đạt Audio — hơn 10 năm kinh nghiệm tư vấn, phối ghép và lắp đặt giải pháp âm thanh gia đình, karaoke, cafe và sân khấu hội trường tại Quảng Ngãi.',
+    'Tiến Đạt Audio — hoạt động từ năm 2005, tư vấn, phối ghép và lắp đặt giải pháp âm thanh gia đình, karaoke, cafe và sân khấu hội trường tại Quảng Ngãi.',
   keywords: [
     'Tiến Đạt Audio',
     'giới thiệu Tiến Đạt Audio',
@@ -52,7 +52,7 @@ export default async function AboutPage() {
         {/* Hero Header */}
         <div className="mb-12 max-w-3xl">
           <span className="inline-block rounded-full bg-red-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#d32f2f]">
-            Uy tín hơn 10 năm tại Quảng Ngãi
+            Hoạt động từ năm 2005 tại Quảng Ngãi
           </span>
           <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
             Mang Âm Thanh Đích Thực Đến Từng Không Gian Sống
@@ -156,9 +156,9 @@ export default async function AboutPage() {
                 <div className="rounded-xl bg-red-100 p-3 text-[#d32f2f] w-fit">
                   <Award size={22} />
                 </div>
-                <h3 className="mt-3 text-base font-bold text-slate-900">Thương hiệu Quốc Tế</h3>
+                <h3 className="mt-3 text-base font-bold text-slate-900">Đại lý ARF</h3>
                 <p className="mt-1 text-xs text-slate-500 leading-relaxed">
-                  Đối tác phân phối các thương hiệu hàng đầu: JBL, Bose, BMB, Paramax, Yamaha, Denon...
+                  Đại lý ARF tại Quảng Ngãi: loa thùng, loa trầm, vang số và main công suất chính hãng.
                 </p>
               </div>
 
