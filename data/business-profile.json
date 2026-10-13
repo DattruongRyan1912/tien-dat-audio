@@ -10,7 +10,7 @@
     "streetAddress": "264 Phan Đình Phùng, Phường Cẩm Thành",
     "addressLocality": "Quảng Ngãi",
     "addressRegion": "Quảng Ngãi",
-    "postalCode": "",
+    "postalCode": "53000",
     "addressCountry": "VN",
     "formatted": "264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi, Việt Nam"
   },
@@ -35,9 +35,10 @@
     "Tư vấn hệ thống karaoke và nghe nhạc"
   ],
   "socialLinks": [
-    "https://www.facebook.com/amthanhtiendat"
+    "https://www.facebook.com/amthanhtiendat",
+    "https://maps.google.com/?cid=1617460810128453419"
   ],
   "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d436.98143933457914!2d108.80262824033873!3d15.11569782866824!2m3!1f0!2f0!3f0!3m2!1i1024!1i768!4f13.1!3m3!1m2!1s0x3169adcf61ae37c5%3A0x1672600981d26f2b!2zVGnhur9uIMSQ4bqhdCBBdWRpbw!5e0!3m2!1svi!2s!4v1786213706677!5m2!1svi!2s",
-  "mapUrl": "https://www.google.com/maps/place/Ti%E1%BA%BFn+%C4%90%E1%BA%A1t+Audio/@15.1156297,108.7975873,17z/data=!3m1!4b1!4m6!3m5!1s0x3169adcf61ae37c5:0x1672600981d26f2b!8m2!3d15.1156246!4d108.8024582!16s%2Fg%2F11xz0mp84c?entry=ttu&g_ep=EgoyMDI2MDgwOS4wIKXMDSoASAFQAw%3D%3D",
+  "mapUrl": "https://maps.google.com/?cid=1617460810128453419",
   "updatedAt": "2026-10-11T00:00:00.000Z"
 }

@@ -1659,3 +1659,23 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
     * Sau chu kỳ ISR: schema trang chủ có `foundingDate=2005`, `knowsAbout` gồm "đại lý ARF Quảng Ngãi" và không có "cho thuê"; `/faq` có 3/3 FAQ mới (FAQPage 6 câu); `/thuong-hieu/arf` có câu đại lý ARF.
     * Trang mới 200, canonical đúng, FAQPage 4 câu, có trong sitemap.
   + Rollback: `mongorestore --archive=<backup> --gzip --nsInclude="tiendataudio.<site_settings|brands>" --drop`.
+
+## 2026-10-13 19:55 +0700 — Gắn Google Business Profile thật vào business profile
+
+- Scope/authorization: Người dùng gửi link trang quản lý GBP và hỏi có đúng không. Theo đề xuất trước đó, gửi link thì tôi thay `mapUrl`/`sameAs`.
+- Audit:
+  + Link người dùng gửi là trang quản lý hồ sơ (`#mpd=editprofile`, `mat`, `authuser`), gắn với phiên đăng nhập, không dùng công khai được.
+  + Giải mã tham số `stick` (gzip/base64, xử lý local): feature id `0x3169adcf61ae37c5:0x1672600981d26f2b`, CID `1617460810128453419`.
+  + Mở `https://maps.google.com/?cid=1617460810128453419` bằng browser pane: "Tiến Đạt Audio", Cửa hàng thiết bị âm thanh, 264 Phan Đình Phùng, Cẩm Thành, Quảng Ngãi 53000; website và số điện thoại khớp; 5,0 sao, 1 đánh giá; kgmid `/g/11xz0mp84c`.
+  + Production `mapUrl` đang là link tìm kiếm chung "Tiến Đạt Audio" (có thể ra cửa hàng ở tỉnh khác); `mapEmbedUrl` đã nhúng đúng địa điểm; `postalCode` trống.
+  + Lệch giờ: Maps ghi "Đóng cửa vào 21:00", website ghi 08:00–22:00. Chưa sửa, chờ chủ cửa hàng xác nhận.
+- Changes:
+  + `scripts/update-business-profile-gbp.mjs` (mặc định dry-run; production cần `BUSINESS_GBP_TARGET=production` cùng `CONFIRM_BUSINESS_GBP=UPDATE-BUSINESS-GBP`; ghi có điều kiện theo `value.updatedAt`; idempotent): đặt `mapUrl` = link CID, thêm link CID vào `socialLinks` (sameAs), `postalCode`=53000.
+  + Fallback `data/business-profile.json` cập nhật giống production; `tests/local-seo.test.ts` khoá đúng danh sách sameAs (Facebook + GBP), `mapUrl` và mã bưu chính (fail trước khi sửa, pass sau khi sửa).
+  + `docs/GEO_QUANG_NGAI.html` cập nhật.
+- Production data:
+  + Backup `/var/backups/tiendataudio/manual-business-gbp-20261013T125526Z-site_settings.archive.gz` + `.SHA256SUMS` (0600); checksum OK; `--dryRun` thấy đúng namespace.
+  + Apply lúc 2026-10-13T12:55:27Z (SHA-256 script khớp bản local): changes=3; chạy lại "Nothing to apply". File tạm đã xoá.
+- Verification: DB nháp seed từ production: schema ra `sameAs` [Facebook, GBP], `hasMap` = GBP, `postalCode` 53000, `foundingDate` 2005; DB nháp đã drop. `npm test` 89/89, lint, `audit-secrets.sh` pass.
+- Remaining risk: lệch giờ đóng cửa 21:00 / 22:00; GBP mới có 1 đánh giá.
+- Rollback reference: `mongorestore --archive=/var/backups/tiendataudio/manual-business-gbp-20261013T125526Z-site_settings.archive.gz --gzip --nsInclude="tiendataudio.site_settings" --drop` (hoàn tác mọi thay đổi site_settings sau 12:55Z).

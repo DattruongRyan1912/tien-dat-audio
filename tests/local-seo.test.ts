@@ -38,7 +38,10 @@ test('local landing is discoverable from sitemap and contains matching public fa
 test('business profile fallback uses the post-merger address and lists neighbouring service areas', () => {
   assert.match(businessProfile.address.formatted, /Phường Cẩm Thành/)
   assert.equal(businessProfile.email, '')
-  assert.deepEqual(businessProfile.socialLinks, ['https://www.facebook.com/amthanhtiendat'])
+  // Chỉ Facebook thật và Google Business Profile của cửa hàng (CID cố định), không trỏ tài khoản trùng tên.
+  assert.deepEqual(businessProfile.socialLinks, ['https://www.facebook.com/amthanhtiendat', 'https://maps.google.com/?cid=1617460810128453419'])
+  assert.equal(businessProfile.mapUrl, 'https://maps.google.com/?cid=1617460810128453419')
+  assert.equal(businessProfile.address.postalCode, '53000')
   for (const area of ['Quảng Ngãi', 'Kon Tum', 'Quảng Nam', 'Đà Nẵng', 'Bình Định', 'Gia Lai']) {
     assert.ok(businessProfile.areaServed.includes(area), area)
   }
