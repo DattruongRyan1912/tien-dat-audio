@@ -67,6 +67,28 @@ test('theme hydration preserves the mode selected by the pre-paint bootstrap', a
   assert.match(themeContext, /if \(!modeReady\) return/)
 })
 
+test('theme defaults to light on both sides of hydration and shares one storage key', async () => {
+  const [layout, themeContext, themeStorage] = await Promise.all([
+    readSource('src/app/layout.tsx'),
+    readSource('src/contexts/ThemeContext.tsx'),
+    readSource('src/lib/theme-storage.ts'),
+  ])
+
+  assert.match(layout, /<ThemeProvider initialMode="light">/)
+  assert.match(layout, /localStorage\.getItem\('\$\{THEME_STORAGE_KEY\}'\)/)
+  assert.match(themeContext, /import \{ THEME_STORAGE_KEY \} from '@\/lib\/theme-storage'/)
+  assert.doesNotMatch(layout + themeContext, /'sonic_theme_mode'/)
+  // Khoá mới đưa khách đã bị lưu nhầm chế độ tối về giao diện sáng.
+  assert.match(themeStorage, /THEME_STORAGE_KEY = 'sonic_theme_mode_v2'/)
+})
+
+test('layout ships no Vercel-only analytics on the self-hosted VPS', async () => {
+  const [layout, pkg] = await Promise.all([readSource('src/app/layout.tsx'), readSource('package.json')])
+
+  assert.doesNotMatch(layout, /@vercel\//)
+  assert.doesNotMatch(pkg, /@vercel\/(analytics|speed-insights)/)
+})
+
 test('assistant stays runtime-gated and its full widget loads only after interaction', async () => {
   const [layout, conditionalLayout, gate, sessionRoute] = await Promise.all([
     readSource('src/app/layout.tsx'),

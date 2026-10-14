@@ -5,17 +5,16 @@ import ConditionalLayout from '@/components/ConditionalLayout'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { ToastProvider } from '@/components/ui/toast'
 import { buildAIReadableStructuredData } from '@/lib/seo-strategy'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-import { Analytics } from '@vercel/analytics/react'
 import SiteAnalytics from '@/components/analytics/SiteAnalytics'
 import { getPublicSiteSettings } from '@/lib/public-site-settings'
+import { THEME_STORAGE_KEY } from '@/lib/theme-storage'
 
 const manrope = Manrope({
   subsets: ["latin", "vietnamese"],
   variable: "--font-manrope",
 });
 
-const themeBootstrapScript = `try{const stored=localStorage.getItem('sonic_theme_mode');const preferred=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';const mode=stored==='light'||stored==='dark'?stored:stored==='system'?preferred:'light';const root=document.documentElement;root.dataset.theme=mode;root.classList.toggle('dark',mode==='dark');root.classList.toggle('light',mode==='light');root.style.colorScheme=mode}catch{}`
+const themeBootstrapScript = `try{const stored=localStorage.getItem('${THEME_STORAGE_KEY}');const preferred=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';const mode=stored==='light'||stored==='dark'?stored:stored==='system'?preferred:'light';const root=document.documentElement;root.dataset.theme=mode;root.classList.toggle('dark',mode==='dark');root.classList.toggle('light',mode==='light');root.style.colorScheme=mode}catch{}`
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://tiendataudioquangngai.id.vn'),
@@ -63,15 +62,13 @@ export default async function RootLayout({
       </head>
       <body className="antialiased min-h-screen">
         <ToastProvider>
-          <ThemeProvider initialMode="dark">
+          <ThemeProvider initialMode="light">
             <ConditionalLayout profile={profile}>
               {children}
             </ConditionalLayout>
           </ThemeProvider>
         </ToastProvider>
         <SiteAnalytics />
-        <SpeedInsights />
-        <Analytics />
       </body>
     </html>
   );

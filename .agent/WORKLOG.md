@@ -1736,3 +1736,20 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
   + Backlink/nhắc tên từ bên ngoài để Google ưu tiên crawl.
   + Bing Webmaster Tools (nguồn của ChatGPT/Copilot) có thể vẫn giữ bản Vercel cũ.
 - Rollback reference: revert commit sitemap; các yêu cầu Search Console không cần rollback.
+
+## 2026-10-14 20:36 +0700 — Search Console lô 2, điểm PageSpeed 94, gỡ Vercel analytics, sửa theme lệch về tối
+
+- Scope/authorization: Người dùng nhờ gửi tiếp lô Request Indexing (đã tự đăng nhập Search Console trong browser pane); hỏi vì sao điểm performance desktop xuống 94; duyệt "sửa cả 2 lỗi rồi deploy, đưa khách cũ về sáng luôn".
+- Search Console:
+  + Hiệu suất 90 ngày: 304 lượt hiển thị, 7 lượt nhấp, vị trí TB 6,6; truy vấn "loa quảng ngãi" chưa có lượt hiển thị nào; "tiến đạt audio" vị trí TB 10,6.
+  + Request Indexing 10 URL, đều xác nhận "Đã yêu cầu lập chỉ mục": `/kien-thuc`, `/brands`, `/san-pham/arf-x12pro`, `/san-pham/arf-nx4-800`, `/san-pham/arf-fs12`, `/san-pham/arf-sa15` (Google chưa biết URL này), `/san-pham/arf-vx660`, 3 bài (`so-sanh-vang-co-lai-so-va-vang-so`, `cach-chon-loa-nghe-nhac-cho-phong-khach`, `kinh-nghiem-chon-micro-khong-day-karaoke-uhf`).
+  + Còn lại: `/bai-viet`, 5 bài kiến thức, `/san-pham/arf-vx330pro` (giữ lại vì dữ liệu danh mục/thông số đang lệch).
+- PageSpeed audit (Lighthouse 13.4.1 desktop, 3 lần trên máy local: 95/100/99; PSI API keyless hết hạn mức): TTFB ~180 ms, TBT 0, CLS 0 ở mọi lần; lần 95 do kết nối lần đầu chậm (first paint quan sát 3,1 s so với 0,8 s). Kết luận: 94 nằm trong dao động đo, không phải hồi quy code.
+- Lỗi thật tìm được và đã sửa:
+  + `@vercel/analytics` + `@vercel/speed-insights` vẫn mount trong root layout dù chạy trên VPS: `/_vercel/insights/script.js` và `/_vercel/speed-insights/script.js` trả 404 (HTML 39 KB), lỗi console, không thu số liệu. Đã gỡ component và package (package.json, package-lock.json).
+  + Theme lệch: bootstrap pre-paint mặc định `light` nhưng `<ThemeProvider initialMode="dark">` sau hydration đổi sang `dark` và lưu `dark` cho mọi khách mới (kiểm chứng trong browser: xoá storage → reload → `<html class="dark">`, localStorage `dark`); gây đổi màu sau khi tải (9 "non-composited animations" thuộc tính color). Đổi thành `initialMode="light"`; khoá lưu chuyển sang `src/lib/theme-storage.ts` (`sonic_theme_mode_v2`), dùng chung cho bootstrap script và ThemeContext, nên khách cũ bị lưu `dark` được đưa về sáng.
+  + Test: `tests/performance.test.ts` thêm 2 test (fail trước khi sửa, pass sau khi sửa).
+- Không sửa (ngoài code/lợi ích nhỏ): Cloudflare Web Analytics beacon (cảnh báo cache 4 KiB + 10 KiB legacy JS, tắt trong Cloudflare nếu không dùng); polyfill Next 14 KiB; 35 KiB JS chưa dùng; 1 ảnh có thể nhỏ hơn 25 KiB.
+- Verification: `npm test` 91/91, `tsc --noEmit`, eslint các file đổi pass.
+- Remaining risk: người đã chủ động chọn giao diện tối cũng bị đưa về sáng một lần (cần bấm lại nút đổi giao diện). Khoá cũ `sonic_theme_mode` và cookie `sonic_theme` còn trong trình duyệt khách nhưng không được đọc.
+- Rollback reference: revert commit này.

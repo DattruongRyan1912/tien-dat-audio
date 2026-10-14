@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
+import { THEME_STORAGE_KEY } from '@/lib/theme-storage'
 
 export type ThemeMode = 'dark' | 'light' | 'system'
 export type ResolvedThemeMode = 'dark' | 'light'
@@ -80,7 +81,6 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
-const THEME_STORAGE_KEY = 'sonic_theme_mode'
 const THEME_COOKIE_KEY = 'sonic_theme'
 
 function isThemeMode(value: string | null | undefined): value is ThemeMode {
