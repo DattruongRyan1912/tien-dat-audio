@@ -17,6 +17,7 @@ import SonicProductCard from '@/components/sonic/SonicProductCard'
 import { getProducts } from '@/lib/catalog'
 import { getBusinessProfile, formatPhoneHref } from '@/lib/business-profile'
 import { listContentPosts } from '@/lib/content-repository'
+import { getLandingSpecRows, karaokeSystemRoles } from '@/lib/landing-specs'
 import { absoluteSiteUrl, generateSEOMetadata } from '@/lib/seo'
 import { getPublishedServiceAreas } from '@/lib/service-areas'
 
@@ -56,6 +57,21 @@ const localFaqs = [
     answer:
       'Có. Showroom tại 264 Phan Đình Phùng đang có sẵn loa thùng, loa trầm, vang số và main công suất ARF chính hãng để nghe thử và phối ghép thành dàn karaoke hoàn chỉnh.',
   },
+  {
+    question: 'Tiến Đạt Audio hoạt động tại Quảng Ngãi từ khi nào?',
+    answer:
+      'Tiến Đạt Audio hoạt động từ năm 2005 và là đại lý thiết bị âm thanh ARF tại Quảng Ngãi, nhận làm âm thanh cho gia đình, phòng karaoke, quán cafe, hội trường và nhà thờ.',
+  },
+  {
+    question: 'Vì sao website không ghi giá loa? Làm sao để nhận báo giá?',
+    answer:
+      'Tiến Đạt Audio báo giá theo cấu hình cụ thể của từng phòng. Quý khách gửi diện tích phòng và nhu cầu (hát karaoke, nghe nhạc, kinh doanh) qua Zalo hoặc gọi 0934 995 657 để nhận báo giá trọn bộ thiết bị và lắp đặt.',
+  },
+  {
+    question: 'Tiến Đạt Audio có nhận sửa loa, cho thuê âm thanh hoặc bán loa kéo không?',
+    answer:
+      'Không. Tiến Đạt Audio Quảng Ngãi tập trung bán thiết bị, tư vấn phối ghép, lắp đặt và cân chỉnh hệ thống âm thanh; cửa hàng không nhận sửa loa, không cho thuê thiết bị và không bán loa kéo.',
+  },
 ]
 
 const speakerLines = [
@@ -76,7 +92,7 @@ const neighborRegions = [
 const roomGuide = [
   { area: 'Dưới 20m²', setup: 'Một cặp loa full bass 25cm (10 inch) + vang số, thường chưa cần loa sub.', note: 'Ưu tiên loa gọn, tránh dư bass gây ù.' },
   { area: '20 – 35m²', setup: 'Một cặp loa full bass 30cm (12 inch) + vang số + main công suất; thêm loa sub nếu thích trầm sâu.', note: 'Cấu hình phổ biến nhất cho phòng khách nhà phố.' },
-  { area: 'Trên 35m², quán cafe, hội trường nhỏ', setup: 'Loa full bass 30 – 40cm, loa sub và main công suất dư 20 – 30% công suất loa.', note: 'Nên khảo sát tận nơi để đo âm học trước khi báo giá.' },
+  { area: 'Trên 35m², quán cafe, hội trường nhỏ', setup: 'Loa full bass 30 – 40cm, loa sub và main công suất khoảng 1,5 – 2 lần công suất AES/RMS của loa (tính ở đúng trở kháng loa).', note: 'Nên khảo sát tận nơi để đo âm học trước khi báo giá.' },
 ]
 
 export const metadata: Metadata = generateSEOMetadata({
@@ -167,6 +183,10 @@ export default async function LocalQuangNgaiPage() {
   const structuredData = pageStructuredData(profile, products)
   const phoneHref = formatPhoneHref(profile.phone)
   const publishedAreaSlugs = new Set(getPublishedServiceAreas().map((area) => area.slug))
+  const systemGroups = karaokeSystemRoles.map((role) => ({
+    ...role,
+    products: products.filter((product) => product.category_id === role.categoryId),
+  }))
   const stockedBrands = Array.from(new Map(products.filter((product) => product.brand_id).map((product) => [product.brand_id, product.brand])).entries())
   const updatedDate = new Date(profile.updatedAt)
   const updatedLabel = Number.isFinite(updatedDate.getTime()) ? updatedDate.toLocaleDateString('vi-VN') : null
@@ -361,6 +381,87 @@ export default async function LocalQuangNgaiPage() {
           <p className="mt-4 text-xs leading-relaxed text-slate-500">
             Đây là gợi ý chung. Mang kích thước phòng đến showroom hoặc gửi qua Zalo để kỹ thuật viên đề xuất cấu hình và nghe thử dàn tương đương trước khi mua.
           </p>
+        </section>
+
+        {/* Karaoke system components with in-stock ARF models */}
+        <section className="mb-16 rounded-3xl border border-slate-200/90 bg-white p-8 shadow-sm md:p-10">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#d32f2f]">Hiểu trước khi mua</span>
+          <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">Dàn Loa Karaoke Gồm Những Gì — Thiết Bị ARF Có Sẵn Tại Quảng Ngãi</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">
+            Mua loa Quảng Ngãi để hát karaoke, bạn cần cả hệ thống chứ không chỉ một cặp loa. Tín hiệu đi từ micro và đầu karaoke vào vang số, qua main công suất rồi ra loa full và loa sub. Dưới đây là vai trò từng khối và các model ARF đang có tại showroom để nghe thử.
+          </p>
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
+            {systemGroups.map((group, index) => (
+              <div key={group.categoryId} className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-5">
+                <h3 className="text-base font-bold text-slate-900">
+                  <span className="mr-2 text-[#d32f2f]">{String(index + 1).padStart(2, '0')}</span>
+                  {group.role}
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-600">{group.purpose}</p>
+                {group.products.length > 0 ? (
+                  <ul className="mt-3 space-y-3">
+                    {group.products.map((product) => {
+                      const specRows = getLandingSpecRows(product)
+                      return (
+                        <li key={product.id} className="rounded-xl border border-slate-200 bg-white p-3">
+                          <Link href={`/san-pham/${product.slug}`} className="text-sm font-bold text-[#d32f2f] underline">
+                            {product.name}
+                          </Link>
+                          {specRows.length > 0 ? (
+                            <dl className="mt-2 space-y-1 text-xs">
+                              {specRows.map((row) => (
+                                <div key={row.label} className="flex flex-wrap gap-x-1">
+                                  <dt className="text-slate-500">{row.label}:</dt>
+                                  <dd className="font-semibold text-slate-800">{row.value}</dd>
+                                </div>
+                              ))}
+                            </dl>
+                          ) : (
+                            <p className="mt-1 text-xs text-slate-500">Thông số chi tiết: hỏi kỹ thuật viên tại showroom hoặc qua Zalo.</p>
+                          )}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                ) : (
+                  <p className="mt-3 text-xs text-slate-500">Hỏi showroom để được tư vấn thiết bị phù hợp.</p>
+                )}
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-xs leading-relaxed text-slate-500">
+            Micro karaoke (có dây hoặc không dây) và đầu karaoke được tư vấn theo nhu cầu sử dụng khi chốt cấu hình.
+          </p>
+        </section>
+
+        {/* Full vs sub, power matching */}
+        <section className="mb-16 grid gap-6 lg:grid-cols-2">
+          <div className="rounded-3xl border border-slate-200/90 bg-white p-8 shadow-sm">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900">Loa Full Hay Cần Thêm Loa Sub?</h2>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              Một cặp loa full bass 25cm (10 inch) thường đủ cho phòng khách dưới 20m² hát karaoke gia đình. Nên thêm loa sub khi:
+            </p>
+            <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-600">
+              <li>Phòng từ khoảng 20m² trở lên và bạn thích tiếng trầm sâu, hoặc cần âm lượng lớn.</li>
+              <li>Hay nghe nhạc nhiều tiếng trầm như remix, EDM, nhạc phim.</li>
+              <li>Muốn loa full đỡ phải gánh dải trầm để tiếng hát trong và rõ hơn.</li>
+            </ul>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              Phòng nhỏ, kín, nhiều kính dễ bị ù nếu loa sub quá lớn hoặc đặt sát góc tường; vị trí và mức sub được cân chỉnh khi lắp đặt.
+            </p>
+          </div>
+          <div className="rounded-3xl border border-slate-200/90 bg-white p-8 shadow-sm">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900">Phối Ghép Công Suất Loa Và Main</h2>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              Công suất mỗi kênh của main, tính ở đúng trở kháng của loa, nên lớn hơn công suất liên tục (AES/RMS) của loa, thường khoảng 1,5 – 2 lần. Main quá yếu phải đẩy hết mức sẽ bị méo tín hiệu (clip), đây là nguyên nhân thường gặp làm cháy loa treble.
+            </p>
+            <p className="mt-3 rounded-xl bg-[#f8fafc] p-4 text-sm leading-relaxed text-slate-700">
+              Ví dụ theo thông số nhà sản xuất: loa <Link href="/san-pham/arf-x12pro" className="font-semibold text-[#d32f2f] underline">ARF X12Pro</Link> chịu 400W AES ở 8Ω; main <Link href="/san-pham/arf-nx4-800" className="font-semibold text-[#d32f2f] underline">ARF NX4-800</Link> cho 800W mỗi kênh ở 8Ω, tức khoảng 2 lần. Hai kênh kéo một cặp X12Pro, hai kênh còn lại dành cho loa sub hoặc cặp loa thứ hai tùy thông số của loa đó.
+            </p>
+            <p className="mt-3 text-xs leading-relaxed text-slate-500">
+              Mức âm lượng an toàn được giới hạn khi cân chỉnh vang số, để dàn có dư công suất mà không vượt sức chịu của loa.
+            </p>
+          </div>
         </section>
 
         {/* Featured Products Grid */}

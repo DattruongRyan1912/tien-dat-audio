@@ -1753,3 +1753,23 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
 - Verification: `npm test` 91/91, `tsc --noEmit`, eslint các file đổi pass.
 - Remaining risk: người đã chủ động chọn giao diện tối cũng bị đưa về sáng một lần (cần bấm lại nút đổi giao diện). Khoá cũ `sonic_theme_mode` và cookie `sonic_theme` còn trong trình duyệt khách nhưng không được đọc.
 - Rollback reference: revert commit này.
+
+## 2026-10-16 — Làm sâu nội dung `/loa-quang-ngai` (đang #3 cho "loa quảng ngãi")
+
+- Scope/authorization: Người dùng báo trang đứng #3 organic cho "loa quảng ngãi" và duyệt "Làm đi" cho việc làm sâu landing bằng dữ kiện đã có. Không đưa giá (chủ cửa hàng không muốn), không thêm claim bảo hành/xuất xứ mới.
+- Audit:
+  + SERP 16/10: #1 Anh Đức (~2.950 chữ), #2 civip (danh mục bluetooth toàn quốc), #3 `/loa-quang-ngai`. AI Overview liệt kê Tiến Đạt Audio đầu tiên và trích nguyên meta description.
+  + Landing trước khi sửa: ~1.555 chữ, 6 FAQ.
+  + Dữ liệu sản phẩm: VX330PRO (vang số) mang thông số của loa sub (35Hz–150Hz, 500W AES, 32kg); FS12, SA15, VX660 chưa có thông số. Bảng diện tích ghi "main dư 20–30%", mâu thuẫn ví dụ thật (X12Pro 400W AES @8Ω, NX4-800 800W/kênh @8Ω = 2×).
+- Changes (giữ nguyên title, H1, meta description, URL):
+  + `src/lib/landing-specs.ts`: vai trò từng khối dàn karaoke; whitelist thông số theo `category_id`, nhóm vang số không hiện thông số.
+  + `/loa-quang-ngai`:
+    * Thêm mục "Dàn Loa Karaoke Gồm Những Gì — Thiết Bị ARF Có Sẵn Tại Quảng Ngãi" (render từ catalog, link trang sản phẩm).
+    * Thêm mục "Loa Full Hay Cần Thêm Loa Sub?" và "Phối Ghép Công Suất Loa Và Main" (ví dụ X12Pro + NX4-800 có ghi trở kháng).
+    * Sửa dòng bảng diện tích thành "1,5 – 2 lần công suất AES/RMS ở đúng trở kháng".
+    * Thêm 3 FAQ từ dữ kiện đã xác nhận (từ 2005 + đại lý ARF; báo giá qua Zalo/điện thoại; không sửa loa/cho thuê/bán loa kéo). FAQPage 9 câu.
+  + `tests/local-seo.test.ts`: test whitelist (vang số không hiện thông số, không hiện trọng lượng/kích thước) và cấm lại "dư 20 – 30%".
+- Verification: `npm test` 92/92, `tsc`, `eslint src tests scripts --max-warnings=0`, `audit-secrets.sh`, build (không có Mongo local, giống CI) đều pass. Smoke `next start` với dữ liệu fallback: title/H1/meta không đổi, ~2.030 chữ, "loa quảng ngãi" 3 lần, 0 "22:00", 0 thông số "35Hz", 0 link micro; desktop và mobile 375px không cuộn ngang.
+- Ghi chú môi trường: `npm run lint` toàn repo đang quét cả `.claude/worktrees/hopeful-curran-1b548d` (worktree của session khác, đã có trong `.git/info/exclude`) nên báo 1.466 lỗi không thuộc repo; CI không bị ảnh hưởng. Build local cần tắt `MONGODB_URI` khi Mongo local không chạy.
+- Remaining: sửa thông số VX330PRO trong admin; bổ sung thông số FS12/SA15/VX660; chờ duyệt trước khi push (push main = deploy).
+- Rollback reference: revert commit này.

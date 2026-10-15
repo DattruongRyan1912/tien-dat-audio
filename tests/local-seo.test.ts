@@ -4,6 +4,8 @@ import { test } from 'node:test'
 import localSEOConfig from '../data/seo-strategy.json'
 import businessProfile from '../data/business-profile.json'
 import { getSEODataForPage } from '../src/lib/seo-static'
+import { getLandingSpecRows } from '../src/lib/landing-specs'
+import speakerData from '../data/products/speakers.json'
 import { getPublishedServiceArea, getPublishedServiceAreas, serviceAreas, type ServiceArea } from '../src/lib/service-areas'
 
 const landingSource = readFileSync(new URL('../src/app/loa-quang-ngai/page.tsx', import.meta.url), 'utf8')
@@ -78,4 +80,21 @@ test('navigation links only point at category ids that exist in the catalog', ()
     for (const [, id] of source.matchAll(/\/products\?category=([a-z0-9-]+)/g)) assert.ok(categoryIds.has(id), `${file}: ${id}`)
   }
   assert.match(sitemapSource, /brandIdsWithProducts/)
+})
+
+test('landing spec rows only show whitelisted specs per category and never the mixed-up digital mixer data', () => {
+  const byslug = new Map(speakerData.speakers.map((product) => [product.slug, product]))
+  const asProduct = (slug: string) => {
+    const raw = byslug.get(slug)!
+    return { category_id: raw.category_id, specifications: raw.specifications as Record<string, string> }
+  }
+  assert.deepEqual(getLandingSpecRows(asProduct('arf-vx330pro')), [])
+  assert.deepEqual(getLandingSpecRows(asProduct('arf-fs12')), [])
+  const speaker = getLandingSpecRows(asProduct('arf-x12pro'))
+  assert.ok(speaker.some((row) => row.label === 'Trở kháng' && row.value === '8Ω'))
+  assert.ok(!speaker.some((row) => /Trọng lượng|Kích thước/.test(row.label)))
+  const amp = getLandingSpecRows(asProduct('arf-nx4-800'))
+  assert.ok(amp.some((row) => row.label === 'Công suất mỗi kênh (8Ω)' && row.value === '800W x 4'))
+  assert.match(landingSource, /getLandingSpecRows\(product\)/)
+  assert.doesNotMatch(landingSource, /dư 20 – 30%/)
 })
