@@ -35,6 +35,15 @@ function normalizeProduct(raw: Record<string, unknown>): Product {
     })
   }
 
+  // Phòng vệ: Vang số ARF VX330PRO bị nhầm thông số loa sub (500W AES, 35Hz-150Hz, 32kg) trong dữ liệu MongoDB cũ
+  if (
+    (raw.id === 'arf-vx330pro' || raw.slug === 'arf-vx330pro') &&
+    typeof specifications.frequency_response === 'string' &&
+    specifications.frequency_response.includes('35Hz')
+  ) {
+    Object.keys(specifications).forEach((key) => delete specifications[key])
+  }
+
   return {
     id: String(raw.id || ''),
     name: String(raw.name || ''),

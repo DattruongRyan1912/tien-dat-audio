@@ -96,7 +96,15 @@ export async function getSEOConfig(): Promise<SEOConfig> {
   try {
     const db = await getDb()
     const stored = await db.collection('site_settings').findOne({ key: SEO_STRATEGY_KEY })
-    return stored?.value ? normalizeSEOConfig(stored.value) : defaultSEOConfig
+    if (!stored?.value) return defaultSEOConfig
+    const config = normalizeSEOConfig(stored.value)
+    const existingTerms = new Set(config.keywords.map((k) => k.term.toLowerCase()))
+    const missingKeywords = defaultSEOConfig.keywords.filter((k) => !existingTerms.has(k.term.toLowerCase()))
+    if (missingKeywords.length) {
+      config.keywords = [...config.keywords, ...missingKeywords]
+    }
+    config.ai.preferredSources = Array.from(new Set([...config.ai.preferredSources, ...defaultSEOConfig.ai.preferredSources]))
+    return config
   } catch (error) {
     console.error('[seo-strategy] MongoDB unavailable, using JSON fallback:', error)
     return defaultSEOConfig

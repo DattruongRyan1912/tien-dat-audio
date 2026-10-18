@@ -1794,3 +1794,13 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
 - Result: Sạch thông số sai của VX330PRO trên frontend và API fallback; mở rộng đầy đủ các từ khoá chiến lược cho Schema/AI discovery.
 - Rollback reference: revert commit này.
 
+## 2026-10-19 02:20 +0700 — Phòng vệ dữ liệu MongoDB: làm sạch thông số VX330PRO và đồng bộ từ khoá mới vào runtime
+
+- Scope/authorization: Người dùng duyệt đưa thay đổi lên production. Audit sau deploy phát hiện MongoDB production lưu trực tiếp thông số cũ của sản phẩm và site_settings.
+- Changes:
+  + `src/lib/catalog.ts`: Thêm lớp kiểm tra trong `normalizeProduct`, chủ động xoá bỏ thông số loa sub (35Hz, 500W AES) còn sót lại trong MongoDB của model `ARF VX330PRO`.
+  + `src/lib/seo-strategy.ts`: Trong `getSEOConfig()`, tự động merge các từ khoá mới từ file baseline vào cấu hình đang lưu trong MongoDB nếu chưa tồn tại.
+- Verification: `npm test` 92/92 pass, `tsc` và `eslint` 0 error, build production pass.
+- Rollback reference: revert commit này.
+
+
