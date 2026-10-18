@@ -276,6 +276,83 @@
       },
       "isActive": true,
       "updatedAt": "2026-08-11T00:00:00.000Z"
+    },
+    {
+      "id": "kw-combo-dan-karaoke",
+      "term": "combo dàn karaoke gia đình",
+      "intent": "commercial",
+      "targetPage": "/combos",
+      "cluster": "solutions",
+      "priority": "high",
+      "notes": "Trang danh mục combo dàn karaoke gia đình trọn bộ đồng bộ thiết bị.",
+      "isActive": true,
+      "updatedAt": "2026-10-19T00:00:00.000Z"
+    },
+    {
+      "id": "kw-cua-hang-am-thanh-uy-tin-quang-ngai",
+      "term": "cửa hàng âm thanh uy tín Quảng Ngãi",
+      "intent": "commercial",
+      "targetPage": "/chon-cua-hang-am-thanh-uy-tin-quang-ngai",
+      "cluster": "core-local",
+      "priority": "high",
+      "notes": "Trang hướng dẫn tiêu chí chọn cửa hàng âm thanh uy tín tại TP Quảng Ngãi.",
+      "isActive": true,
+      "updatedAt": "2026-10-19T00:00:00.000Z"
+    },
+    {
+      "id": "kw-mua-loa-quang-ngai",
+      "term": "mua loa Quảng Ngãi",
+      "intent": "transactional",
+      "targetPage": "/loa-quang-ngai",
+      "cluster": "core-local",
+      "priority": "high",
+      "notes": "Cụm tìm kiếm mua sắm trực tiếp của khách hàng địa phương dẫn về landing thương mại.",
+      "isActive": true,
+      "updatedAt": "2026-10-19T00:00:00.000Z"
+    },
+    {
+      "id": "kw-brand-vang-so-arf-quang-ngai",
+      "term": "vang số ARF Quảng Ngãi",
+      "intent": "commercial",
+      "targetPage": "/thuong-hieu/arf",
+      "cluster": "brand-local",
+      "priority": "high",
+      "notes": "Nhóm thiết bị vang số xử lý âm thanh thương hiệu ARF phân phối tại Quảng Ngãi.",
+      "isActive": true,
+      "updatedAt": "2026-10-19T00:00:00.000Z"
+    },
+    {
+      "id": "kw-product-arf-x12pro",
+      "term": "loa full ARF X12Pro",
+      "intent": "commercial",
+      "targetPage": "/san-pham/arf-x12pro",
+      "cluster": "products",
+      "priority": "high",
+      "notes": "Dòng loa full karaoke công suất 400W AES bán chạy của hãng ARF.",
+      "isActive": true,
+      "updatedAt": "2026-10-19T00:00:00.000Z"
+    },
+    {
+      "id": "kw-product-arf-nx4-800",
+      "term": "cục đẩy ARF NX4-800",
+      "intent": "commercial",
+      "targetPage": "/san-pham/arf-nx4-800",
+      "cluster": "products",
+      "priority": "high",
+      "notes": "Cục đẩy công suất 4 kênh 800W mỗi kênh ở 8Ω cho hệ thống âm thanh.",
+      "isActive": true,
+      "updatedAt": "2026-10-19T00:00:00.000Z"
+    },
+    {
+      "id": "kw-local-lap-dat-binh-son",
+      "term": "lắp đặt âm thanh Bình Sơn",
+      "intent": "local",
+      "targetPage": "/kien-thuc/lap-dat-dan-karaoke-gia-dinh-quang-ngai",
+      "cluster": "solutions",
+      "priority": "high",
+      "notes": "Nhu cầu khảo sát và thi công âm thanh, dàn karaoke tại huyện Bình Sơn, Quảng Ngãi.",
+      "isActive": true,
+      "updatedAt": "2026-10-19T00:00:00.000Z"
     }
   ],
   "ai": {
@@ -318,10 +395,11 @@
     "preferredSources": [
       "/",
       "/products",
+      "/combos",
       "/loa-quang-ngai",
       "/kien-thuc",
       "/contact"
     ]
   },
-  "updatedAt": "2026-08-27T00:00:00.000Z"
+  "updatedAt": "2026-10-19T00:00:00.000Z"
 }

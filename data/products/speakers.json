@@ -158,15 +158,7 @@
       "images": [
         "/uploads/1757873217170_zjcdu51ihss.webp"
       ],
-      "specifications": {
-        "power_handling": "500W AES / 2000W Peak",
-        "impedance": "8Ω",
-        "sensitivity": "97dB",
-        "max_spl": "121dB continuous / 124dB program / 128dB peak",
-        "frequency_response": "35Hz-150Hz",
-        "directivity": "omnidirectional",
-        "weight": "32kg net / 37kg gross"
-      },
+      "specifications": {},
       "description": "Vang số ARF VX330PRO với công nghệ xử lý DSP 3x, 4 chế độ chuyên nghiệp tùy chọn và 5.1 kênh đầu ra.",
       "features": [
         "3xDSP digital processing technology",

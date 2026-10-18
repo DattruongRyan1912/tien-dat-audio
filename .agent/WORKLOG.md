@@ -1773,3 +1773,24 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
 - Ghi chú môi trường: `npm run lint` toàn repo đang quét cả `.claude/worktrees/hopeful-curran-1b548d` (worktree của session khác, đã có trong `.git/info/exclude`) nên báo 1.466 lỗi không thuộc repo; CI không bị ảnh hưởng. Build local cần tắt `MONGODB_URI` khi Mongo local không chạy.
 - Remaining: sửa thông số VX330PRO trong admin; bổ sung thông số FS12/SA15/VX660; chờ duyệt trước khi push (push main = deploy).
 - Rollback reference: revert commit này.
+
+## 2026-10-19 02:10 +0700 — Bổ sung ma trận từ khoá SEO, tài liệu HTML-First và xoá thông số sai của Vang số VX330PRO
+
+- Scope/authorization: Người dùng yêu cầu kế thừa công việc từ phiên Claude (85a22deb-c49a-4115-854a-b632515105a2), phân tích từ khoá hot và duyệt bổ sung từ khoá cùng chuẩn hoá thông số VX330PRO.
+- Audit baseline:
+  + Trang `/loa-quang-ngai` giữ vững #3 organic và được Google AI Overview trích dẫn đầu tiên.
+  + File `data/seo-strategy.json` mới có 21 từ khoá, thiếu các trang quan trọng (`/combos`, `/chon-cua-hang-am-thanh-uy-tin-quang-ngai`, model sản phẩm ARF, thị trường Bình Sơn).
+  + `data/products/speakers.json` gán nhầm thông số của một loa sub (500W AES, 35Hz-150Hz, 32kg) cho model vang số `ARF VX330PRO`.
+- Changes:
+  + `data/seo-strategy.json`: Bổ sung 7 từ khoá chiến lược có độ ưu tiên cao (`combo dàn karaoke gia đình`, `cửa hàng âm thanh uy tín Quảng Ngãi`, `mua loa Quảng Ngãi`, `vang số ARF Quảng Ngãi`, `loa full ARF X12Pro`, `cục đẩy ARF NX4-800`, `lắp đặt âm thanh Bình Sơn`); thêm `/combos` vào `ai.preferredSources`.
+  + `data/products/speakers.json`: Xoá sạch thông số loa sub bị gán nhầm của `arf-vx330pro`, đưa `specifications` về `{}` để trang chi tiết hiển thị trạng thái "đang cập nhật" và giữ nguyên các tính năng DSP thật.
+  + `docs/KEYWORD_STRATEGY_QUANG_NGAI.html`: Tạo tài liệu HTML-First độc lập, responsive, có thanh tìm kiếm/lọc intent và copy 1-click cho toàn bộ ma trận từ khoá ngành âm thanh Quảng Ngãi.
+- Verification:
+  + `npm test`: 92/92 tests pass.
+  + `npx tsx --test tests/seo-strategy.test.ts`: 4/4 pass (Schema `knowsAbout` và `/llms.txt` đồng bộ chuẩn).
+  + `npx tsx --test tests/local-seo.test.ts`: 7/7 pass.
+  + `npx tsc --noEmit` & `eslint`: 0 error.
+  + `bash deploy/scripts/audit-secrets.sh`: Secret scan pass.
+- Result: Sạch thông số sai của VX330PRO trên frontend và API fallback; mở rộng đầy đủ các từ khoá chiến lược cho Schema/AI discovery.
+- Rollback reference: revert commit này.
+

@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chiến Lược Từ Khoá Ngành Âm Thanh & Local SEO — Tiến Đạt Audio Quảng Ngãi</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --panel-hover: #1f232d;
+    --line: #2a2f3a;
+    --text: #e6e8ec;
+    --muted: #9aa3b2;
+    --accent: #f59e0b;
+    --red: #ef4444;
+    --green: #22c55e;
+    --blue: #60a5fa;
+    --purple: #c084fc;
+    --code-bg: #12151b;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  main { max-width: 1160px; margin: 0 auto; padding: 32px 20px 80px; }
+  
+  /* Header */
+  header { border-bottom: 1px solid var(--line); padding-bottom: 24px; margin-bottom: 24px; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 3px 10px; border-radius: 999px; margin-bottom: 12px; }
+  .b-accent { background: rgba(245, 158, 11, .15); color: var(--accent); border: 1px solid var(--accent); }
+  .b-green { background: rgba(34, 197, 94, .15); color: var(--green); border: 1px solid var(--green); }
+  h1 { font-size: 26px; margin: 0 0 8px; line-height: 1.3; color: #fff; }
+  p.meta { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
+  
+  /* Quick Nav */
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  nav.toc a { color: var(--blue); text-decoration: none; font-size: 13px; padding: 5px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; transition: all .2s; }
+  nav.toc a:hover { border-color: var(--blue); background: var(--panel-hover); }
+
+  /* Headings & Section Cards */
+  h2 { margin: 36px 0 16px; font-size: 20px; border-bottom: 1px solid var(--line); padding-bottom: 8px; color: #fff; display: flex; align-items: center; justify-content: space-between; }
+  h3 { margin: 20px 0 8px; font-size: 16px; color: var(--accent); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+  
+  /* Metrics Grid */
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .stat-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  .stat-card b.val { display: block; font-size: 28px; line-height: 1.1; margin-bottom: 6px; font-weight: 800; }
+  .stat-card span.lbl { font-size: 13px; color: var(--muted); }
+
+  /* Interactive Filter & Search Box */
+  .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; align-items: center; background: var(--panel); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--line); }
+  .search-input { flex: 1; min-width: 220px; background: var(--bg); border: 1px solid var(--line); color: var(--text); padding: 8px 14px; border-radius: 8px; font-size: 14px; outline: none; }
+  .search-input:focus { border-color: var(--blue); }
+  .filter-btn { background: var(--bg); color: var(--muted); border: 1px solid var(--line); padding: 6px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; transition: all .2s; }
+  .filter-btn.active, .filter-btn:hover { color: #fff; border-color: var(--accent); background: rgba(245, 158, 11, .15); }
+  
+  /* Tables */
+  .tw { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; margin: 12px 0 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; text-align: left; }
+  th, td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  th { background: #13161c; color: var(--muted); font-weight: 600; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255, 255, 255, .02); }
+  
+  /* Tags */
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+  .p0 { color: var(--red); border-color: rgba(239, 68, 68, .4); background: rgba(239, 68, 68, .1); }
+  .p1 { color: var(--accent); border-color: rgba(245, 158, 11, .4); background: rgba(245, 158, 11, .1); }
+  .p2 { color: var(--blue); border-color: rgba(96, 165, 250, .4); background: rgba(96, 165, 250, .1); }
+  .intent-local { color: #34d399; border-color: rgba(52, 211, 153, .4); background: rgba(52, 211, 153, .1); }
+  .intent-commercial { color: #38bdf8; border-color: rgba(56, 189, 248, .4); background: rgba(56, 189, 248, .1); }
+  .intent-info { color: #a78bfa; border-color: rgba(167, 139, 250, .4); background: rgba(167, 139, 250, .1); }
+  .intent-negative { color: #f87171; border-color: rgba(248, 113, 113, .4); background: rgba(248, 113, 113, .1); }
+
+  code { background: var(--code-bg); padding: 2px 6px; border-radius: 6px; font-size: 13px; color: #e2e8f0; font-family: ui-monospace, Menlo, Consolas, monospace; }
+  
+  /* Buttons */
+  .btn-copy { font-size: 11px; background: #232836; color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; cursor: pointer; transition: all .2s; }
+  .btn-copy:hover { border-color: var(--blue); color: var(--blue); }
+  
+  .note { border-left: 3px solid var(--accent); background: #1a1712; padding: 12px 16px; border-radius: 6px; color: #f3e3c3; font-size: 14px; margin: 16px 0; }
+  .note-danger { border-left: 3px solid var(--red); background: rgba(239, 68, 68, .08); color: #fca5a5; }
+
+  ul.check-list { list-style: none; padding-left: 0; margin: 12px 0; }
+  ul.check-list li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px dashed var(--line); font-size: 14px; }
+  ul.check-list li::before { content: "✔"; position: absolute; left: 4px; top: 7px; color: var(--green); font-weight: 700; }
+
+  /* Roadmap Timeline */
+  .timeline { display: flex; flex-direction: column; gap: 14px; margin: 16px 0; }
+  .step-box { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; }
+  .step-box h4 { margin: 0 0 6px; color: var(--blue); font-size: 15px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <span class="badge b-accent">SEO Matrix &amp; Search Intent</span>
+    <span class="badge b-green">Production Status: Top #3 Google</span>
+    <h1>Chiến Lược Từ Khoá Ngành Âm Thanh &amp; Local SEO — Tiến Đạt Audio</h1>
+    <p class="meta">
+      Cập nhật: 19/10/2026 · Mục tiêu: Bứt phá Top #1 "loa quảng ngãi", phủ sóng dàn karaoke gia đình và chiếm lĩnh các huyện lỵ trọng điểm (Bình Sơn, Đức Phổ, Mộ Đức, Sơn Tịnh).
+    </p>
+    <nav class="toc">
+      <a href="#hientrang">1. Hiện Trạng &amp; Cơ Hội</a>
+      <a href="#matran">2. Ma Trận Từ Khoá Đầy Đủ</a>
+      <a href="#phu-dinh">3. Từ Khoá Phủ Định (Tránh Lãng Phí)</a>
+      <a href="#chien-luoc-top1">4. Kế Hoạch Vượt Lên Top #1</a>
+      <a href="#case-study-template">5. Mẫu Bài Viết Công Trình Thật</a>
+      <a href="#hanh-dong">6. Checklist Hành Động</a>
+    </nav>
+  </header>
+
+  <!-- 1. Hiện trạng -->
+  <section id="hientrang">
+    <h2>1. Hiện Trạng &amp; Bối Cảnh Cạnh Tranh</h2>
+    <div class="grid-4">
+      <div class="stat-card">
+        <b class="val" style="color:var(--green)">#3 Organic</b>
+        <span class="lbl">Trang <code>/loa-quang-ngai</code> cho từ khoá "loa quảng ngãi" (tăng vọt từ ngoài top 40 sau đợt tối ưu 11/10).</span>
+      </div>
+      <div class="stat-card">
+        <b class="val" style="color:var(--accent)">Top #1 AI</b>
+        <span class="lbl">Google AI Overview trích dẫn Tiến Đạt Audio đầu tiên, dẫn nguồn 264 Phan Đình Phùng &amp; phân phối ARF.</span>
+      </div>
+      <div class="stat-card">
+        <b class="val" style="color:var(--blue)">2 Đối Thủ</b>
+        <span class="lbl">#1 Anh Đức (bài 2.950 chữ, không có ARF); #2 civip.com.vn (danh mục toàn quốc, sai ngữ cảnh local).</span>
+      </div>
+      <div class="stat-card">
+        <b class="val" style="color:var(--purple)">Mùa Cao Điểm</b>
+        <span class="lbl">Nhu cầu mua sắm âm thanh &amp; dàn karaoke gia đình tăng 250% - 400% trong quý 4 và dịp cận Tết âm lịch.</span>
+      </div>
+    </div>
+    <div class="note">
+      <b>Khoảng trống thị trường:</b> Đối thủ #1 (Anh Đức Digital) tập trung vào bài viết dài nhưng thiếu thông tin chi tiết về từng mã sản phẩm, không có schema LocalBusiness / FAQ, và hoàn toàn bỏ trống thị trường các huyện thị (Bình Sơn, Đức Phổ, Mộ Đức) và tỉnh lân cận (Kon Tum, Tam Kỳ, Quy Nhơn). Đây là cửa ngõ lớn nhất để Tiến Đạt Audio vượt mặt.
+    </div>
+  </section>
+
+  <!-- 2. Ma trận từ khoá -->
+  <section id="matran">
+    <h2>
+      <span>2. Ma Trận Từ Khoá Theo Search Intent &amp; Mục Tiêu Doanh Thu</span>
+    </h2>
+
+    <div class="filter-bar">
+      <input type="text" id="keywordSearch" class="search-input" placeholder="🔍 Tìm kiếm từ khoá, URL, intent..." onkeyup="filterKeywords()">
+      <button class="filter-btn active" onclick="setIntentFilter('all', this)">Tất Cả</button>
+      <button class="filter-btn" onclick="setIntentFilter('Local', this)">Local (Địa bàn)</button>
+      <button class="filter-btn" onclick="setIntentFilter('Commercial', this)">Commercial (Mua sắm)</button>
+      <button class="filter-btn" onclick="setIntentFilter('Informational', this)">Informational (Kỹ thuật/Hỏi đáp)</button>
+    </div>
+
+    <div class="tw">
+      <table id="keywordTable">
+        <thead>
+          <tr>
+            <th>Từ khoá tìm kiếm</th>
+            <th>Search Intent</th>
+            <th>Ưu tiên</th>
+            <th>Nhu cầu &amp; Tính chất</th>
+            <th>Trang đích phụ trách</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Nhóm 1: Core Local & Commercial -->
+          <tr data-intent="Local Commercial" data-priority="P0">
+            <td><b>loa quảng ngãi</b></td>
+            <td><span class="tag intent-local">Local Commercial</span></td>
+            <td><span class="tag p0">P0 Khẩn cấp</span></td>
+            <td>Rất cao · Hiện đang đứng Top #3</td>
+            <td><code>/loa-quang-ngai</code></td>
+            <td><button class="btn-copy" onclick="copyText('loa quảng ngãi')">Copy</button></td>
+          </tr>
+          <tr data-intent="Commercial" data-priority="P0">
+            <td><b>bán loa quảng ngãi</b></td>
+            <td><span class="tag intent-commercial">Commercial</span></td>
+            <td><span class="tag p0">P0 Khẩn cấp</span></td>
+            <td>Cao · Khách tìm mua trực tiếp</td>
+            <td><code>/loa-quang-ngai</code></td>
+            <td><button class="btn-copy" onclick="copyText('bán loa quảng ngãi')">Copy</button></td>
+          </tr>
+          <tr data-intent="Local Commercial" data-priority="P0">
+            <td><b>loa karaoke quảng ngãi</b></td>
+            <td><span class="tag intent-local">Local Commercial</span></td>
+            <td><span class="tag p0">P0 Khẩn cấp</span></td>
+            <td>Rất cao · Nhóm sản phẩm bán chạy nhất</td>
+            <td><code>/loa-quang-ngai</code></td>
+            <td><button class="btn-copy" onclick="copyText('loa karaoke quảng ngãi')">Copy</button></td>
+          </tr>
+          <tr data-intent="Local Commercial" data-priority="P0">
+            <td><b>dàn karaoke gia đình quảng ngãi</b></td>
+            <td><span class="tag intent-local">Local Commercial</span></td>
+            <td><span class="tag p0">P0 Khẩn cấp</span></td>
+            <td>Rất cao · Giá trị đơn hàng lớn (20M–60M)</td>
+            <td><code>/</code> (Trang chủ) &amp; <code>/kien-thuc/lap-dat...</code></td>
+            <td><button class="btn-copy" onclick="copyText('dàn karaoke gia đình quảng ngãi')">Copy</button></td>
+          </tr>
+          <tr data-intent="Local" data-priority="P0">
+            <td><b>cửa hàng âm thanh quảng ngãi</b></td>
+            <td><span class="tag intent-local">Local Intent</span></td>
+            <td><span class="tag p0">P0 Khẩn cấp</span></td>
+            <td>Cao · Khách tìm địa chỉ showroom nghe thử</td>
+            <td><code>/loa-quang-ngai</code> &amp; <code>/contact</code></td>
+            <td><button class="btn-copy" onclick="copyText('cửa hàng âm thanh quảng ngãi')">Copy</button></td>
+          </tr>
+          <tr data-intent="Local Commercial" data-priority="P0">
+            <td><b>thiết bị âm thanh quảng ngãi</b></td>
+            <td><span class="tag intent-local">Local Commercial</span></td>
+            <td><span class="tag p0">P0 Khẩn cấp</span></td>
+            <td>Cao · Bao quát loa, vang số, main, micro</td>
+            <td><code>/loa-quang-ngai</code> &amp; <code>/products</code></td>
+            <td><button class="btn-copy" onclick="copyText('thiết bị âm thanh quảng ngãi')">Copy</button></td>
+          </tr>
+          <tr data-intent="Commercial" data-priority="P0">
+            <td><b>loa arf quảng ngãi</b></td>
+            <td><span class="tag intent-commercial">Commercial Brand</span></td>
+            <td><span class="tag p0">P0 Khẩn cấp</span></td>
+            <td>Lợi thế độc quyền đại lý phân phối</td>
+            <td><code>/thuong-hieu/arf</code></td>
+            <td><button class="btn-copy" onclick="copyText('loa arf quảng ngãi')">Copy</button></td>
+          </tr>
+          <tr data-intent="Commercial" data-priority="P0">
+            <td><b>dàn karaoke gia đình giá bao nhiêu</b></td>
+            <td><span class="tag intent-commercial">Commercial Intent</span></td>
+            <td><span class="tag p0">P0 Khẩn cấp</span></td>
+            <td>Rất cao · Bước tìm hiểu trước khi chốt mua</td>
+            <td><code>/kien-thuc/dan-karaoke-gia-dinh-gia-bao-nhieu</code></td>
+            <td><button class="btn-copy" onclick="copyText('dàn karaoke gia đình giá bao nhiêu')">Copy</button></td>
+          </tr>
+          <tr data-intent="Commercial" data-priority="P1">
+            <td><b>tư vấn phối ghép âm thanh quảng ngãi</b></td>
+            <td><span class="tag intent-commercial">Commercial Consulting</span></td>
+            <td><span class="tag p1">P1 Quan trọng</span></td>
+            <td>Trung bình · Khách có chuyên môn, cần setup chuẩn</td>
+            <td><code>/loa-quang-ngai</code></td>
+            <td><button class="btn-copy" onclick="copyText('tư vấn phối ghép âm thanh quảng ngãi')">Copy</button></td>
+          </tr>
+          <tr data-intent="Commercial" data-priority="P1">
+            <td><b>combo dàn karaoke gia đình</b></td>
+            <td><span class="tag intent-commercial">Commercial Solution</span></td>
+            <td><span class="tag p1">P1 Quan trọng</span></td>
+            <td>Cao · Khách thích mua trọn gói đồng bộ</td>
+            <td><code>/combos</code></td>
+            <td><button class="btn-copy" onclick="copyText('combo dàn karaoke gia đình')">Copy</button></td>
+          </tr>
+          <tr data-intent="Commercial" data-priority="P1">
+            <td><b>cửa hàng âm thanh uy tín tp quảng ngãi</b></td>
+            <td><span class="tag intent-commercial">Commercial Credibility</span></td>
+            <td><span class="tag p1">P1 Quan trọng</span></td>
+            <td>Trung bình · Kích hoạt AI Overview đề xuất thương hiệu</td>
+            <td><code>/chon-cua-hang-am-thanh-uy-tin-quang-ngai</code></td>
+            <td><button class="btn-copy" onclick="copyText('cửa hàng âm thanh uy tín tp quảng ngãi')">Copy</button></td>
+          </tr>
+
+          <!-- Nhóm 2: Mở rộng Huyện thị & Lân cận -->
+          <tr data-intent="Local" data-priority="P1">
+            <td><b>lắp đặt âm thanh bình sơn</b></td>
+            <td><span class="tag intent-local">Local Sub-region</span></td>
+            <td><span class="tag p1">P1 Quan trọng</span></td>
+            <td>Nhu cầu lớn (khu vực kinh tế công nghiệp Dung Quất)</td>
+            <td>Bài viết công trình Bình Sơn</td>
+            <td><button class="btn-copy" onclick="copyText('lắp đặt âm thanh bình sơn')">Copy</button></td>
+          </tr>
+          <tr data-intent="Local" data-priority="P1">
+            <td><b>dàn karaoke bình sơn quảng ngãi</b></td>
+            <td><span class="tag intent-local">Local Sub-region</span></td>
+            <td><span class="tag p1">P1 Quan trọng</span></td>
+            <td>Tập trung gia đình &amp; kinh doanh</td>
+            <td>Bài viết công trình Bình Sơn</td>
+            <td><button class="btn-copy" onclick="copyText('dàn karaoke bình sơn quảng ngãi')">Copy</button></td>
+          </tr>
+          <tr data-intent="Local" data-priority="P1">
+            <td><b>mua loa đức phổ / âm thanh đức phổ</b></td>
+            <td><span class="tag intent-local">Local Sub-region</span></td>
+            <td><span class="tag p1">P1 Quan trọng</span></td>
+            <td>Thị xã phía nam Quảng Ngãi</td>
+            <td>Bài viết công trình Đức Phổ</td>
+            <td><button class="btn-copy" onclick="copyText('mua loa đức phổ')">Copy</button></td>
+          </tr>
+          <tr data-intent="Local" data-priority="P1">
+            <td><b>dàn karaoke gia đình mộ đức</b></td>
+            <td><span class="tag intent-local">Local Sub-region</span></td>
+            <td><span class="tag p1">P1 Quan trọng</span></td>
+            <td>Nhu cầu nhà vườn, nhà mới xây</td>
+            <td>Bài viết công trình Mộ Đức</td>
+            <td><button class="btn-copy" onclick="copyText('dàn karaoke gia đình mộ đức')">Copy</button></td>
+          </tr>
+          <tr data-intent="Local" data-priority="P2">
+            <td><b>lắp đặt âm thanh tư nghĩa / sơn tịnh</b></td>
+            <td><span class="tag intent-local">Local Sub-region</span></td>
+            <td><span class="tag p2">P2 Trung bình</span></td>
+            <td>Khu vực sát thành phố Quảng Ngãi</td>
+            <td>Bài viết công trình Tư Nghĩa / Sơn Tịnh</td>
+            <td><button class="btn-copy" onclick="copyText('lắp đặt âm thanh tư nghĩa')">Copy</button></td>
+          </tr>
+          <tr data-intent="Local" data-priority="P2">
+            <td><b>loa kon tum / âm thanh kon tum</b></td>
+            <td><span class="tag intent-local">Regional Expansion</span></td>
+            <td><span class="tag p2">P2 Trung bình</span></td>
+            <td>Đối thủ Quảng Ngãi chưa có trang riêng</td>
+            <td><code>/khu-vuc/kon-tum</code></td>
+            <td><button class="btn-copy" onclick="copyText('loa kon tum')">Copy</button></td>
+          </tr>
+          <tr data-intent="Local" data-priority="P2">
+            <td><b>loa quy nhơn / dàn karaoke quy nhơn</b></td>
+            <td><span class="tag intent-local">Regional Expansion</span></td>
+            <td><span class="tag p2">P2 Trung bình</span></td>
+            <td>Nhu cầu rất lớn, phân mảnh</td>
+            <td><code>/khu-vuc/quy-nhon</code></td>
+            <td><button class="btn-copy" onclick="copyText('loa quy nhơn')">Copy</button></td>
+          </tr>
+
+          <!-- Nhóm 3: Troubleshooting & Kỹ thuật -->
+          <tr data-intent="Informational" data-priority="P1">
+            <td><b>loa karaoke bị hú nguyên nhân và cách khắc phục</b></td>
+            <td><span class="tag intent-info">Informational Problem</span></td>
+            <td><span class="tag p1">P1 Quan trọng</span></td>
+            <td>Nỗi đau phổ biến nhất của người hát karaoke</td>
+            <td><code>/kien-thuc/loa-karaoke-bi-hu-nguyen-nhan-cach-khac-phuc</code></td>
+            <td><button class="btn-copy" onclick="copyText('loa karaoke bị hú nguyên nhân và cách khắc phục')">Copy</button></td>
+          </tr>
+          <tr data-intent="Informational" data-priority="P1">
+            <td><b>nên mua loa full hay loa sub cho karaoke</b></td>
+            <td><span class="tag intent-info">Informational Comparison</span></td>
+            <td><span class="tag p1">P1 Quan trọng</span></td>
+            <td>Thắc mắc cốt lõi khi chọn cấu hình loa</td>
+            <td><code>/loa-quang-ngai#full-hay-sub</code></td>
+            <td><button class="btn-copy" onclick="copyText('nên mua loa full hay loa sub')">Copy</button></td>
+          </tr>
+          <tr data-intent="Informational" data-priority="P1">
+            <td><b>công suất cục đẩy gấp mấy lần loa</b></td>
+            <td><span class="tag intent-info">Technical Guide</span></td>
+            <td><span class="tag p1">P1 Quan trọng</span></td>
+            <td>Tỷ lệ 1.5–2x công suất AES/RMS</td>
+            <td><code>/loa-quang-ngai#phoi-ghep-cong-suat</code></td>
+            <td><button class="btn-copy" onclick="copyText('công suất cục đẩy gấp mấy lần loa')">Copy</button></td>
+          </tr>
+          <tr data-intent="Informational" data-priority="P2">
+            <td><b>so sánh vang cơ lai số và vang số</b></td>
+            <td><span class="tag intent-info">Technical Comparison</span></td>
+            <td><span class="tag p2">P2 Trung bình</span></td>
+            <td>Người dùng phân vân giữa dễ chỉnh và chất âm hay</td>
+            <td><code>/kien-thuc/so-sanh-vang-co-lai-so-va-vang-so</code></td>
+            <td><button class="btn-copy" onclick="copyText('so sánh vang cơ lai số và vang số')">Copy</button></td>
+          </tr>
+          <tr data-intent="Informational" data-priority="P2">
+            <td><b>cách chọn loa nghe nhạc phòng khách</b></td>
+            <td><span class="tag intent-info">Buying Guide</span></td>
+            <td><span class="tag p2">P2 Trung bình</span></td>
+            <td>Tư vấn chọn loa theo kích thước diện tích phòng</td>
+            <td><code>/kien-thuc/cach-chon-loa-nghe-nhac-cho-phong-khach</code></td>
+            <td><button class="btn-copy" onclick="copyText('cách chọn loa nghe nhạc phòng khách')">Copy</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. Từ khoá phủ định -->
+  <section id="phu-dinh">
+    <h2>3. Từ Khoá Phủ Định (Negative Keywords — Cần Tránh Lãng Phí)</h2>
+    <div class="note note-danger">
+      <b>Nguyên tắc tiết kiệm chi phí &amp; giữ thương hiệu:</b> Tiến Đạt Audio định vị là showroom tư vấn phối ghép hệ thống âm thanh chính hãng, chuyên nghiệp (showroom nghe thử 264 Phan Đình Phùng, phân phối ARF, bảo hành 12 tháng). Việc nhận nhầm lead không thuộc phạm vi kinh doanh gây lãng phí thời gian tư vấn và làm loãng tín hiệu thực thể với Google.
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Từ khoá loại trừ</th>
+            <th>Lý do không nhắm tới</th>
+            <th>Cách xử lý trong code &amp; content</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>loa kẹo kéo quảng ngãi</code> / <code>mua loa kéo giá rẻ</code></td>
+            <td>Cửa hàng <b>không bán loa kéo/loa di động</b>. Tỷ lệ bảo hành cao, biên lợi nhuận thấp.</td>
+            <td>Đã chặn trong FAQ Schema và loại bỏ khỏi menu/giới thiệu.</td>
+          </tr>
+          <tr>
+            <td><code>sửa loa quảng ngãi</code> / <code>quấn lại loa cháy</code></td>
+            <td>Cửa hàng <b>chỉ bảo hành sản phẩm bán ra</b>, không làm dịch vụ sửa chữa thiết bị cũ hỏng từ bên ngoài.</td>
+            <td>FAQ ghi rõ "Không nhận sửa chữa loa cũ"; hướng dẫn AI Overview không trích dẫn dịch vụ sửa loa.</td>
+          </tr>
+          <tr>
+            <td><code>cho thuê âm thanh đám cưới quảng ngãi</code></td>
+            <td>Cửa hàng <b>không làm dịch vụ cho thuê âm thanh lưu động</b>.</td>
+            <td>Khai báo rõ trên <code>llms.txt</code> và FAQ trang <code>/loa-quang-ngai</code>.</td>
+          </tr>
+          <tr>
+            <td><code>loa bãi quảng ngãi</code> / <code>bán loa bãi cũ xịn</code></td>
+            <td>Cửa hàng chỉ cung cấp hàng <b>chính hãng mới 100%</b>, nguyên thùng, có bảo hành.</td>
+            <td>Không dùng từ "loa bãi" trong bất kỳ bài viết nào để tránh thu hút khách hàng tìm đồ cũ.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. Chiến lược bứt phá Top #1 -->
+  <section id="chien-luoc-top1">
+    <h2>4. Kế Hoạch Bứt Phá Lên Top #1 &amp; #2 "Loa Quảng Ngãi"</h2>
+    <p>Hiện trang <code>/loa-quang-ngai</code> đã ở vị trí <b>#3</b>. Để vượt qua #2 (civip) và #1 (Anh Đức Digital), cần thực thi 3 đòn bẩy trọng tâm:</p>
+
+    <div class="timeline">
+      <div class="step-box">
+        <h4>Đòn bẩy 1: "Case Study Công Trình Thật" tại Quảng Ngãi (Tác động mạnh nhất đến Google)</h4>
+        <p>Google đánh giá cực cao tín hiệu trải nghiệm thực tế (E-E-A-T). Tất cả các bài đứng top từ khoá "dàn karaoke gia đình" đều là dạng bài: <i>"Lắp đặt dàn karaoke gia đình anh Nam tại Bình Sơn, Quảng Ngãi"</i> kèm 3-5 ảnh kỹ thuật viên đang đấu nối và bàn giao dàn loa.</p>
+        <p><b>Hành động:</b> Khi đi lắp công trình, chủ shop chụp 3-4 tấm ảnh rõ mặt dàn máy + không gian phòng khách + ảnh chụp chung với gia chủ, sau đó gửi lên để tạo bài viết công trình.</p>
+      </div>
+
+      <div class="step-box">
+        <h4>Đòn bẩy 2: Tối ưu Google Business Profile (Củng cố Thực thể &amp; Map Pack)</h4>
+        <p>Google đang chuẩn bị kích hoạt khối Google Maps (Local 3-Pack) cho từ khoá "loa quảng ngãi". Ai có nhiều đánh giá chất lượng tại địa phương sẽ giành trọn 3 vị trí này.</p>
+        <p><b>Hành động:</b> Nhờ 5–10 khách hàng thân thiết sau khi lắp đặt xong vào đánh giá 5 sao trên Google Maps với nội dung chứa từ khoá tự nhiên: <i>"Rất hài lòng với dàn loa ARF mua tại Tiến Đạt Audio 264 Phan Đình Phùng, âm thanh sáng, chống hú tốt"</i>.</p>
+      </div>
+
+      <div class="step-box">
+        <h4>Đòn bẩy 3: Khép kín liên kết nội bộ (Internal Linking Matrix)</h4>
+        <p>Hiện nay tất cả các bài viết kiến thức và trang sản phẩm ARF đều đã có link trỏ về trang cột trụ <code>/loa-quang-ngai</code> với anchor text tự nhiên ("loa Quảng Ngãi", "dàn karaoke gia đình Quảng Ngãi"). Cần tiếp tục duy trì dòng chảy PageRank này cho các bài viết mới.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Mẫu bài viết công trình -->
+  <section id="case-study-template">
+    <h2>5. Khung Mẫu Bài Viết Công Trình Thật (Chuẩn SEO &amp; E-E-A-T)</h2>
+    <p>Chỉ cần chủ showroom cung cấp ảnh và thông tin vắn tắt, hệ thống có thể tạo ngay bài viết theo chuẩn sau:</p>
+
+    <div class="card">
+      <h3>Tiêu đề mẫu: Lắp Đặt Dàn Karaoke ARF Gia Đình Anh [Tên] Tại [Huyện/Xã], Quảng Ngãi</h3>
+      <ul class="check-list">
+        <li><b>Không gian:</b> Phòng khách gia đình diện tích [20m² – 35m²], sàn gạch, trần thạch cao.</li>
+        <li><b>Nhu cầu:</b> Gia đình muốn hát karaoke âm thanh ấm, hát nhẹ, không bị rít mic và nghe nhạc acoustics cuối tuần.</li>
+        <li><b>Cấu hình thiết bị:</b>
+          <ul>
+            <li>01 Đôi loa full ARF X12Pro (công suất 400W AES, bass 30cm).</li>
+            <li>01 Cục đẩy công suất ARF NX4-800 (800W x 4 kênh ở 8Ω).</li>
+            <li>01 Vang số ARF VX330PRO (xử lý chống hú DSP 3x chuyên nghiệp).</li>
+            <li>01 Bộ micro không dây chuyên dùng cho karaoke gia đình.</li>
+          </ul>
+        </li>
+        <li><b>Quy trình thi công:</b> Khảo sát góc đặt loa cách tường 30cm tránh dội âm bass, đi dây âm nẹp gọn gàng, test âm lượng và hướng dẫn gia chủ lưu các chế độ hát (Echo/Reverb).</li>
+        <li><b>Hình ảnh thực tế:</b> 03 ảnh chụp cận cảnh góc máy và tổng thể phòng khách.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6. Checklist hành động -->
+  <section id="hanh-dong">
+    <h2>6. Checklist Các Bước Tiếp Theo Dành Cho Kỹ Thuật &amp; Chủ Shop</h2>
+    <div class="card">
+      <ul class="check-list">
+        <li><b>Xử lý thông số VX330PRO:</b> Cập nhật thông số kỹ thuật chuẩn của vang số hoặc xoá sạch thông số sub 32kg sai lệch trong <code>data/products/speakers.json</code>.</li>
+        <li><b>Báo Google lập chỉ mục lại:</b> Vào Search Console gửi yêu cầu crawl lại <code>/loa-quang-ngai</code> để nhận diện 3 mục hướng dẫn và 9 FAQ mới.</li>
+        <li><b>Thu thập tư liệu công trình:</b> Gửi ảnh 1-2 công trình thực tế vừa lắp đặt gần nhất ở Quảng Ngãi để lên bài đầu tiên.</li>
+        <li><b>Theo dõi thứ hạng tuần tới:</b> Kiểm tra báo cáo Hiệu suất từ khoá "loa quảng ngãi" và "dàn karaoke gia đình quảng ngãi" trên Search Console.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+  function filterKeywords() {
+    const input = document.getElementById('keywordSearch').value.toLowerCase();
+    const rows = document.querySelectorAll('#keywordTable tbody tr');
+    rows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      row.style.display = text.includes(input) ? '' : 'none';
+    });
+  }
+
+  function setIntentFilter(intent, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const rows = document.querySelectorAll('#keywordTable tbody tr');
+    rows.forEach(row => {
+      if (intent === 'all') {
+        row.style.display = '';
+      } else {
+        const rowIntent = row.getAttribute('data-intent');
+        row.style.display = rowIntent.includes(intent) ? '' : 'none';
+      }
+    });
+  }
+
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Đã copy từ khoá: ' + text);
+    });
+  }
+</script>
+</body>
+</html>
