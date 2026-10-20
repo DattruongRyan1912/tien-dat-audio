@@ -50,11 +50,20 @@ test('product schema uses the public route and never fabricates ratings', () => 
   assert.match(JSON.stringify(breadcrumb), /\/san-pham\/arf-x12pro/)
 })
 
-test('products without a configured price omit Offer and keep contact-price semantics', () => {
+test('products without a configured price emit clean ItemPage schema without Product offer warnings', () => {
   const item = product({ price: 0, salePrice: null })
   const schema = generateProductStructuredData(item) as { '@graph': Array<Record<string, unknown>> }
   const productNode = schema['@graph'].find((entry) => entry['@type'] === 'Product')
-  assert.equal(productNode?.offers, undefined)
+  const itemPageNode = schema['@graph'].find((entry) => entry['@type'] === 'ItemPage')
+  
+  // Không xuất node Product để Google Search Console không bắt lỗi thiếu offers/review/aggregateRating
+  assert.equal(productNode, undefined)
+  assert.ok(itemPageNode, 'Phải có node ItemPage')
+  assert.equal(itemPageNode?.['@id'], 'https://tiendataudioquangngai.id.vn/san-pham/arf-x12pro#webpage')
+  assert.equal(itemPageNode?.url, 'https://tiendataudioquangngai.id.vn/san-pham/arf-x12pro')
+  assert.equal(itemPageNode?.offers, undefined)
+  assert.equal(itemPageNode?.sku, undefined)
+  assert.equal(itemPageNode?.brand, undefined)
 })
 
 test('legacy product canonicals are normalized to the public san-pham route', () => {

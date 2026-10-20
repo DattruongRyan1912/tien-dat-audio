@@ -159,67 +159,84 @@ export function generateProductStructuredData(product: Product, category?: Categ
 
   const canonicalUrl = absoluteSiteUrl(getProductCanonicalPath(product))
   const price = Number(product.salePrice || product.price)
+  const hasValidPrice = Number.isFinite(price) && price > 0
   const images = product.images.filter(Boolean).map(absoluteSiteUrl)
-  const productNode: Record<string, unknown> = {
-    '@type': 'Product',
-    '@id': `${canonicalUrl}#product`,
-    url: canonicalUrl,
-    name: product.name,
-    description: product.description,
-    image: images,
-    sku: product.id || product.slug,
-    brand: {
-      '@type': 'Brand',
-      name: brand?.name || product.brand || siteConfig.name,
-      ...(brand?.logo ? { logo: absoluteSiteUrl(brand.logo) } : {}),
-    },
-    category: category?.name || product.category || 'Thiết bị âm thanh',
-  }
 
-  if (Number.isFinite(price) && price > 0) {
-    productNode.offers = {
-      '@type': 'Offer',
+  let mainNode: Record<string, unknown>
+
+  if (hasValidPrice) {
+    mainNode = {
+      '@type': 'Product',
+      '@id': `${canonicalUrl}#product`,
       url: canonicalUrl,
-      price: String(price),
-      priceCurrency: 'VND',
-      availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      itemCondition: 'https://schema.org/NewCondition',
-      seller: {
-        '@type': 'Organization',
-        '@id': `${siteConfig.url.replace(/\/$/, '')}#business`,
-        name: siteConfig.name,
-        url: siteConfig.url,
+      name: product.name,
+      description: product.description,
+      image: images,
+      sku: product.id || product.slug,
+      brand: {
+        '@type': 'Brand',
+        name: brand?.name || product.brand || siteConfig.name,
+        ...(brand?.logo ? { logo: absoluteSiteUrl(brand.logo) } : {}),
       },
+      category: category?.name || product.category || 'Thiết bị âm thanh',
+      offers: {
+        '@type': 'Offer',
+        url: canonicalUrl,
+        price: String(price),
+        priceCurrency: 'VND',
+        availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        itemCondition: 'https://schema.org/NewCondition',
+        seller: {
+          '@type': 'Organization',
+          '@id': `${siteConfig.url.replace(/\/$/, '')}#business`,
+          name: siteConfig.name,
+          url: siteConfig.url,
+        },
+      },
+    }
+  } else {
+    // Với sản phẩm chưa có giá cố định (báo giá theo thời điểm/công trình),
+    // xuất ItemPage chuẩn thay vì Product thiếu offers để tránh vi phạm
+    // kiểm tra bắt buộc 'offers, review hoặc aggregateRating' của Google Search Console.
+    mainNode = {
+      '@type': 'ItemPage',
+      '@id': `${canonicalUrl}#webpage`,
+      url: canonicalUrl,
+      name: product.name,
+      description: product.description,
+      image: images,
+      inLanguage: 'vi',
+      breadcrumb: { '@id': `${canonicalUrl}#breadcrumb` },
     }
   }
 
   return {
     '@context': 'https://schema.org',
     '@graph': [
-      productNode,
+      mainNode,
       {
-      '@type': 'BreadcrumbList',
-      '@id': `${canonicalUrl}#breadcrumb`,
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'Trang chủ',
-          item: siteConfig.url,
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'Sản phẩm',
-          item: absoluteSiteUrl('/products'),
-        },
-        {
-          '@type': 'ListItem',
-          position: 3,
-          name: product.name,
-          item: canonicalUrl,
-        },
-      ],
+        '@type': 'BreadcrumbList',
+        '@id': `${canonicalUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Trang chủ',
+            item: siteConfig.url,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Sản phẩm',
+            item: absoluteSiteUrl('/products'),
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: product.name,
+            item: canonicalUrl,
+          },
+        ],
       },
     ],
   }

@@ -1803,4 +1803,30 @@ File này là append-only. Không sửa hoặc xóa entry cũ; nếu thông tin 
 - Verification: `npm test` 92/92 pass, `tsc` và `eslint` 0 error, build production pass.
 - Rollback reference: revert commit này.
 
+## 2026-10-21 04:57 +0700 — Nâng cấp SEO Trang Chủ "Âm thanh Quảng Ngãi" và xử lý 11 lỗi Schema Google Search Console
+
+- Actor: Antigravity Lead Developer (Gemini) phối hợp thẩm định với Senior Architect & QA Advisor (model pro).
+- Scope/authority: Người dùng duyệt "tiến hành toàn bộ" chiến lược SEO đưa cụm "âm thanh quảng ngãi" vượt đối thủ và xử lý triệt để ảnh chụp 11 lỗi schema trong Google Search Console.
+- Audit baseline:
+  + Trang chủ `/` tập trung H1 vào "DÀN KARAOKE GIA ĐÌNH QUẢNG NGÃI", thiếu trọng tâm cụm "THIẾT BỊ ÂM THANH QUẢNG NGÃI" dẫn đến phân tán thứ hạng với các đối thủ (Tân Phát, Anh Đức).
+  + Google Search Console báo lỗi nghiêm trọng đỏ cho 11 sản phẩm có giá liên hệ/báo giá Zalo (`price <= 0`): "Phải chỉ định 'offers', 'review' hoặc 'aggregateRating'". Nguyên nhân do `src/lib/seo.ts` xuất `@type: 'Product'` nhưng bỏ qua `offers`.
+- Changes:
+  + `src/app/page.tsx`:
+    - Cập nhật metadata keywords bổ sung `âm thanh Quảng Ngãi`, `thiết bị âm thanh Quảng Ngãi`, `cửa hàng âm thanh Quảng Ngãi`, `lắp đặt âm thanh Quảng Ngãi`.
+    - Nâng cấp H1 thành `THIẾT BỊ ÂM THANH & DÀN KARAOKE GIA ĐÌNH QUẢNG NGÃI` bao quát toàn diện nhóm từ khóa ngành và thương hiệu.
+    - Bổ sung Section 3 pillars `Giải Pháp Thiết Bị Âm Thanh Toàn Diện Tại Quảng Ngãi` (Gia đình & Biệt thự; Cafe & Kinh doanh; Hội trường & Cơ quan) với descriptive anchor text chuẩn SEO trỏ `/combos`, `/loa-quang-ngai`, `/contact`.
+  + `src/lib/seo.ts`:
+    - Khi `price > 0`: Tiếp tục xuất `@type: 'Product'` với đầy đủ trường `offers` chuẩn Google Merchant / Product snippet.
+    - Khi `price <= 0` (sản phẩm báo giá theo công trình/Zalo): Xuất chuẩn `@type: 'ItemPage'` với `@id: #webpage`, loại bỏ triệt để các thuộc tính của Product (`sku`, `brand`, `offers`) để không bị Google Parser bắt lỗi Merchant Listings mà vẫn bảo toàn indexing và breadcrumb.
+  + `tests/seo.test.ts`: Refactor test case xác minh khi `price: 0`, schema xuất `ItemPage` sạch và không chứa node `Product` trần thiếu offers.
+- Verification:
+  + Senior Architect & QA Advisor audit và ký duyệt QA Gate (APPROVED).
+  + `npm test`: 92/92 tests passing (SEO tests 6/6 pass).
+  + `npx tsc --noEmit`: 0 error.
+  + `npx eslint src tests scripts --max-warnings=0`: 0 error, 0 warning.
+  + `bash deploy/scripts/audit-secrets.sh`: Secret scan pass.
+- Result: Sẵn sàng đưa lên Production để xóa sạch 11 lỗi GSC và thúc đẩy thứ hạng SEO cụm "âm thanh quảng ngãi".
+- Rollback reference: revert commit này.
+
+
 

@@ -12,9 +12,12 @@ export const metadata: Metadata = generateSEOMetadata({
   title: 'Tiến Đạt Audio — Dàn Karaoke & Thiết Bị Âm Thanh Quảng Ngãi',
   description: 'Chuyên cung cấp dàn karaoke gia đình, loa, vang số chống hú, cục đẩy công suất chính hãng tại Quảng Ngãi. Lắp đặt tận nơi, cắt hú 100%, bảo hành 2 năm 24/7. Showroom 264 Phan Đình Phùng. Hotline: 0934 995 657.',
   keywords: [
+    'âm thanh Quảng Ngãi',
+    'thiết bị âm thanh Quảng Ngãi',
+    'cửa hàng âm thanh Quảng Ngãi',
+    'lắp đặt âm thanh Quảng Ngãi',
     'dàn karaoke gia đình Quảng Ngãi',
     'dàn karaoke Quảng Ngãi',
-    'thiết bị âm thanh Quảng Ngãi',
     'loa Quảng Ngãi',
     'vang số chống hú Quảng Ngãi',
     'loa karaoke Quảng Ngãi',
@@ -42,16 +45,16 @@ export default async function HomePage() {
               </span>
               
               <h1 className="mt-3 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl md:text-4xl lg:text-[40px] lg:leading-[1.15]">
-                DÀN KARAOKE GIA ĐÌNH QUẢNG NGÃI<br />
+                THIẾT BỊ ÂM THANH & DÀN KARAOKE GIA ĐÌNH QUẢNG NGÃI<br />
                 <span className="text-[#d32f2f]">HÁT NHẸ HƠI — CẮT HÚ 100% — GIÁ TẬN KHO</span>
               </h1>
               
               <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
-                Phối ghép chuẩn âm học cho phòng khách nhà ống miền Trung. 
-                <strong className="text-slate-800"> Trải nghiệm nghe thử thực tế tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi</strong> trước khi quyết định. 
-                Đội ngũ kỹ sư đo đạc âm học RTA và bàn giao tận nhà toàn tỉnh. Xem thêm{' '}
+                Tiến Đạt Audio chuyên phân phối thiết bị âm thanh chính hãng và phối ghép dàn karaoke chuẩn âm học cho không gian phòng khách miền Trung.{' '}
+                <strong className="text-slate-800">Trải nghiệm nghe thử thực tế tại 264 Phan Đình Phùng, Phường Cẩm Thành, Quảng Ngãi</strong> trước khi quyết định.{' '}
+                Đội ngũ kỹ sư đo đạc âm học RTA, lắp đặt và bàn giao tận nhà toàn tỉnh. Xem thêm{' '}
                 <Link href="/loa-quang-ngai" className="font-semibold text-[#d32f2f] underline">loa Quảng Ngãi</Link>{' '}
-                và khu vực lắp đặt.
+                và các cấu hình dàn âm thanh trọn gói.
               </p>
 
               {/* CTAs */}
@@ -219,6 +222,128 @@ export default async function HomePage() {
         <div className="mb-14">
           <HomeKaraokeCalculator />
         </div>
+
+        {/* 3 Solutions: Comprehensive Audio Solutions in Quang Ngai */}
+        <section className="mb-14">
+          <div className="mb-6 flex items-end justify-between border-b-2 border-slate-200 pb-2">
+            <div className="relative">
+              <h2 className="text-xl font-extrabold text-slate-900 sm:text-2xl">
+                Giải Pháp Thiết Bị Âm Thanh Toàn Diện Tại Quảng Ngãi
+              </h2>
+              <div className="absolute -bottom-2.5 left-0 h-0.5 w-20 bg-[#d32f2f]"></div>
+            </div>
+            <Link href="/products" className="text-xs font-bold text-[#d32f2f] hover:underline sm:text-sm">
+              Khám phá toàn bộ thiết bị &rarr;
+            </Link>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {/* Pillar 1: Home Karaoke */}
+            <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-xs transition-all hover:border-[#d32f2f] hover:shadow-md">
+              <div>
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-[11px] font-bold text-[#b91c1c]">
+                  🎤 Gia Đình & Biệt Thự
+                </div>
+                <h3 className="mt-3 text-lg font-bold text-slate-900">
+                  Dàn Karaoke Gia Đình Chuẩn Âm Học
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                  Phối ghép hoàn hảo giữa loa full ARF, vang số chống hú chuyên sâu và micro không dây cao cấp. Cân chỉnh phần mềm đo pha RTA trực tiếp tại phòng khách, hát nhẹ hơi, tròn tiếng và cắt hú rít triệt để.
+                </p>
+                <ul className="mt-4 space-y-2 text-xs text-slate-700">
+                  <li className="flex items-center gap-2">
+                    <span className="font-bold text-[#d32f2f]">✓</span> Cắt hú 100%, bảo vệ củ loa treble
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="font-bold text-[#d32f2f]">✓</span> Hát nhẹ, tôn chất giọng tự nhiên
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="font-bold text-[#d32f2f]">✓</span> Lắp đặt & tinh chỉnh tận nhà toàn tỉnh
+                  </li>
+                </ul>
+              </div>
+              <div className="mt-6 border-t border-slate-100 pt-4">
+                <Link
+                  href="/combos"
+                  className="group inline-flex items-center gap-1 text-xs font-bold text-[#d32f2f] hover:underline"
+                >
+                  <span>Khám phá cấu hình dàn karaoke gia đình trọn gói</span>
+                  <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Pillar 2: Cafe & Acoustic */}
+            <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-xs transition-all hover:border-[#d32f2f] hover:shadow-md">
+              <div>
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[11px] font-bold text-amber-800">
+                  ☕ Cafe & Kinh Doanh
+                </div>
+                <h3 className="mt-3 text-lg font-bold text-slate-900">
+                  Âm Thanh Quán Cafe, Nhà Hàng & Phòng Trà
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                  Giải pháp âm thanh đa vùng với độ phủ âm đồng đều, nhạc nền du dương ấm áp hoặc acoustic sống động. Khách trò chuyện dễ chịu mà vẫn cảm nhận trọn vẹn từng giai điệu âm nhạc.
+                </p>
+                <ul className="mt-4 space-y-2 text-xs text-slate-700">
+                  <li className="flex items-center gap-2">
+                    <span className="font-bold text-[#d32f2f]">✓</span> Phân vùng âm thanh, phủ âm đồng đều
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="font-bold text-[#d32f2f]">✓</span> Thiết kế loa treo thẩm mỹ, giấu dây kỹ
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="font-bold text-[#d32f2f]">✓</span> Hoạt động bền bỉ liên tục 16h - 18h/ngày
+                  </li>
+                </ul>
+              </div>
+              <div className="mt-6 border-t border-slate-100 pt-4">
+                <Link
+                  href="/loa-quang-ngai"
+                  className="group inline-flex items-center gap-1 text-xs font-bold text-[#d32f2f] hover:underline"
+                >
+                  <span>Xem các dòng loa âm thanh quán cafe, kinh doanh tại Quảng Ngãi</span>
+                  <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Pillar 3: Hall & Conference */}
+            <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-xs transition-all hover:border-[#d32f2f] hover:shadow-md">
+              <div>
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[11px] font-bold text-blue-800">
+                  🏛️ Hội Trường & Cơ Quan
+                </div>
+                <h3 className="mt-3 text-lg font-bold text-slate-900">
+                  Âm Thanh Hội Trường & Phòng Họp Tại Quảng Ngãi
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                  Tư vấn, cấu hình và thi công hệ thống âm thanh hội trường cơ quan, trường học, trung tâm hội nghị và phòng họp trực tuyến. Đảm bảo độ rõ tiếng đàm thoại và công suất phủ rộng không gian lớn.
+                </p>
+                <ul className="mt-4 space-y-2 text-xs text-slate-700">
+                  <li className="flex items-center gap-2">
+                    <span className="font-bold text-[#d32f2f]">✓</span> Micro cổ ngỗng & micro đại biểu độ nhạy cao
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="font-bold text-[#d32f2f]">✓</span> Cục đẩy công suất & vang số xử lý ma trận
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="font-bold text-[#d32f2f]">✓</span> Đầy đủ chứng từ CO/CQ, hóa đơn VAT
+                  </li>
+                </ul>
+              </div>
+              <div className="mt-6 border-t border-slate-100 pt-4">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-1 text-xs font-bold text-[#d32f2f] hover:underline"
+                >
+                  <span>Liên hệ khảo sát & thiết kế âm thanh hội trường Quảng Ngãi</span>
+                  <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Real Customer Proof in Quang Ngai */}
         <div className="mb-14">
